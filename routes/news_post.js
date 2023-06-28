@@ -10,8 +10,9 @@ const { Op } = require("sequelize");
 // 게시글 작성 POST : localhost:3018/news
 router.post("/news", authMiddleware, async(req, res) => {
     
-    try{ const { UserId } = res.locals.user;
-         const { title, content } = req.body;
+    try{ 
+        const { UserId } = res.locals.user;
+        const { title, content } = req.body;
 
     // 유효성 검사
     if (!title) {

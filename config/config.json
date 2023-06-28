@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "qwer1234",
     "database": "newsfeed",
-    "host": "",
+    "host": "database-express.cyis22tg2zx1.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

@@ -38,7 +38,7 @@ router.get("/news/:newsId", async (req, res) => {
     });
 
     res.json({
-        data: prNews,
+        news: prNews,
     });
   } catch (error) {
     console.log(error);

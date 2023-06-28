@@ -3,7 +3,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 // 스키마 가져오기
-const { Users } = require("../models/user.js")
+const { Users } = require("../models/")
 // 라우터 생성하기
 const router = express.Router();
 
@@ -15,11 +15,11 @@ router.post("/login", async (req, res) => {
     const { id, password } = req.body;
     //           동기   모델  하나찾기           닉네임 일치
     
-    const user = await Users.findOne({ where: { id } });
+    const users = await Users.findOne({ where: { id } });
 
     // ID과 비밀번호가 유효한지 확인하기
     // 같은 ID가 없다면
-    if (!user) {
+    if (!users) {
         return res.status(401).json({ message: "존재하지 않는 ID입니다." });
     }
     // 같은 ID가 있지만 비밀번호가 다르다면
@@ -90,11 +90,13 @@ router.post("/user", async (req, res) => {
 
     // 비밀번호 검증하기
     // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+    const passRegex = /^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d@$!%*#?&]{3,}$/;
     const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것
-    if (passCheck || password.includes(id)) {
+    if (!passCheck || password.includes(id)) {
+        console.log(passCheck);
+        console.log(password.includes(id));
         res.status(400).json({
             errorMessage:
                 "password를 ID를 포함하지 않으면서 최소 4자 이상으로 작성하세요",

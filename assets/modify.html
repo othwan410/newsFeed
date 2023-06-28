@@ -1,0 +1,189 @@
+<!-- 이상우 뉴스수정 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- font-awesome CSS -->
+<script src="https://kit.fontawesome.com/727ce840af.js" crossorigin="anonymous"></script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+
+<!-- 날짜 CDN -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    
+    <title>게시글 수정</title>
+</head>
+<style>
+    .wrap {
+      width: 800px;
+      margin: auto;
+    }
+  
+    .form-group {
+      margin-top: 30px;
+    }
+  
+    .label {
+      margin-top: 20px;
+    }
+  
+    .btncls {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      margin-top: 10px;
+    }
+  
+    .btn-primary {
+      margin-left: 20px;
+    }
+  
+    .inputPwd {
+      width: 200px;
+      margin-left: 10px;
+      -webkit-text-security: disc;
+    }
+  </style>
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const newsId = urlParams.get("newsId");
+  
+ 
+
+    // 게시글 수정
+    function correct() {
+      $.ajax({
+        type: "PUT",
+        url: `/news/${newsId}`,
+        dataType: "text",
+        data: {
+          //바뀐 데이터
+          title: $(title).val(),
+          content: $(content).val(),
+        },
+        success: function (response) {
+          if (response["result"] == "success") {
+            alert("글이 정상적으로 수정되었습니다.");
+            window.location.href = "/news"
+          }
+        }
+      });
+    }
+
+    //취소 버튼 시 뒤로가기 기능
+    function back(){
+      location.href='javascript:history.back();'
+    }
+  
+    // 게시글 삭제  
+    function remove() {
+      $.ajax({
+        type: "DELETE",
+        url: `/news/${newsId}`,
+        data: {},
+        success: function(response) {
+          if (response["result"] == "success"){
+            alert("글이 정상적으로 삭제되었습니다.")
+            location.href="/news"
+          }
+        }
+      })
+    }
+
+  </script>
+  
+  <body>
+    <div class='wrap'>
+      <h1>게시글 수정 & 삭제</h1>
+      <form class="form-group" action="http://localhost:3018/news" method="PUT">
+      <div class="form-group">
+        <div class="label">
+          <label for="exampleFormControlInput1" style="font-weight: bold;">제목 :</label>
+          <input id="borderName" placeholder="제목을 입력해 주세요.">
+        </div>
+        <div class="label">
+          <label for="exampleFormControlInput1">내용</label>
+          <textarea class="form-control" id="borderContent" type="text" rows="20"></textarea>
+        </div>
+      </div>
+    </form>
+      <div class="btncls">
+        <button class="btn btn-primary" type="submit" onclick="correct()">수정 완료</button>
+        <button class="btn btn-primary" type="submit" onclick="remove()">삭제</button>
+        <button class="btn btn-primary" type="submit" onclick="back()">취소</button>
+      </div>
+    </div>
+
+    <!-- onclick='modal_ok()'를 게시글 상세페이지 수정버튼과 연결시켜야 함. -->
+
+     <!-- 게시글 수정후 확인 모달
+    function modal_ok() {
+      $.ajax({
+        type: "GET",
+        url: `news/${newsId}`,
+        dataType: "text",
+        data: {},
+        success: function (response) {
+          let bordersInfo = response["detail"];
+          //db에 저장된 비밀번호 가져오기
+          let pwd = bordersInfo['borderPwd']
+          //비밀번호 입력창에 입력한 값과 db로 가져온 pwd를 비교하여 검사
+          if (pwd === $(borderPwd).val()) {
+            correct()
+          }
+          else {
+            alert("비밀번호가 다릅니다.");
+          }
+        }
+      });
+    }
+
+  글 수정 후 비밀번호 확인을 위해 모달창 이용
+    function modal_start() {
+    $('#cartModal').modal('show');
+  } -->
+
+    <!-- <div class="modal text-left" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">알림</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            회원 비밀번호를 입력하세요.
+          </div>
+          <input class="inputPwd" id="borderPwd" type="number" placeholder="password" />
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sparta" onclick='modal_ok()'>
+              확인
+            </button>
+            <button type="button" class="btn btn-outline-sparta" data-dismiss="modal">
+              취소
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </body>
+  
+  </html>

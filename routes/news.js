@@ -2,6 +2,7 @@ const express = require("express");
 const { News, Users } = require("../models");
 const router = express.Router();
 
+
 router.get("/news/:newsId", async (req, res) => {
   try {
     if (!req.params) {

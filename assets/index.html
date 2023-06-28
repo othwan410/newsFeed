@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./main.css" />
+    <title>축스피드</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1><a href="#">축스피드</a></h1>
+        <ul>
+          <li><a href="#">Write</a></li>
+          <li><a href="#">Sign Up</a></li>
+          <li>
+            <div>
+              <input id="id" type="text" placeholder="ID 입력" />
+              <input id="password" type="text" placeholder="PW 입력" />
+              <button onclick="sign_in()">로그인</button>
+              <button onclick="log_out()">로그아웃</button>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="main-container">
+      <main>
+        <div class="category-btn">
+          <button onclick="k_football()">국내축구</button>
+          <button onclick="w_football()">해외축구</button>
+        </div>
+        <div class="sort-btn">
+          <button class="new">최신순</button>
+          <button>좋아요순</button>
+        </div>
+        <div class="news-box">
+          <ul>
+            <li class="news-list">
+              <div class="news-card">
+                <a href="#"><img src="#" alt="#" /> 사진</a>
+                <h3>제목</h3>
+                <p>내용</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </main>
+    </div>
+    <footer><p>NodeJs A반 6조 - 노드레인저</p></footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+      $("document").ready(function () {
+        getNews();
+      });
+
+      function getNews() {
+        $.ajax({
+          type: "GET",
+          url: "/getnews",
+          success: function (a) {
+            const news = a.news;
+            news.forEach((item) => {
+              img = item.img;
+              title = item.title;
+              createdAt = item.createdAt.substring(0, 10);
+              user = item.User.nickname;
+
+              const template = `<div class="news-card">
+                <a href="#"><img src="${img}" alt="#" />사진</a>
+                <h3>${title}</h3>
+                <p>${createdAt}</p>
+                <p>${user}</p>
+                </div>`;
+
+              $(".news-box").append(template);
+            });
+          },
+        });
+      }
+
+      // 로그인 버튼
+      function sign_in() {
+        let id = $("#id").val();
+        let password = $("#password").val();
+        console.log(id, password);
+        $.ajax({
+          type: "POST",
+          url: "/login",
+          data: {
+            id: id,
+            password: password,
+          },
+          success: function (response) {
+            console.log("로그인 성공");
+          },
+          error: function (error) {
+            console.log("로그인 실패");
+          },
+        });
+      }
+
+      // 로그아웃 버튼
+      function log_out() {
+        $.ajax({
+          type: "POST",
+          url: "/logout",
+        });
+      }
+
+      // 국내축구 카테고리
+      // function k_football() {
+      //   $.ajax({
+      //     type: "GET",
+      //     url: "/k-football",
+      //     success: function (response) {},
+      //   });
+      // }
+
+      // 해외축구 카테고리
+      // function w_football() {
+      //   $.ajax({
+      //     type: "GET",
+      //     url: "/w-football",
+      //   });
+      // }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!-- 이상우 뉴스생성 -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- font-awesome CSS -->
+        <script src="https://kit.fontawesome.com/727ce840af.js" crossorigin="anonymous"></script>
+      
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+      
+        <!-- 날짜 CDN -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <title>게시글 작성</title>
+  </head>
+  <style>
+    .wrap {
+      width: 800px;
+      margin: auto;
+    }
+  
+    .form-group {
+      margin-top: 30px;
+    }
+  
+    .label {
+      margin-top: 20px;
+    }
+  
+    .btncls {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      margin-top: 10px;
+    }
+  
+    .btn-primary {
+      margin-left: 20px;
+    }
+  
+    .inputPwd {
+      -webkit-text-security: disc;
+    }
+  </style>
+  <script>
+    function post_border() {
+    //현재 시각 저장할 변수
+    let date = new Date()
+    let borderDate = date.getTime()
+    $.ajax({
+      type: "POST",
+      url: `/news`,
+      data: {
+        //post 보낼 데이터
+        title: $("#title").val(),
+        content: $("#content").val(),
+        borderDate
+      },
+      success: function (response) {
+        if (response['result'] == "success") {
+          alert("글이 등록 되었습니다.");
+          window.location.href="/news"
+        }
+      }
+    });
+  }
+  </script>
+  <body>
+    <div class='wrap'>
+        <h1>게시글 작성</h1>
+        <form class="form-group" action="http://localhost:3018/news" method="POST">
+          <div class="label">
+            <label for="exampleFormControlInput1" style="font-weight: bold;">제목 :</label>
+            <input type="text" id="borderName" />
+          </div>
+          <div class="label">
+            <label for="exampleFormControlInput1">내용</label>
+            <textarea class="form-control" id="borderContent" type="text" rows="20"></textarea>
+          </div>
+        </form>
+        <div class="btncls">
+          <input type="file" id="inputImage">
+          <button id="sendButton">파일 등록</button>
+            <img src="" class="uploadImage">
+          <button class="btn btn-primary" type="submit" onclick="post_border()">글 작성 완료</button>
+          <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
+        </div>
+      </div>
+  </body>
+</html>

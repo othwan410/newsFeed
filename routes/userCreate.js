@@ -3,7 +3,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 // 스키마 가져오기
-const { Users } = require("../models/")
+const { Users } = require("../models/");
 // 라우터 생성하기
 const router = express.Router();
 
@@ -15,11 +15,11 @@ router.post("/login", async (req, res) => {
     const { id, password } = req.body;
     //           동기   모델  하나찾기           닉네임 일치
     
-    const users = await Users.findOne({ where: { id } });
+    const user = await Users.findOne({ where: { id } });
 
     // ID과 비밀번호가 유효한지 확인하기
     // 같은 ID가 없다면
-    if (!users) {
+    if (!user) {
         return res.status(401).json({ message: "존재하지 않는 ID입니다." });
     }
     // 같은 ID가 있지만 비밀번호가 다르다면
@@ -121,7 +121,7 @@ router.post("/user", async (req, res) => {
     }
 
 
-    // 닉네임도 감증
+    // 닉네임도 검증
     const isExistUserNickname = await Users.findOne({ where: { nickname } });
 
     // 존재한다면 경고를 띄운다.

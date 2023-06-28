@@ -3,7 +3,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 // 스키마 가져오기
-const { Users } = require("../models/");
+const { Users } = require("../models");
 // 라우터 생성하기
 const router = express.Router();
 

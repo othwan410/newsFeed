@@ -28,47 +28,70 @@
     <title>게시글 작성</title>
   </head>
   <style>
-    .wrap {
-      width: 800px;
-      margin: auto;
+    .post {
+      color: white;
     }
-  
-    .form-group {
+    .title {
+      color: white;
+    }
+    .content {
+      color: white;
+      margin-top: 20px;
+    }
+    .body {
+      height: 100%;
+      width: 100%;
+      background-image: url('https://blog.kakaocdn.net/dn/0e9bC/btqWjp4w0Zq/fNhnULYtM7mCch5aLdEYc1/img.jpg');
+      background-repeat : no-repeat;
+      background-size: cover;
+    }
+    .form-control {
+      background-color: transparent;
+    }
+    .wrap {
+      width: 60%;
+      margin: auto;
       margin-top: 30px;
     }
   
+    .form-group {
+      margin-top: 20px;
+    }
+
     .label {
       margin-top: 20px;
     }
-  
+
     .btncls {
       display: flex;
       justify-content: flex-end;
       flex-wrap: nowrap;
       margin-top: 10px;
     }
-  
+
     .btn-primary {
       margin-left: 20px;
     }
-  
     .inputPwd {
       -webkit-text-security: disc;
     }
+
+    #content{
+      margin-top: 20px;
+    }
+
   </style>
   <script>
-    function post_border() {
-    //현재 시각 저장할 변수
-    let date = new Date()
-    let borderDate = date.getTime()
+    function upload() {
     $.ajax({
       type: "POST",
-      url: `/news`,
+      url: `http://localhost:3018/api/news`,
       data: {
         //post 보낼 데이터
-        title: $("#title").val(),
-        content: $("#content").val(),
-        borderDate
+        title: $("#title").val(), // QuerySelector (#id) =  #하면 아이디
+        content: $("#content").val(), 
+        category: $("input[name=flexRadioDefault]:checked").val(), // 카테고리 value값 가져옴
+        // img: dd, // 이미지 = 바이너리 데이터로 변경 BLOB // 출력은 BLOB를 이미지로 변경하는 라이브러리 이용(Multer)   
       },
       success: function (response) {
         if (response['result'] == "success") {
@@ -79,24 +102,39 @@
     });
   }
   </script>
-  <body>
+  <body class="body">
     <div class='wrap'>
-        <h1>게시글 작성</h1>
+        <h1 class="post">게시글 작성</h1>
         <form class="form-group" action="http://localhost:3018/news" method="POST">
-          <div class="label">
+          <div class="label" style= "float: left">
             <label for="exampleFormControlInput1" style="font-weight: bold;">제목 :</label>
-            <input type="text" id="borderName" />
+            <input type="text" id="title" placeholder="제목을 입력해 주세요."/>
           </div>
+          <div class="content" style= "float: right">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외축구" checked>
+              <label class="form-check-label" for="flexRadioDefault1">
+                해외축구
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내축구" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                국내축구
+              </label>
+            </div>
+          </div>
+          <br>
           <div class="label">
-            <label for="exampleFormControlInput1">내용</label>
-            <textarea class="form-control" id="borderContent" type="text" rows="20"></textarea>
+            <label for="exampleFormControlInput1" style= "float: left"></label>
+            <textarea id="content" class="form-control" id="borderContent" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
           </div>
         </form>
         <div class="btncls">
-          <input type="file" id="inputImage">
-          <button id="sendButton">파일 등록</button>
-            <img src="" class="uploadImage">
-          <button class="btn btn-primary" type="submit" onclick="post_border()">글 작성 완료</button>
+          <!-- <input type="file" id="uploadFiles">
+          <button id="uploadBtn" type="button" value="업로드" onclick="fileUpload()">파일 등록</button>
+            <img src="" class="uploadImage"> -->
+          <button class="btn btn-primary" type="submit" onclick="upload()">글 작성 완료</button>
           <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
         </div>
       </div>

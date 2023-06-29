@@ -1,4 +1,4 @@
-<!-- 이상우 뉴스수정 -->
+<!-- 이상우 뉴스수정 및 삭제-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,13 +28,20 @@
     <title>게시글 수정</title>
 </head>
 <style>
+    .body {
+      background-image: url("https://c.wallhere.com/photos/3d/f7/Liverpool_FC_soccer_men_sport-201243.jpg!d");
+    }
+    .form-control {
+      background-color: transparent;
+    }
     .wrap {
-      width: 800px;
+      width: 60%;
       margin: auto;
+      margin-top: 30px;
     }
   
     .form-group {
-      margin-top: 30px;
+      margin-top: 20px;
     }
   
     .label {
@@ -69,12 +76,13 @@
     function correct() {
       $.ajax({
         type: "PUT",
-        url: `/news/${newsId}`,
+        url: `http://localhost:3018/api/news/${newsId}`,
         dataType: "text",
         data: {
-          //바뀐 데이터
-          title: $(title).val(),
-          content: $(content).val(),
+          title: $("#title").val(),
+          content: $("#content").val(),
+          category: $("input[name=flexRadioDefault]:checked").val(),
+          // img: // 이미지 = 바이너리 데이터로 변경 BLOB // 출력은 BLOB를 이미지로 변경하는 라이브러리 이용(Multer)   ,
         },
         success: function (response) {
           if (response["result"] == "success") {
@@ -94,7 +102,7 @@
     function remove() {
       $.ajax({
         type: "DELETE",
-        url: `/news/${newsId}`,
+        url: `http://localhost:3018/api/news/${newsId}`,
         data: {},
         success: function(response) {
           if (response["result"] == "success"){
@@ -107,18 +115,32 @@
 
   </script>
   
-  <body>
+  <body class="body">
     <div class='wrap'>
       <h1>게시글 수정 & 삭제</h1>
       <form class="form-group" action="http://localhost:3018/news" method="PUT">
       <div class="form-group">
-        <div class="label">
+        <div class="label" style= "float: left">
           <label for="exampleFormControlInput1" style="font-weight: bold;">제목 :</label>
-          <input id="borderName" placeholder="제목을 입력해 주세요.">
+          <input  type="text" id="title" placeholder="제목을 입력해 주세요.">
         </div>
+        <div style= "float: right">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외축구" checked>
+          <label class="form-check-label" for="flexRadioDefault1">
+            해외축구
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내축구" checked>
+          <label class="form-check-label" for="flexRadioDefault2">
+            국내축구
+          </label>
+        </div>
+      </div>
+        <br>
         <div class="label">
-          <label for="exampleFormControlInput1">내용</label>
-          <textarea class="form-control" id="borderContent" type="text" rows="20"></textarea>
+          <textarea id="content" class="form-control" id="borderContent" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
         </div>
       </div>
     </form>

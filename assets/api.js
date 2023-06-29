@@ -1,4 +1,324 @@
+<<<<<<< HEAD
 function getNewsDetail(newsId, callback) {
+=======
+function getNews() {
+  $.ajax({
+    type: "GET",
+    url: "/getnews",
+    success: function (res) {
+      const news = res.news;
+      news.map((item) => {
+        newsId = item.newsId;
+        img = item.img;
+        title = item.title;
+        createdAt = item.createdAt.substring(0, 10);
+        user = item.User.nickname;
+
+        const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+        $(".news-category").html("축구소식");
+        $(".news-box").append(template);
+      });
+    },
+  });
+}
+
+// 로그인 버튼
+function sign_in() {
+  let id = $("#id").val();
+  let password = $("#password").val();
+  console.log(id, password);
+  $.ajax({
+    type: "POST",
+    url: "/login",
+    data: {
+      id: id,
+      password: password,
+    },
+    success: function (response) {
+      console.log("로그인 성공");
+    },
+    error: function (error) {
+      console.log("로그인 실패");
+    },
+  });
+}
+
+// 로그아웃 버튼
+function log_out() {
+  $.ajax({
+    type: "POST",
+    url: "/logout",
+  });
+}
+
+// 국내축구 카테고리
+function k_football() {
+  $(".news-box").empty();
+  $.ajax({
+    type: "GET",
+    url: "/getnews",
+    success: function (res) {
+      const news = res.news;
+      const newsList = news.filter((a) => {
+        return a["category"] === "국내";
+      });
+      newsList.filter((item) => {
+        newsId = item.newsId;
+        img = item.img;
+        title = item.title;
+        createdAt = item.createdAt.substring(0, 10);
+        user = item.User.nickname;
+
+        const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+        $(".news-category").html(`${item.category}축구`);
+        $(".news-box").append(template);
+      });
+    },
+  });
+}
+
+// 해외축구 카테고리
+function w_football() {
+  $(".news-box").empty();
+  $.ajax({
+    type: "GET",
+    url: "/getnews",
+    success: function (res) {
+      const news = res.news;
+      const newsList = news.filter((a) => {
+        return a["category"] === "해외";
+      });
+      newsList.map((item) => {
+        newsId = item.newsId;
+        img = item.img;
+        title = item.title;
+        createdAt = item.createdAt.substring(0, 10);
+        user = item.User.nickname;
+
+        const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+        $(".news-category").html(`${item.category}축구`);
+        $(".news-box").append(template);
+      });
+    },
+  });
+}
+
+// 최신, 과거순 정렬 함수
+function dateSort() {
+  $(".news-box").empty();
+
+  // 정렬 버튼 텍스트
+  let sortBtnText = $(".date-sort-btn").html();
+  // 카테고리 텍스트
+  let category = $(".news-category").html();
+
+  // 과거순으로
+  if (sortBtnText === "최신순") {
+    if (category === "국내축구") {
+      $.ajax({
+        type: "GET",
+        url: "/getoldnews",
+        success: function (res) {
+          const news = res.news;
+          const newsList = news.filter((a) => {
+            return a["category"] === "국내";
+          });
+          newsList.map((item) => {
+            newsId = item.newsId;
+            img = item.img;
+            title = item.title;
+            createdAt = item.createdAt.substring(0, 10);
+            user = item.User.nickname;
+
+            const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+            $(".news-category").html(`${item.category}축구`);
+            $(".news-box").append(template);
+          });
+          $(".date-sort-btn").html("과거순");
+        },
+      });
+    } else if (category === "해외축구") {
+      $.ajax({
+        type: "GET",
+        url: "/getoldnews",
+        success: function (res) {
+          const news = res.news;
+          const newsList = news.filter((a) => {
+            return a["category"] === "해외";
+          });
+          newsList.map((item) => {
+            newsId = item.newsId;
+            img = item.img;
+            title = item.title;
+            createdAt = item.createdAt.substring(0, 10);
+            user = item.User.nickname;
+
+            const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+            $(".news-category").html(`${item.category}축구`);
+            $(".news-box").append(template);
+          });
+          $(".date-sort-btn").html("과거순");
+        },
+      });
+    } else {
+      $.ajax({
+        type: "GET",
+        url: "/getoldnews",
+        success: function (res) {
+          const news = res.news;
+          news.map((item) => {
+            newsId = item.newsId;
+            img = item.img;
+            title = item.title;
+            createdAt = item.createdAt.substring(0, 10);
+            user = item.User.nickname;
+
+            const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+            $(".news-category").html(`축구소식`);
+            $(".news-box").append(template);
+          });
+          $(".date-sort-btn").html("과거순");
+        },
+      });
+    }
+  }
+  // 최신순으로
+  else if (sortBtnText === "과거순") {
+    if (category === "국내축구") {
+      $.ajax({
+        type: "GET",
+        url: "/getnews",
+        success: function (res) {
+          const news = res.news;
+          const newsList = news.filter((a) => {
+            return a["category"] === "국내";
+          });
+          newsList.map((item) => {
+            newsId = item.newsId;
+            img = item.img;
+            title = item.title;
+            createdAt = item.createdAt.substring(0, 10);
+            user = item.User.nickname;
+
+            const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+            $(".news-category").html(`${item.category}축구`);
+            $(".news-box").append(template);
+          });
+          $(".date-sort-btn").html("최신순");
+        },
+      });
+    } else if (category === "해외축구") {
+      $.ajax({
+        type: "GET",
+        url: "/getnews",
+        success: function (res) {
+          const news = res.news;
+          const newsList = news.filter((a) => {
+            return a["category"] === "해외";
+          });
+          newsList.map((item) => {
+            newsId = item.newsId;
+            img = item.img;
+            title = item.title;
+            createdAt = item.createdAt.substring(0, 10);
+            user = item.User.nickname;
+
+            const template = `<ul>
+                            <li class="news-list">
+                              <div class="news-card">
+                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <p>${createdAt}</p>
+                                <p>${user}</p>
+                              </div>
+                            </li>
+                          </ul>`;
+
+            $(".news-category").html(`${item.category}축구`);
+            $(".news-box").append(template);
+          });
+          $(".date-sort-btn").html("최신순");
+        },
+      });
+    } else {
+      getNews();
+      $(".date-sort-btn").html("최신순");
+    }
+  }
+}
+
+function getNewsDetail(goodsId, callback) {
+>>>>>>> c98388be4fdb1b9bca5fca4d897b0b970b6c0f58
     $.ajax({
         type: "GET",
         url: `/api/news/${newsId}`,
@@ -30,45 +350,4 @@ function getNewsDetailLiked(newsId, callback) {
             callback(response.likedCount);
         },
     });
-}
-
-
-
-
-// 바이너리 업로드 (img파일)
-function Uploader(file) {
-    this._file = file;
-    this._xhr = new XMLHttpRequest();
-    this._xhr.addEventListener("load", transferComplete);        
-
-    // 파일 하나에 대한 업로드를 시작한다.
-    this.startUpload = function () {
-        var reader = new FileReader();
-        var fileName = this._file.name;
-        var xhr = this._xhr;
-
-        // FileReader에서 파일 내용을 모두 읽은 경우 AJAX으로 전송한다.
-        reader.onload = function(evt) {
-            xhr.open("POST", "upload.asp", true);
-            // 파일 이름은 file-name에 명시한다.
-            xhr.setRequestHeader("file-name", encodeURIComponent(fileName));
-            xhr.send(evt.target.result);
-        };
-        reader.readAsArrayBuffer(file);            
-    }
-
-    function transferComplete() {
-        // 성공적으로 업로드된 경우 UI에 출력한다.
-        if (this.status == 200) {
-            var li = document.createElement("li");
-            li.innerHTML = this.responseText;
-            document.getElementById("resultList").appendChild(li);
-        }
-    }
-}
-
-function fileUpload() {
-    var uploadFiles = document.getElementById("uploadFiles");
-    var uploader = new Uploader(uploadFiles.files[0]);
-    uploader.startUpload();
 }

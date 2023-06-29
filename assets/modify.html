@@ -81,8 +81,7 @@
         data: {
           title: $("#title").val(),
           content: $("#content").val(),
-          category: $("input[name=flexRadioDefault]:checked").val(),
-          // img: // 이미지 = 바이너리 데이터로 변경 BLOB // 출력은 BLOB를 이미지로 변경하는 라이브러리 이용(Multer)   ,
+          category: $("input[name=flexRadioDefault]:checked").val()
         },
         success: function (response) {
           if (response["result"] == "success") {

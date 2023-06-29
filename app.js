@@ -2,14 +2,12 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const newsRouter = require("./routes/news.js");
 const homeRouter = require("./routes/home.js");
-// const cors = require("cors"); // CORS이슈, 삭제하지 마세요. // app.js실행 안되면 npm i cors 설치하세요.
-const app = express();
-const port = 3018;
-
 const userCreateRouter = require("./routes/userCreate");
 const userInfoeRouter = require("./routes/userInfo");
 const newspostRouter = require("./routes/newspost");
-const newsRouter = require("./routes/news");
+// const cors = require("cors"); // CORS이슈, 삭제하지 마세요. // app.js실행 안되면 npm i cors 설치하세요.
+const app = express();
+const port = 3018;
 
 app.use(express.json());
 app.use(express.static("assets"));

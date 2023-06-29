@@ -27,7 +27,7 @@ router.get("/news/:newsId", async (req, res) => {
 
     const prNews = [news].map((item) => {
         return {
-            newsId: item.postId,
+            newsId: item.newsId,
             userId: item.User.userId,
             title: item.title,
             nickname: item.User.nickname,
@@ -72,8 +72,47 @@ router.get("/like/:newsId", async (req, res) => {
    });
 
   res.json({
-      likedCount: likedCount.count
+      likedCount: likedCount,
   });
+});
+
+router.post("/like/:newsId", authMiddleware, async (req, res) => {
+  try {
+
+    const { userId } = res.locals.user;
+    const { newsId } = req.params;
+
+    await NewsLiked.create({
+      newsId : newsId,
+      userId : userId,
+    });
+  
+    res.json({ message: "게시글 좋아요에 성공했습니다." });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      errorMessage: "게시글 좋아요에 실패하였습니다.",
+    });
+  }
+});
+
+router.delete("/like/:newsId", authMiddleware, async (req, res) => {
+  try {
+
+    const { userId } = res.locals.user;
+    const { newsId } = req.params;
+
+    await NewsLiked.destroy({where:{ userId, newsId }});
+  
+    res.json({ message: "게시글 좋아요 취소에 성공했습니다." });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      errorMessage: "게시글 좋아요 취소에 실패하였습니다.",
+    });
+  }
 });
 
 module.exports = router;

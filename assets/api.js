@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-function getNewsDetail(newsId, callback) {
-=======
 function getNews() {
   $.ajax({
     type: "GET",
@@ -18,7 +15,7 @@ function getNews() {
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <h3 onclick="location.href='/newsDetail.html?newsId=${newsId}'>${title}</h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -318,7 +315,6 @@ function dateSort() {
 }
 
 function getNewsDetail(goodsId, callback) {
->>>>>>> c98388be4fdb1b9bca5fca4d897b0b970b6c0f58
     $.ajax({
         type: "GET",
         url: `/api/news/${newsId}`,

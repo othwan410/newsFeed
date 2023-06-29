@@ -5,8 +5,6 @@ const homeRouter = require("./routes/home.js");
 const app = express();
 const port = 3018;
 
-app.set("view engine", "ejs");
-
 app.use(express.json());
 app.use(express.static("assets"));
 app.use(express.urlencoded({ extended: false }));

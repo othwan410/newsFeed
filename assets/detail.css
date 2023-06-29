@@ -12,7 +12,7 @@ body{
 
 #newsCreatedAt{
     font-size: small;
-    margin-left: 40px;
+    margin-left: 300px;
     float: left;
 }
 
@@ -23,7 +23,7 @@ body{
 }
 
 #newsNickname{
-    margin-right: 100px;
+    margin-right: 500px;
     margin-bottom: 200px;
     text-align: right;
 }
@@ -36,14 +36,17 @@ body{
 #newsContent{
     word-break:break-all;
     font-size: 20px;
-    margin: 100px 300px 200px 300px; 
+    margin: 100px 300px 100px 300px; 
     text-align: center;
 }
 
 #btnLiked{
+    margin-top: 15px;
+    margin-right: 5px;
     float: right;
 }
 
 #liked{
     float: right;
+    margin-right: 600px;
 }

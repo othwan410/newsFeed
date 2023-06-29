@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(cors()); // CORS, 삭제하지 마세요 
+app.use(express.static("assets"));
 app.use("/", newsRouter);
 
 app.use("/api", [userCreateRouter, userInfoeRouter, newspostRouter, newsRouter]);

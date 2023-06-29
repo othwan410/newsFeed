@@ -16,10 +16,10 @@
         <p id="newsCreatedAt" class="underTitle"></p>
         <p id="newsUpdatedAt" class="underTitle"></p>
         <p id="newsNickname" class="underTitle"></p>
-        <img id="newsUrl" />
+        <img id="newsUrl" src="./1.jpg" />
         <p id="newsContent"></p>
-        <button id="btnLiked">좋아요</button>
         <p id="liked"></p>
+        <button id="btnLiked">좋아요</button>
     </div>
     </main>
     <!-- Optional JavaScript -->
@@ -36,7 +36,7 @@
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
                 $("#newsTitle").text(news.title);
-                $("#newsUrl").attr("src", news.img);
+                // $("#newsUrl").attr("src", news.img);
                 $("#newsNickname").text("작성자: " + news.nickname);
                 $("#newsContent").text(news.content);
                 $("#newsCreatedAt").text("작성일: " + news.createdAt);

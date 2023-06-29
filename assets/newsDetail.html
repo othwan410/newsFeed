@@ -18,6 +18,8 @@
         <p id="newsContent"></p>
         <p id="newsCreatedAt"></p>
         <p id="newsUpdatedAt"></p>
+        <p id="liked"></p>
+        <p id="userliked"></p>
     </div>
     </main>
     <!-- Optional JavaScript -->
@@ -25,16 +27,14 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="/api.js"></script>
-    <script src="/api.js"></script>
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newsId = 2// urlParams.get("newsId");
-        let news;
 
         $(document).ready(function () {
             getNewsDetail(newsId, function (n) {
-                [news] = n;
+                const [news] = n;
                 $("#newsTitle").text(news.title);
                 $("#newsUrl").attr("src", news.img);
                 $("#newsNickname").text(news.nickname);
@@ -42,27 +42,17 @@
                 $("#newsCreatedAt").text(news.createdAt);
                 $("#newsUpdatedAt").text(news.updatedAt);
             });
-        });
 
-        function getNewsDetail(goodsId, callback) {
-            $.ajax({
-                type: "GET",
-                url: `/api/news/${newsId}`,
-                error: function (xhr, status, error) {
-                    if (status == 401) {
-                        alert("로그인이 필요합니다.");
-                    } else if (status == 404) {
-                        alert("존재하지 않는 상품입니다.");
-                    } else {
-                        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-                    }
-                },
-                success: function (response) {
-                    console.log(response);
-                    callback(response.news);
-                },
-            });
-        }
+            getNewsDetailLiked(newsId, function (likedCount, userId) {
+                $("#liked").text(likedCount);
+                if (userId) {
+                    $("#userliked").text("userId");
+                }
+                else {
+                    $("#userliked").text("null");
+                }
+            })
+        });
     </script>
 </body>
 

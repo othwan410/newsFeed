@@ -28,7 +28,7 @@ module.exports = {
       },
       img: {
         allowNull: true, // NOT
-        type: Sequelize.STRING
+        type: Sequelize.BLOB
       },
       category: {
         allowNull: false, // NOT NULL

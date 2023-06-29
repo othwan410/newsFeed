@@ -9,7 +9,6 @@ const port = 3018;
 const userCreateRouter = require("./routes/userCreate");
 const userInfoeRouter = require("./routes/userInfo");
 const newspostRouter = require("./routes/newspost");
-const newsRouter = require("./routes/news");
 
 app.use(express.json());
 app.use(express.static("assets"));
@@ -18,7 +17,7 @@ app.use(cookieParser());
 
 app.use("/", [homeRouter, newsRouter]);
 // app.use(cors()); // CORS, 삭제하지 마세요 
-app.use("/api", [userCreateRouter, userInfoeRouter, newspostRouter, newsRouter]);
+app.use("/sports", [userCreateRouter, userInfoeRouter, newspostRouter, newsRouter]);
 
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");

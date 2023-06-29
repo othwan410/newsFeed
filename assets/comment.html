@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>게시물 댓글 시스템</title>
+    <style>
+        .comment {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .comment .content {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 10px;
+        }
+        .comment .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .comment .actions button {
+            margin-left: 5px;
+        }
+        .comment::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -5px; 
+            height: 1px;
+            background-color: #ccc; 
+        }
+        #commentForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #commentContent {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="comments">
+        <!-- 댓글 목록이 표시될 부분 -->
+    </div>
+    
+    <form id="commentForm">
+        <textarea id="commentContent" placeholder="댓글 내용"></textarea>
+        <button type="submit">댓글 작성</button>
+    </form>
+
+    <script src="comment.js"></script>
+</body>
+</html>

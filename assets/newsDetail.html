@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" type="text/css" href="./detail.css" />
+
+    <title>축스피드 | 기사 상세</title>
+</head>
+
+<body>
+    <header class="title" id="newsTitle">?</header>
+    <div class="newsDetail">
+        <p id="newsNickname"></p>
+        <img id="newsUrl" />
+        <p id="newsContent"></p>
+        <p id="newsCreatedAt"></p>
+        <p id="newsUpdatedAt"></p>
+        <p id="liked"></p>
+        <p id="userliked"></p>
+    </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="/api.js"></script>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const newsId = 2// urlParams.get("newsId");
+
+        $(document).ready(function () {
+            getNewsDetail(newsId, function (n) {
+                const [news] = n;
+                $("#newsTitle").text(news.title);
+                $("#newsUrl").attr("src", news.img);
+                $("#newsNickname").text(news.nickname);
+                $("#newsContent").text(news.content);
+                $("#newsCreatedAt").text(news.createdAt);
+                $("#newsUpdatedAt").text(news.updatedAt);
+            });
+
+            getNewsDetailLiked(newsId, function (likedCount, userId) {
+                $("#liked").text(likedCount);
+                if (userId) {
+                    $("#userliked").text("userId");
+                }
+                else {
+                    $("#userliked").text("null");
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

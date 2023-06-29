@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "4321!!!!",
-    "database": "express-db",
-    "host": "127.0.0.1",
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
     "dialect": "mysql"
   },
   "test": {

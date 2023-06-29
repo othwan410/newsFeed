@@ -1,19 +1,19 @@
-// 뉴스 생성, 수정, 삭제 (이상우)
+// 이상우 게시글 생성, 수정, 삭제
 
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware.js")
-const { News } = require("../models/news.js");
+const { News } = require("../models");
 const { Op } = require("sequelize");
 
 
-// 게시글 작성 POST : localhost:3018/news
-router.post("/news", authMiddleware, async(req, res) => {
-    
-    try{ 
-        const { UserId } = res.locals.user;
-        const { title, content } = req.body;
+// 게시글 작성 POST : localhost:3018/api/news (성공)
+router.post("/news", authMiddleware, async(req, res) => {  
 
+    try{ const { UserId } = res.locals.user;
+         const { title, content, category, img } = req.body;
+         console.log(req.body);
+        
     // 유효성 검사
     if (!title) {
         return res.status(400).json({
@@ -23,27 +23,27 @@ router.post("/news", authMiddleware, async(req, res) => {
         return res.status(400).json({
             errorMessage: "내용을 입력해주세요."
         })
+    } else if (!category) {
+        return res.status(400).json({
+            errorMessage: "카테고리를 선택해주세요."
+        })
     } else if (!UserId) {
         return res.status(400).json({
             errorMessage: "게시글 작성 권한이 없습니다. 로그인 해주세요."
         })
     }
     // 게시글 생성
-    const post = await News.create({
-        newsId,
-        userId : UserId,
+    await News.create({
+        userId : UserId, // 뉴스와 유저의 관계는 1대 N ()
         title,
         content,
         img,
         category,
-        createdAt,
-        updatedAt
-    })
-    res.render('create', {title: "게시글 작성"})
-    return res.status(201).json({
-        data: post,
-        message: "게시글이 등록되었습니다."
-    })
+    });
+    res.send({ result: "success" });
+    // return res.status(201).json({
+    //     message: "게시글이 등록되었습니다."
+    // })
 
 } catch (error){
     console.error(error);
@@ -54,11 +54,11 @@ router.post("/news", authMiddleware, async(req, res) => {
 })
 
 
-// 게시글 수정 PUT : localhost:3018/news/newsId
-router.put("/news/newsId", authMiddleware, async(req, res) => {
+// 게시글 수정 PUT : localhost:3018/api/news/newsId (성공)
+router.put("/news/:newsId", authMiddleware, async(req, res) => {  
     const { newsId } = req.params;
     const { userId } = res.locals.user;
-    const { title, content } = req.body;
+    const { title, content, category, img } = req.body;
     
     const post = await News.findOne({where: { newsId }});
     // 유효성 검사
@@ -66,7 +66,7 @@ router.put("/news/newsId", authMiddleware, async(req, res) => {
         return res.status(404).json({
             errorMessage: "게시글이 존재하지 않습니다."
         })
-    } else if (userId !== post.userId || !userId){
+    } else if (userId !== post.userId){
         return res.status(404).json({
             errorMessage: "게시글 수정 권한이 없습니다."
         })
@@ -78,49 +78,52 @@ router.put("/news/newsId", authMiddleware, async(req, res) => {
         return res.status(404).json({
             errorMessage: "내용을 입력해주세요."
         })
-    }
+    } else if (!category) {
+        return res.status(400).json({
+            errorMessage: "카테고리를 선택해주세요."
+        })
+    } 
 
     // 수정
     await News.update(
-        { title, content },
+        { title, content, category, img },
         { where : {
             [Op.and]: [{newsId}, {UserId: userId}],
         }}
     );  
         res.send({ result: "success" });
-        return res.status(200).json({
-            message: "게시글이 수정되었습니다."
-        });
+        // return res.status(200).json({
+        //     message: "게시글이 수정되었습니다."
+        // });
 });
 
 
 
-// 게시글 삭제 DELETE : localhost:3018/news/newsId
-router.delete("news/newsId", authMiddleware, async (req, res) => {
+// 게시글 삭제 DELETE : localhost:3018/api/news/newsId (성공)
+router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
     const { newsId } = req.params;
     const { userId } = res.locals.user;
 
     const post = await News.findOne({ where : { newsId }});
 
-    if (!post || !newsId){
+    if (!post){
         return res.status(404).json({
             errorMessage: "게시글이 존재하지 않습니다."
         });
-    } else if (userId !== post.userId || !userId){
+    } else if (post.userId !== userId){
         return res.status(404).json({
             errorMessage: "게시글 삭제 권한이 없습니다."
         });
     }
-
     await News.destroy({
         where: {
-            [Op.and]: [{newsId}, {UserId: userId}],
+            [Op.and]: [{newsId}, {UserId: userId}]
         }
     });
     res.send({ result: "success" });
-    return res.status(200).json({
-        message: "게시글이 삭제되었습니다."
-    });
+    // return res.status(200).json({
+    //     message: "게시글이 삭제되었습니다."
+    // });
 });
 
 

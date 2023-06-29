@@ -85,13 +85,15 @@
   integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
   <script src="/api.js"></script>
   <script>
+
+    // 게시글 생성
     function upload() {
     $.ajax({
       type: "POST",
       url: `http://localhost:3018/api/news`,
       data: {
         //post 보낼 데이터
-        title: $("#title").val(), // QuerySelector (#id) =  #하면 아이디
+        title: $("#title").val(), // QuerySelector (#id) #하면 아이디
         content: $("#content").val(), 
         category: $("input[name=flexRadioDefault]:checked").val(), // 카테고리 value값 가져옴
         img: $("#uploadFiles").val(), // 이미지 = 바이너리 데이터로 변경 BLOB // 출력은 BLOB를 이미지로 변경하는 라이브러리 이용(Multer)   
@@ -105,7 +107,7 @@
     });
   }
 
-  /////
+ //////////////////////////
 // 바이너리 업로드 (img파일)
 function Uploader(file) {
     this._file = file;
@@ -136,13 +138,13 @@ function Uploader(file) {
             document.getElementById("resultList").appendChild(li);
         }
     }
-}
-function fileUpload() {
-    var uploadFiles = document.getElementById("uploadFiles");
-    var uploader = new Uploader(uploadFiles.files[0]);
-    uploader.startUpload();
-}
-/////
+      }
+      function fileUpload() {
+          var uploadFiles = document.getElementById("uploadFiles");
+          var uploader = new Uploader(uploadFiles.files[0]);
+          uploader.startUpload();
+    }
+    //////////////////////////
 
   </script>
   <body class="body">
@@ -150,7 +152,7 @@ function fileUpload() {
         <h1 class="post">게시글 작성</h1>
         <form class="form-group" action="http://localhost:3018/news" method="POST">
           <div class="label" style= "float: left">
-            <label style="font-weight: bold;">제목 :</label> <!-- for="exampleFormControlInput1" -->
+            <label class="post" style="font-weight: bold;">제목 :</label> <!-- for="exampleFormControlInput1" -->
             <input type="text" id="title" placeholder="제목을 입력해 주세요."/>
           </div>
           <div class="content" style= "float: right">
@@ -178,7 +180,7 @@ function fileUpload() {
           <button id="uploadBtn" type="button" value="업로드" onclick="fileUpload()">파일 등록</button>
           <ul id="resultList"></ul>
           <!-- <img src="" class="uploadImage"> -->
-          <button class="btn btn-primary" type="submit" onclick="upload()">글 작성 완료</button>
+          <button class="btn btn-primary" type="submit" onclick="upload()">작성 완료</button>
           <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
         </div>
       </div>

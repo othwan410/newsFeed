@@ -5,7 +5,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
+        <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+        
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -157,13 +159,13 @@ function Uploader(file) {
           </div>
           <div class="content" style= "float: right">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외축구" checked>
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외" checked>
               <label class="form-check-label" for="flexRadioDefault1">
                 해외축구
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내축구" checked>
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내" checked>
               <label class="form-check-label" for="flexRadioDefault2">
                 국내축구
               </label>

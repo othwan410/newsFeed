@@ -10,18 +10,9 @@
     <title>축스피드 | 기사 상세</title>
 </head>
 
+
+
 <body>
-    <div>
-        <h1 id="newsTitle"></h1>
-        <p id="newsCreatedAt" class="underTitle"></p>
-        <p id="newsUpdatedAt" class="underTitle"></p>
-        <p id="newsNickname" class="underTitle"></p>
-        <img id="newsUrl" src="./1.jpg" />
-        <p id="newsContent"></p>
-        <p id="liked"></p>
-        <button id="btnLiked" onclick=clickLikedbtn()>좋아요</button>
-    </div>
-    </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -31,7 +22,20 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newsId = 2// urlParams.get("newsId");
+    </script>
 
+    <div>
+        <h1 id="newsTitle"></h1>
+        <p id="newsCreatedAt" class="underTitle"></p>
+        <p id="newsUpdatedAt" class="underTitle"></p>
+        <p id="newsNickname" class="underTitle"></p>
+        <img id="newsUrl" src="./1.jpg" />
+        <p id="newsContent"></p>
+        <p id="liked"></p>
+        <button id="btnLiked" onclick=clickLikedbtn(newsId)>좋아요</button>
+    </div>
+
+    <script>
         $(document).ready(function () {
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
@@ -46,6 +50,7 @@
             getNewsDetailLiked(newsId, function (likedCount) {
                 $("#liked").text(likedCount);
             })
+
         });
     </script>
 </body>

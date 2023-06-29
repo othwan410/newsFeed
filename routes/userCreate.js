@@ -23,19 +23,19 @@ router.post("/login", async (req, res) => {
         return res.status(401).json({ message: "존재하지 않는 ID입니다." });
     }
     // 같은 ID가 있지만 비밀번호가 다르다면
-    else if (users.password !== password) {
+    else if (user.password !== password) {
         return res.status(401).json({ message: "비밀번호가 일치하지 않습니다." });
     }
     // 위의 과정을 모두 통과 = 닉네임과 비밀번호가 유효하다면, 토큰을 생성한다.
     const token = jwt.sign(
         {
-            userId: users.userId,
+            userId: user.userId,
         },
         "customized_secret_key" // 비밀키
     );
     //토큰을 쿠키로 만든다,      쿠키명      토큰
     res.cookie("authorization", `Bearer ${token}`);
-    return res.status(200).json({ message: "로그인 성공", userId: users.userId });
+    return res.status(200).json({ message: "로그인 성공", userId: user.userId });
 });
 
 // 회원가입
@@ -90,7 +90,7 @@ router.post("/user", async (req, res) => {
 
     // 비밀번호 검증하기
     // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
+    const passRegex = /^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d@$!%*#?&]{5,}$/
     const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것

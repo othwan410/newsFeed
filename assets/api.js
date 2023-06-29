@@ -1,4 +1,4 @@
-function getNewsDetail(goodsId, callback) {
+function getNewsDetail(newsId, callback) {
     $.ajax({
         type: "GET",
         url: `/api/news/${newsId}`,
@@ -15,7 +15,7 @@ function getNewsDetail(goodsId, callback) {
     });
 }
 
-function getNewsDetailLiked(goodsId, callback) {
+function getNewsDetailLiked(newsId, callback) {
     $.ajax({
         type: "GET",
         url: `/api/like/${newsId}`,
@@ -27,7 +27,7 @@ function getNewsDetailLiked(goodsId, callback) {
             }
         },
         success: function (response) {
-            callback(response.likedCount.count, response.userId);
+            callback(response.likedCount);
         },
     });
 }

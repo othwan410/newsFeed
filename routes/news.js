@@ -51,7 +51,7 @@ router.get("/news/:newsId", async (req, res) => {
 });
 
 router.get("/like/:newsId", async (req, res) => {
-  let userId = null;
+  let userId = 1;
   try {
     const { Authorization } = req.cookies;
     const [authType, authToken] = (Authorization ?? "").split(" ");
@@ -71,14 +71,8 @@ router.get("/like/:newsId", async (req, res) => {
     where: {newsId}
    });
 
-  const likedUserId = await NewsLiked.findOne({ 
-    attributes: ["userId"],
-        where: { newsId, userId}
-  });
-
   res.json({
-      likedCount: likedCount,
-      userId: likedUserId,
+      likedCount: likedCount.count
   });
 });
 

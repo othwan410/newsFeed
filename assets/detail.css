@@ -3,18 +3,47 @@
 }
 
 body{
-    margin:30;
-    background-color:wheat;
+    margin-top:100px;
 }
 
-header{
+#newsTitle{
     text-align: center;
-    font-size: 50px;
 }
 
+#newsCreatedAt{
+    font-size: small;
+    margin-left: 40px;
+    float: left;
+}
 
-.movieInfo{
+#newsUpdatedAt{
+    font-size: small;
+    margin-left: 10px;
+    float: left;
+}
+
+#newsNickname{
+    margin-right: 100px;
+    margin-bottom: 200px;
+    text-align: right;
+}
+
+#newsUrl{
+    margin: auto;
+    display: block;
+}
+
+#newsContent{
+    word-break:break-all;
     font-size: 20px;
+    margin: 100px 300px 200px 300px; 
+    text-align: center;
 }
 
+#btnLiked{
+    float: right;
+}
 
+#liked{
+    float: right;
+}

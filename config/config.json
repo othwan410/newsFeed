@@ -1,22 +1,22 @@
 {
   "development": {
-    "username": "root",
-    "password": "root1234",
-    "database": "expressdb",
-    "host": "expressdb.cwwte0e7xmzj.ap-northeast-2.rds.amazonaws.com",
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": null,
-    "database": "expressdb",
+    "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "expressdb",
+    "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

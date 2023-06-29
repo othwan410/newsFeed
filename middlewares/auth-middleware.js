@@ -18,7 +18,9 @@ module.exports = async (req, res, next) => {
 
     if (!user) {
       res.clearCookie("authorization");
-      return res.status(401).json({ message: "토큰 사용자가 존재하지 않습니다." });
+      return res
+        .status(401)
+        .json({ message: "토큰 사용자가 존재하지 않습니다." });
     }
 
     res.locals.user = user;
@@ -30,4 +32,4 @@ module.exports = async (req, res, next) => {
       message: "비정상적인 요청입니다."
     });
   }
-}
+};

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>축스피드 회원가입.</title>
+    <link rel="stylesheet" href="./userCreate.css" />
+</head>
+
+<body>
+    <h1>회원가입</h1>
+    <form id="signupForm">
+        <div class="input">
+            <div class="left-input">
+                <label for="id">ID :</label>
+                <label for="password">비밀번호 :</label>
+                <label for="confirmPassword">비밀번호 다시 입력 :</label>
+                <label for="name">이름 :</label>
+                <label for="nickname">닉네임 :</label>
+                <label for="message">나의 한마디 :</label>
+            </div>
+            <div class="right-input">
+                <input type="text" id="id" name="id" required><br>
+                <input type="password" id="password" name="password" required><br>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                <input type="text" id="name" name="name" required><br>
+                <input type="text" id="nickname" name="nickname" required><br>
+                <input type="text" id="message" name="message"><br>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br>
+
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="confirmPassword">비밀번호 다시 입력:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="nickname">닉네임:</label>
+        <input type="text" id="nickname" name="nickname" required><br>
+
+        <label for="message">나의 한마디.:</label>
+        <input type="text" id="message" name="message"><br> -->
+
+        <button type="submit">회원가입</button>
+    </form>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // 기본 폼 제출 동작 방지
+
+            // 폼 데이터 수집
+            const formData = new FormData(this);
+
+            // POST 요청을 보낼 URL 설정
+            const url = "localhost:3018/api/user";
+
+            // POST 요청 보내기
+            fetch(url, {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 응답 처리
+                    if (data.message) {
+                        alert(data.message); // 회원가입 성공 메시지
+                        window.location.href = "/index.html"; // 메인 페이지로
+                    } else if (data.errorMessage) {
+                        alert(data.errorMessage); // 에러 메시지
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</body>
+
+</html>

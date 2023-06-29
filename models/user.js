@@ -1,9 +1,8 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const {  Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Users extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -28,12 +27,12 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  User.init({
+  Users.init({
     userId: {
       allowNull: false, // NOT NULL
-        autoIncrement: true, // AUTO_INCREMENT
-        primaryKey: true, // Primary Key (기본키)
-        type: DataTypes.INTEGER,
+      autoIncrement: true, // AUTO_INCREMENT
+      primaryKey: true, // Primary Key (기본키)
+      type: DataTypes.INTEGER,
     },
     id: {
       allowNull: false, // NOT NULL
@@ -71,5 +70,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Users',
   });
-  return User;
+  return Users;
 };

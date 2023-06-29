@@ -16,10 +16,6 @@ app.use(cookieParser());
 
 app.use("/", [homeRouter, newsRouter]);
 // app.use(cors()); // CORS, 삭제하지 마세요 
-app.use(express.static("assets"));
-
-app.use("/", [homeRouter, newsRouter]);
-// app.use(cors()); // CORS, 삭제하지 마세요 
 app.use("/api", [userCreateRouter, userInfoeRouter, newspostRouter, newsRouter]);
 
 app.listen(port, () => {

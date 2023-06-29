@@ -3,7 +3,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 // 스키마 가져오기
-const { Users } = require("../models/");
+const { Users } = require("../models");
 // 라우터 생성하기
 const router = express.Router();
 
@@ -51,7 +51,7 @@ router.post("/user", async (req, res) => {
     } = req.body;
 
     // 정규식을 활용하여, 입력받은 id가 조건을 만족하는지 체크한다.
-    const idRegex = /^[a-zA-Z0-9]{3,}$/;
+    const idRegex = /^[A-Za-z\d]{3,10}$/;
     const idCheck = idRegex.test(id);
 
     // id가 조건을 만족하지 않는다면,
@@ -59,19 +59,19 @@ router.post("/user", async (req, res) => {
         res.status(400).json({
             // 경고문을 띄운다.
             errorMessage:
-                "ID를 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
+                "ID를 최소 3~10자, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
         });
         return;
     }
 
     // 닉네임도 id와 똑같이 처리한다.
-    const nickRegex = /^[a-zA-Z0-9가-힣]{3,}$/;
+    const nickRegex = /^[A-Za-z\d!@#$%^&()[\]{}가-힣ㄱ-ㅎㅏ-ㅣ*.,';:']{3,10}$/;
     const nickCheck = nickRegex.test(nickname);
 
     if (!nickCheck) {
         res.status(400).json({
             errorMessage:
-                "닉네임을 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
+                "닉네임을 3~10자, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
         });
         return;
     }
@@ -90,16 +90,14 @@ router.post("/user", async (req, res) => {
 
     // 비밀번호 검증하기
     // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-    const passRegex = /^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d@$!%*#?&]{3,}$/;
+    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
     const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것
     if (!passCheck || password.includes(id)) {
-        console.log(passCheck);
-        console.log(password.includes(id));
         res.status(400).json({
             errorMessage:
-                "password를 ID를 포함하지 않으면서 최소 4자 이상으로 작성하세요",
+                "password는 ID를 포함하지 않는, 영어, 숫자, 특수문자(!@#$%^&*)를 포함한 6~20 글자여야합니다.",
         });
         return;
     }
@@ -107,7 +105,7 @@ router.post("/user", async (req, res) => {
     // 패스워드를 똑같이 두 번 입력하지 않은 경우 에러 메시지 출력
     if (password !== confirmPassword) {
         res.status(400).json({
-            errorMessage: "password가 confirmPassword과 다릅니다.",
+            errorMessage: "비밀번호가 일치하지 않습니다..",
         });
         return;
     }
@@ -129,6 +127,18 @@ router.post("/user", async (req, res) => {
         return res.status(409).json({ message: "이미 존재하는 닉네임입니다." });
     }
 
+    // 메시지 검증    
+    const messRegex = /^[A-Za-z\d!@#$%^&()[\]{}가-힣ㄱ-ㅎㅏ-ㅣ*_^.,';:　\s]{0,30}$/
+    const messCheck = messRegex.test(message);
+
+    if (!messCheck) {
+        res.status(400).json({
+            errorMessage:
+                "메시지는 30 글자 이하로 해주세요(영어, 숫자, 특수문자만 가능)",
+        });
+        return;
+    }
+
     const user = await Users.create({
         id,
         password,
@@ -141,24 +151,6 @@ router.post("/user", async (req, res) => {
     return res.status(201).json({ message: "회원가입이 완료되었습니다." });
 });
 
-// 사용자 조회
-// 파람에서 id를 받는다.
-router.get("/user/:userId", async (req, res) => {
-    const { userId } = req.params;
-
-    const user = await Users.findOne({
-        // 검색 결과에서 가져올 속성들
-        attributes: ["userId", "nickname", "createdAt", "updatedAt", "name", "message", "password"],
-        // 검색 조건은 userId이다.
-        where: { userId },
-    });
-
-    if (!user) {
-        return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
-    }
-
-    return res.status(200).json({ data: user });
-});
 
 // 현재 라우터를 모듈로 내보낸다.
 module.exports = router;

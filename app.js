@@ -9,7 +9,7 @@ const port = 3018;
 const userCreateRouter = require("./routes/userCreate");
 const userInfoeRouter = require("./routes/userInfo");
 const newspostRouter = require("./routes/newspost");
-const newsRouter = require("./routes/news");
+// const newsRouter = require("./routes/news");
 
 app.use(express.json());
 app.use(express.static("assets"));

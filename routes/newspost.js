@@ -8,8 +8,8 @@ const { Op } = require("sequelize");
 
 
 // 게시글 작성 POST : localhost:3018/api/news (성공)
-router.post("/news", authMiddleware, async(req, res) => { 
-    
+router.post("/news", authMiddleware, async(req, res) => {  
+
     try{ const { UserId } = res.locals.user;
          const { title, content, category, img } = req.body;
          console.log(req.body);
@@ -41,9 +41,9 @@ router.post("/news", authMiddleware, async(req, res) => {
         category,
     });
     res.send({ result: "success" });
-    return res.status(201).json({
-        message: "게시글이 등록되었습니다."
-    })
+    // return res.status(201).json({
+    //     message: "게시글이 등록되었습니다."
+    // })
 
 } catch (error){
     console.error(error);
@@ -55,7 +55,7 @@ router.post("/news", authMiddleware, async(req, res) => {
 
 
 // 게시글 수정 PUT : localhost:3018/api/news/newsId (성공)
-router.put("/news/:newsId", authMiddleware, async(req, res) => { 
+router.put("/news/:newsId", authMiddleware, async(req, res) => {  
     const { newsId } = req.params;
     const { userId } = res.locals.user;
     const { title, content, category, img } = req.body;
@@ -92,15 +92,15 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
         }}
     );  
         res.send({ result: "success" });
-        return res.status(200).json({
-            message: "게시글이 수정되었습니다."
-        });
+        // return res.status(200).json({
+        //     message: "게시글이 수정되었습니다."
+        // });
 });
 
 
 
 // 게시글 삭제 DELETE : localhost:3018/api/news/newsId (성공)
-router.delete("/news/:newsId", authMiddleware, async (req, res) => {
+router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
     const { newsId } = req.params;
     const { userId } = res.locals.user;
 
@@ -121,9 +121,9 @@ router.delete("/news/:newsId", authMiddleware, async (req, res) => {
         }
     });
     res.send({ result: "success" });
-    return res.status(200).json({
-        message: "게시글이 삭제되었습니다."
-    });
+    // return res.status(200).json({
+    //     message: "게시글이 삭제되었습니다."
+    // });
 });
 
 

@@ -7,14 +7,8 @@ const { News } = require("../models");
 const { Op } = require("sequelize");
 
 
-<<<<<<< HEAD
-// 게시글 작성 POST : localhost:3018/api/news (성공)
-router.post("/news", authMiddleware, async (req, res) => {
-    console.log("뉴스 작성 라우터 실행")
-=======
 // 게시글 작성 POST : localhost:3018/sports/news (성공)
 router.post("/news", authMiddleware, async(req, res) => {  
->>>>>>> 5257b8bf85fd5bd917772310e154cc2a342d8e1b
 
     try {
         const { UserId } = res.locals.user;
@@ -62,13 +56,8 @@ router.post("/news", authMiddleware, async(req, res) => {
 })
 
 
-<<<<<<< HEAD
-// 게시글 수정 PUT : localhost:3018/api/news/newsId (성공)
-router.put("/news/:newsId", authMiddleware, async (req, res) => {
-=======
 // 게시글 수정 PUT : localhost:3018/sports/news/newsId (성공)
 router.put("/news/:newsId", authMiddleware, async(req, res) => {  
->>>>>>> 5257b8bf85fd5bd917772310e154cc2a342d8e1b
     const { newsId } = req.params;
     const { userId } = res.locals.user;
     const { title, content, category, img } = req.body;
@@ -114,13 +103,8 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
 
 
 
-<<<<<<< HEAD
-// 게시글 삭제 DELETE : localhost:3018/api/news/newsId (성공)
-router.delete("/news/:newsId", authMiddleware, async (req, res) => {
-=======
 // 게시글 삭제 DELETE : localhost:3018/sports/news/newsId (성공)
 router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
->>>>>>> 5257b8bf85fd5bd917772310e154cc2a342d8e1b
     const { newsId } = req.params;
     const { userId } = res.locals.user;
 

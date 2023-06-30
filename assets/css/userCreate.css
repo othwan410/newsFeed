@@ -14,12 +14,17 @@
     height : 25px;
 }
 
+.right-input input {
+    margin-bottom: 5.5px;
+    margin-top : 5px
+  }
+
 input.row {
     height: 20.8px; /* 4.2 작게 */
     margin-bottom: 2px;
     margin-top:3px;
 }
 
-.button {
+.btn {
     margin-left : 200px;
 }

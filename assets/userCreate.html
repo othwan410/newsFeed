@@ -2,134 +2,87 @@
 <html>
 
 <head>
-<<<<<<< HEAD
-    <title>축스피드 회원가입</title>
-    <link rel="stylesheet" href="./userCreate.css" />
-=======
     <title>축스피드 회원가입.</title>
     <link rel="stylesheet" href="./css/userCreate.css" />
->>>>>>> 5257b8bf85fd5bd917772310e154cc2a342d8e1b
+    <script>
+        function submitForm() {
+            // 폼 데이터 수집
+            const id = document.getElementById('id').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const name = document.getElementById('name').value;
+            const nickname = document.getElementById('nickname').value;
+            const message = document.getElementById('message').value;
+
+            // 폼 데이터 객체 생성
+            const formData = {
+                id: id,
+                password: password,
+                confirmPassword: confirmPassword,
+                name: name,
+                nickname: nickname,
+                message: message
+            };
+
+            // POST 요청 보내기
+            fetch('http://localhost:3018/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("회원가입이 완료되었습니다.");
+                        window.location.href = "/";
+                    } else if (response.status === 409) {
+                        // 이미 존재하는 ID나 닉네임일 경우
+                        response.json().then(data => {
+                            alert(data.message);
+                        });
+                    } else if (response.status === 400) {
+                        // 입력값에 오류가 있는 경우
+                        response.json().then(data => {
+                            alert(data.errorMessage);
+                        });
+                    } else {
+                        // 기타 오류
+                        alert("회원가입에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("서버 오류가 발생했습니다.");
+                });
+        }
+    </script>
 </head>
 
 <body>
     <h1>회원가입</h1>
-    <!-- 방법1 -->
-    <script>
-        function submitForm() {
-            var form = document.getElementById("signupForm");
-            form.target = "_blank"; // 새 창으로 열기
-            form.submit();
-            window.location.reload(); // 기존 창 새로고침
-        }
-    </script>
-
-
-
-
-
-    <form id="signupForm" action="http://localhost:3018/api/user" method="POST">
+    <form id="signupForm">
         <div class="input">
             <div class="left-input">
-                <label class="row" for="id">ID :</label>
-                <label class="row" for="password">비밀번호 :</label>
-                <label class="row" for="confirmPassword">비밀번호 다시 입력 :</label>
-                <label class="row" for="name">이름 :</label>
-                <label class="row" for="nickname">닉네임 :</label>
-                <label class="row" for="message">나의 한마디 :</label>
+                <label for="id">ID :</label>
+                <label for="password">비밀번호 :</label>
+                <label for="confirmPassword">비밀번호 다시 입력 :</label>
+                <label for="name">이름 :</label>
+                <label for="nickname">닉네임 :</label>
+                <label for="message">나의 한마디 :</label>
             </div>
             <div class="right-input">
-                <input class="row" type="text" id="id" name="id" required><br>
-                <!-- autocomplete="off" 자동완성 사용안함 -->
-                <input class="row" type="password" id="password" name="password" required autocomplete="off"><br>
-                <input class="row" type="password" id="confirmPassword" name="confirmPassword" required
-                    autocomplete="off"><br>
-                <input class="row" type="text" id="name" name="name" required><br>
-                <input class="row" type="text" id="nickname" name="nickname" required><br>
-                <input class="row" type="text" id="message" name="message"><br>
+                <input type="text" id="id" name="id" required><br>
+                <input type="password" id="password" name="password" required><br>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                <input type="text" id="name" name="name" required><br>
+                <input type="text" id="nickname" name="nickname" required><br>
+                <input type="text" id="message" name="message"><br>
             </div>
         </div>
-        <!-- 방법 1,2 -->
-        <button type="button" class="button" onclick="submitForm()">회원가입</button>
-        <!-- 방법 3 -->
-        <!-- <button type="button"
-            onclick="submitForm('password','confirmPassword','name','nickname','message')">회원가입</button> -->
+        <button class="btn" type="button" onclick="submitForm()">회원가입</button>
 
     </form>
-
-    <!-- 방법2 -->
-    <!-- <script>
-            function submitForm() {
-                var form = document.getElementById("signupForm");
-                var formData = new FormData(form);
-    
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://localhost:3018/api/user");
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            // 성공적인 응답 처리
-                            console.log(xhr.responseText);
-                            // 새 창 열기
-                            window.open("", "_blank");
-                            // 기존 창 새로고침
-                            window.location.reload();
-                        } else {
-                            // 오류 응답 처리
-                            console.log("오류:", xhr.status);
-                        }
-                    }
-                };
-                xhr.send(formData);
-            }
-        </script> -->
-
-
-    <!-- 방법3 -->
-    <!-- <script>
-        function submitForm(passwordField, confirmPasswordField, nameField, nicknameField, messageField) {
-            var form = document.getElementById("signupForm");
-            //  안에 form을 빼서 빈 것을 만들기도 도전했는데 실패
-            var formData = new FormData();
-
-            var password = document.getElementById(passwordField).value;
-            var confirmPassword = document.getElementById(confirmPasswordField).value;
-            var name = document.getElementById(nameField).value;
-            var nickname = document.getElementById(nicknameField).value;
-            var message = document.getElementById(messageField).value;
-
-            if (password !== confirmPassword) {
-                alert("비밀번호가 일치하지 않습니다.");
-                return;
-            }
-
-            formData.set("password", password);
-            formData.set("confirmPassword", confirmPassword);
-            formData.set("name", name);
-            formData.set("nickname", nickname);
-            formData.set("message", message);
-
-            console.log(formData)
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://localhost:3018/api/user");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // 성공적인 응답 처리
-                        console.log(xhr.responseText);
-                        // 새 창 열기
-                        window.open("", "_blank");
-                        // 기존 창 새로고침
-                        window.location.reload();
-                    } else {
-                        // 오류 응답 처리
-                        console.log("오류:", xhr.status);
-                    }
-                }
-            };
-            xhr.send(formData);
-        }
-    </script> -->
 </body>
 
 </html>

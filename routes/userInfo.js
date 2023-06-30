@@ -3,7 +3,7 @@ const { Users } = require("../models");
 
 const router = express.Router();
 
-// 사용자 조회
+// 닉네임 조회
 // 닉네임으로 상대 정보를 받아오고, 그것으로 남김말을 본다.
 router.get("/user/:nickname", async (req, res) => {
     const { nickname } = req.params;
@@ -71,14 +71,16 @@ router.patch("/user/update/:userId", async (req, res) => {
     // }
 
     const {
-        passwordNew,
+        id,
+        name,
+        nickname,
+        password,
         confirmPassword,
-        message,
-        nickname
+        message
     } = req.body;
 
     //  비밀번호 검증
-    if (passwordNew !== confirmPassword) {
+    if (password !== confirmPassword) {
         res.status(400).json({
             errorMessage: "비밀번호가 일치하지 않습니다..",
         });
@@ -86,10 +88,10 @@ router.patch("/user/update/:userId", async (req, res) => {
     }
 
     const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
-    const passCheck = passRegex.test(passwordNew);
+    const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것
-    if (!passCheck || passwordNew.includes(users.id)) {
+    if (!passCheck || password.includes(users.id)) {
         res.status(400).json({
             errorMessage:
                 "password는 ID를 포함하지 않는, 영어, 숫자, 특수문자(!@#$%^&*)를 포함한 6~20 글자여야합니다.",
@@ -137,7 +139,7 @@ router.patch("/user/update/:userId", async (req, res) => {
 
     const user = await Users.update(
         {
-            password: passwordNew,
+            password,
             message,
             nickname
         },
@@ -180,12 +182,6 @@ router.delete("/user/delete/:userId", async (req, res) => {
         return
     }
 
-    if (users.id !== confirm) {
-        res.status(400).json({
-            errorMessage: "삭제 문구를 다시 확인해 주세요.",
-        });
-        return
-    }
 
     const user = await Users.destroy({
         where: {

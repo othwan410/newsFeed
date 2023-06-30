@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
       userId: user.userId, // userId 할당
     },
     "customized_secret_key"
-  );s
+  );
   // 쿠키 발급
   res.cookie("authorization", `Bearer ${token}`);
   console.log("토큰 내용물 : "+token+" 토큰 끝")

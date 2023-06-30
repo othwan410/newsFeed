@@ -14,11 +14,11 @@ function getNews() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3 onclick="location.href='/newsDetail.html?newsId=${newsId}'>${title}</h3>
+                                <a href="/localhost:3018/news/${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -79,7 +79,7 @@ function k_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
@@ -115,7 +115,7 @@ function w_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
@@ -160,16 +160,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -193,16 +193,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -223,16 +223,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`축구소식`);
             $(".news-box").append(template);
@@ -260,16 +260,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -293,16 +293,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);

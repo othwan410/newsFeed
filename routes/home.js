@@ -5,6 +5,36 @@ const authMiddleware = require("../middlewares/auth-middleware");
 const { json } = require("sequelize");
 const router = express.Router();
 
+// 회원가입 API (임시)
+router.post("/users", async (req, res) => {
+  const { id, password, name, nickname } = req.body;
+  const isExistUser = await Users.findOne({ where: { id } });
+
+  if (isExistUser) {
+    return res.status(409).json({ message: "이미 존재하는 아이디입니다." });
+  }
+
+  const user = await Users.create({ id, password, name, nickname });
+
+  return res.status(201).json({ message: "회원가입이 완료되었습니다." });
+});
+
+// 뉴스 추가 API (임시)
+router.post("/news", async (req, res) => {
+  const { newsId, userId, title, content, category, img } = req.body;
+
+  const news = await News.create({
+    newsId,
+    userId,
+    title,
+    content,
+    category,
+    img,
+  });
+
+  return res.status(201).json({ message: "뉴스 생성 완료." });
+});
+
 // 로그인 API
 router.post("/login", async (req, res) => {
   // id와 pw를 body로 입력받음

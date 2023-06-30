@@ -386,3 +386,14 @@ function clickLikedbtn(newsId) {
     });
   }
 }
+
+function btnReady(){
+  if(loginUserNickname === writeNickname){
+  //   const template = `
+  //     <button>수정</button>
+  //     <button>삭제</button>
+  //   `;
+
+  // $("#updateBtnDiv").append(template);
+  }
+}

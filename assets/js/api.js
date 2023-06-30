@@ -457,3 +457,18 @@ function clickUpdateBtn(newsId){
 function clickDeleteBtn(newsId){
   console.log('삭제');
 }
+
+// 게시글 삭제  
+function remove() {
+  $.ajax({
+    type: "DELETE",
+    url: `http://localhost:3018/api/news/${newsId}`,
+    data: {},
+    success: function(response) {
+      if (response["result"] == "success"){
+        alert("글이 정상적으로 삭제되었습니다.")
+        location.href="/news"
+      }
+    }
+  })
+}

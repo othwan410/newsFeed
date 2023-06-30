@@ -62,6 +62,9 @@
     <!-- 뉴스 -->
     <div id="nwesDiv">
         <div id="updateBtnDiv">
+            <button type="button" class="btn btn-primary" onClick="location.href='modify.html'">수정</button>
+            <button type="button" class="btn btn-primary" type="submit" onclick="remove()">삭제</button>
+            
         </div>
         <h1 id="newsTitle"></h1>
         <p id="newsCreatedAt"></p>
@@ -74,6 +77,8 @@
             <button id="btnLiked" onclick=clickLikedBtn(newsId)>좋아요</button>
         </div>
     </div>
+    <script src="./js/api.js"></script>
+
 
     <!-- 댓글 -->
     <div class="container">
@@ -98,7 +103,9 @@
         <p>NodeJs A반 6조 - 노드레인저</p>
     </footer>
 
-    <script>
+    
+         <script src="./js/api.js"></script>
+         <script>
         $(document).ready(function () {
             login_check();
 
@@ -114,9 +121,9 @@
 
             getNewsDetailLiked(newsId, function (likedCount) {
                 $("#liked").text(likedCount);
-                getUserlikedcheck(newsId);
-                btnReady();
-            });
+            })
+
+            btnReady();
         });
     </script>
 </body>

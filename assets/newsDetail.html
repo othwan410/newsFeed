@@ -5,8 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="./detail.css" />
-    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" type="text/css" href="./css/detail.css" />
+    <link rel="stylesheet" href="./css/main.css" />
     <link rel="favicon" href="./img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="/api.js"></script>
+    <script src="./js/api.js"></script>
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -71,7 +71,7 @@
         <p id="newsCreatedAt">작성일</p>
         <p id="newsUpdatedAt">수정일</p>
         <p id="newsNickname">닉네임</p>
-        <img id="newsImg" src="./1.jpg" />
+        <img id="newsImg" src="./img/1.jpg" />
         <p id="newsContent">내용</p>
         <p id="liked">3</p>
         <button id="btnLiked" onclick=clickLikedbtn(newsId)>좋아요</button>

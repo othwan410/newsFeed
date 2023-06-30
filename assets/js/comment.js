@@ -1,4 +1,3 @@
-'use strict';
 var loggedInUserId = 1; // 예시로 사용할 로그인된 사용자의 ID
 
 // 댓글 목록 데이터

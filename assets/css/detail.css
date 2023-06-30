@@ -2,7 +2,12 @@
     padding-top: 150px;
 }
 
+#likedDiv{
+    margin-bottom: 200px;
+}
+
 #newsTitle{
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -37,12 +42,12 @@
 #newsContent{
     word-break:break-all;
     font-size: 20px;
-    margin: 100px 500px 100px 500px; 
+    margin: 100px 500px 70px 500px; 
     text-align: center;
 }
 
 #btnLiked{
-    margin-top: 2px;
+    margin: 2px;
     margin-right: 5px;
     float: right;
 }
@@ -50,6 +55,54 @@
 #liked{
     float: right;
     margin-right: 600px;
+}
+
+.comment-container {
+    margin-left: 500px;
+    margin-right: 500px;
+    background-color: lightyellow;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.comment {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.comment .content {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+.comment .actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment .actions button {
+    margin-left: 5px;
+}
+
+.comment::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 1px;
+    background-color: #ccc;
+}
+
+#commentForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#commentContent {
+    margin-bottom: 10px;
 }
 
 footer{

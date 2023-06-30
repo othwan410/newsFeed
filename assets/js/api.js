@@ -352,7 +352,7 @@ function getNewsDetailLiked(newsId, callback) {
   });
 }
 
-function clickLikedbtn(newsId) {
+function clickLikedBtn(newsId) {
   if (!loginUserNickname) {
     $.ajax({
       type: "POST",
@@ -388,12 +388,20 @@ function clickLikedbtn(newsId) {
 }
 
 function btnReady(){
-  if(loginUserNickname === writeNickname){
-  //   const template = `
-  //     <button>수정</button>
-  //     <button>삭제</button>
-  //   `;
+  if(loginUserNickname !== writeNickname){
+    const template = `
+      <button onclick=clickUpdateBtn(newsId)>수정</button>
+      <button onclick=clickDeleteBtn(newsId)>삭제</button>
+    `;
 
-  // $("#updateBtnDiv").append(template);
+    $("#updateBtnDiv").append(template);
   }
+}
+
+function clickUpdateBtn(){
+  console.log('수정');
+}
+
+function clickDeleteBtn(){
+  console.log('삭제');
 }

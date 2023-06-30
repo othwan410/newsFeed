@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
         errorMessage: "로그인 후 이용 가능한 기능입니다.",
       });
       return;
-    } 
+    }
 
     const { userId } = jwt.verify(authToken, "customized_secret_key");
     const user = await Users.findOne({ where: { userId } });
@@ -25,12 +25,11 @@ module.exports = async (req, res, next) => {
 
     res.locals.user = user;
     next();
-
   } catch (error) {
     console.log(error);
     res.clearCookie("authorization");
     return res.status(400).json({
-      message: "비정상적인 요청입니다."
+      message: "비정상적인 요청입니다.",
     });
   }
 };

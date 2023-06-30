@@ -10,18 +10,9 @@
     <title>축스피드 | 기사 상세</title>
 </head>
 
+
+
 <body>
-    <header class="title" id="newsTitle">?</header>
-    <div class="newsDetail">
-        <p id="newsNickname"></p>
-        <img id="newsUrl" />
-        <p id="newsContent"></p>
-        <p id="newsCreatedAt"></p>
-        <p id="newsUpdatedAt"></p>
-        <p id="liked"></p>
-        <p id="userliked"></p>
-    </div>
-    </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -31,27 +22,35 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newsId = 2// urlParams.get("newsId");
+    </script>
 
+    <div>
+        <h1 id="newsTitle"></h1>
+        <p id="newsCreatedAt" class="underTitle"></p>
+        <p id="newsUpdatedAt" class="underTitle"></p>
+        <p id="newsNickname" class="underTitle"></p>
+        <img id="newsUrl" src="./1.jpg" />
+        <p id="newsContent"></p>
+        <p id="liked"></p>
+        <button id="btnLiked" onclick=clickLikedbtn(newsId)>좋아요</button>
+    </div>
+
+    <script>
         $(document).ready(function () {
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
                 $("#newsTitle").text(news.title);
-                $("#newsUrl").attr("src", news.img);
-                $("#newsNickname").text(news.nickname);
+                // $("#newsUrl").attr("src", news.img);
+                $("#newsNickname").text("작성자: " + news.nickname);
                 $("#newsContent").text(news.content);
-                $("#newsCreatedAt").text(news.createdAt);
-                $("#newsUpdatedAt").text(news.updatedAt);
+                $("#newsCreatedAt").text("작성일: " + news.createdAt);
+                $("#newsUpdatedAt").text("수정일: " + news.updatedAt);
             });
 
-            getNewsDetailLiked(newsId, function (likedCount, userId) {
+            getNewsDetailLiked(newsId, function (likedCount) {
                 $("#liked").text(likedCount);
-                if (userId) {
-                    $("#userliked").text("userId");
-                }
-                else {
-                    $("#userliked").text("null");
-                }
             })
+
         });
     </script>
 </body>

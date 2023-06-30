@@ -9,6 +9,7 @@ function getNews() {
       const news = res.news;
       news.map((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -17,10 +18,10 @@ function getNews() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -44,8 +45,9 @@ function sign_in() {
       id: id,
       password: password,
     },
-    success: function (response) {
+    success: function (res) {
       console.log("로그인 성공");
+      login_check();
     },
     error: function (error) {
       console.log("로그인 실패");
@@ -58,7 +60,33 @@ function log_out() {
   $.ajax({
     type: "POST",
     url: "/logout",
+    success: function () {
+      location.reload();
+    },
   });
+}
+
+// 로그인 체크
+function login_check() {
+  if (document.cookie) {
+    $.ajax({
+      type: "GET",
+      url: "/logincheck",
+      success: function (res) {
+        const userInfo = res.userInfo;
+
+        const userId = userInfo.userId;
+        const id = userInfo.id;
+
+        const template = `<div class="login-user">
+                            <p class="login-id">접속중인 id : <a href="/modify.html/user/?userId=${userId}">${id}</p>
+                          </div>`;
+
+        $(".user-form").html(template);
+        $(".logout-btn").removeClass("blind");
+      },
+    });
+  }
 }
 
 // 국내축구 카테고리
@@ -74,6 +102,7 @@ function k_football() {
       });
       newsList.filter((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -82,10 +111,10 @@ function k_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -110,6 +139,7 @@ function w_football() {
       });
       newsList.map((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -118,10 +148,10 @@ function w_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -155,6 +185,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -163,10 +194,10 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -188,6 +219,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -196,10 +228,10 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -218,6 +250,7 @@ function dateSort() {
           const news = res.news;
           news.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -226,10 +259,10 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -255,6 +288,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -263,10 +297,10 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                   <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -288,6 +322,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -296,10 +331,10 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -358,27 +393,27 @@ function clickLikedBtn(newsId) {
       type: "POST",
       url: `/api/like/${newsId}`,
       error: function (xhr, status, error) {
-          if (status == 403) {
-              alert("로그인이 필요합니다.");
-          } else {
-            console.log(error);
-            alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-          }
+        if (status == 403) {
+          alert("로그인이 필요합니다.");
+        } else {
+          console.log(error);
+          alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+        }
       },
       success: function () {
         window.location.reload();
       },
-  });
+    });
   } else {
     $.ajax({
       type: "DELETE",
       url: `/api/like/${newsId}`,
       error: function (xhr, status, error) {
-          if (status == 403) {
-              alert("로그인이 필요합니다.");
-          } else {
-              alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-          }
+        if (status == 403) {
+          alert("로그인이 필요합니다.");
+        } else {
+          alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+        }
       },
       success: function () {
         window.location.reload();

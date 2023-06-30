@@ -4,8 +4,9 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./detail.css" />
+    <link rel="stylesheet" href="./main.css" />
 
     <title>축스피드 | 기사 상세</title>
 </head>
@@ -23,17 +24,38 @@
         const urlParams = new URLSearchParams(queryString);
         const newsId = 2// urlParams.get("newsId");
     </script>
+    <header>
+        <nav>
+            <h1><a href="localhost:3018">축스피드</a></h1>
+            <ul>
+                <li><a href="#">Write</a></li>
+                <li><a href="#">Sign Up</a></li>
+                <li>
+                    <div>
+                        <input id="id" type="text" placeholder="ID 입력" />
+                        <input id="password" type="text" placeholder="PW 입력" />
+                        <button onclick="sign_in()">로그인</button>
+                        <button onclick="log_out()">로그아웃</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
     <div>
         <h1 id="newsTitle"></h1>
-        <p id="newsCreatedAt" class="underTitle"></p>
-        <p id="newsUpdatedAt" class="underTitle"></p>
-        <p id="newsNickname" class="underTitle"></p>
+        <p id="newsCreatedAt"></p>
+        <p id="newsUpdatedAt"></p>
+        <p id="newsNickname"></p>
         <img id="newsUrl" src="./1.jpg" />
         <p id="newsContent"></p>
         <p id="liked"></p>
         <button id="btnLiked" onclick=clickLikedbtn(newsId)>좋아요</button>
     </div>
+
+    <footer>
+        <p>NodeJs A반 6조 - 노드레인저</p>
+    </footer>
 
     <script>
         $(document).ready(function () {

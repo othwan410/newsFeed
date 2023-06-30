@@ -7,8 +7,6 @@ const { Users } = require("../models");
 // 라우터 생성하기
 const router = express.Router();
 
-<<<<<<< HEAD
-
 // 로그인
 //                    비동기
 router.post("/login", async (req, res) => {
@@ -39,8 +37,6 @@ router.post("/login", async (req, res) => {
     return res.status(200).json({ message: "로그인 성공", userId: user.userId });
 });
 
-=======
->>>>>>> aaf40c011d247b4b4a60a8929babfb3b5861c30b
 // 회원가입
 // 클라이언트에서 준 정보 처리
 router.post("/user", async (req, res) => {

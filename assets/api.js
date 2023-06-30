@@ -41,8 +41,9 @@ function sign_in() {
       id: id,
       password: password,
     },
-    success: function (response) {
+    success: function (res) {
       console.log("로그인 성공");
+      login_check();
     },
     error: function (error) {
       console.log("로그인 실패");
@@ -55,7 +56,33 @@ function log_out() {
   $.ajax({
     type: "POST",
     url: "/logout",
+    success: function () {
+      window.location.href = "/";
+    },
   });
+}
+
+// 로그인 체크
+function login_check() {
+  if (document.cookie) {
+    $.ajax({
+      type: "GET",
+      url: "/logincheck",
+      success: function (res) {
+        const userInfo = res.userInfo;
+
+        const userId = userInfo.userId;
+        const id = userInfo.id;
+
+        const template = `<div class="login-user">
+                            <p class="login-id">접속중인 id : <a href="/user/${userId}">${id}</p>
+                          </div>`;
+
+        $(".user-form").html(template);
+        $(".logout-btn").removeClass("blind");
+      },
+    });
+  }
 }
 
 // 국내축구 카테고리
@@ -315,35 +342,35 @@ function dateSort() {
 }
 
 function getNewsDetail(goodsId, callback) {
-    $.ajax({
-        type: "GET",
-        url: `/api/news/${newsId}`,
-        error: function (xhr, status, error) {
-            if (status == 401) {
-                alert("로그인이 필요합니다.");
-            } else {
-                alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-            }
-        },
-        success: function (response) {
-            callback(response.news);
-        },
-    });
+  $.ajax({
+    type: "GET",
+    url: `/api/news/${newsId}`,
+    error: function (xhr, status, error) {
+      if (status == 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+      }
+    },
+    success: function (response) {
+      callback(response.news);
+    },
+  });
 }
 
 function getNewsDetailLiked(goodsId, callback) {
-    $.ajax({
-        type: "GET",
-        url: `/api/like/${newsId}`,
-        error: function (xhr, status, error) {
-            if (status == 401) {
-                alert("로그인이 필요합니다.");
-            } else {
-                alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-            }
-        },
-        success: function (response) {
-            callback(response.likedCount.count, response.userId);
-        },
-    });
+  $.ajax({
+    type: "GET",
+    url: `/api/like/${newsId}`,
+    error: function (xhr, status, error) {
+      if (status == 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+      }
+    },
+    success: function (response) {
+      callback(response.likedCount.count, response.userId);
+    },
+  });
 }

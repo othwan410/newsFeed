@@ -7,11 +7,6 @@
     <link rel="favicon" href="./img/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic:wght@800&display=swap"
       rel="stylesheet"
@@ -45,10 +40,10 @@
             <input id="password" type="text" placeholder="PW 입력" />
             <button onclick="sign_in()">로그인</button>
           </div>
-          <!-- <div class="login-user">
-            <p class="login-id">접속중인 id : doohyeon</p>
-            <button class="logout-btn" onclick="log_out()">로그아웃</button>
-          </div> -->
+          <!-- login user template -->
+        </div>
+        <div class="nav-item logout-btn blind">
+          <button onclick="log_out()">로그아웃</button>
         </div>
       </nav>
     </header>
@@ -63,8 +58,7 @@
         <!-- 카테고리 표시 -->
         <p class="news-category">축구소식</p>
         <div class="news-box">
-          <!-- template -->
-          <!--  -->
+          <!-- news template -->
         </div>
       </main>
     </div>
@@ -75,6 +69,7 @@
     <script>
       $("document").ready(function () {
         getNews();
+        login_check();
       });
     </script>
   </body>

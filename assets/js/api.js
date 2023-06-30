@@ -1,5 +1,7 @@
 let loginUserNickname = null;
 let writeNickname = null;
+let loginUserId = null;
+let isLiked = false;
 
 function getNews() {
   $.ajax({
@@ -46,11 +48,10 @@ function sign_in() {
       password: password,
     },
     success: function (res) {
-      console.log("로그인 성공");
-      login_check();
+      window.location.reload();
     },
     error: function (error) {
-      console.log("로그인 실패");
+      alert("아이디 또는 비밀번호가 일치하지 않습니다.");
     },
   });
 }
@@ -84,6 +85,10 @@ function login_check() {
 
         $(".user-form").html(template);
         $(".logout-btn").removeClass("blind");
+
+        loginUserNickname = userInfo.nickname;
+        loginUserId = userId;
+        console.log(loginUserId);
       },
     });
   }
@@ -331,7 +336,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                  <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -372,48 +377,54 @@ function getNewsDetail(goodsId, callback) {
 }
 
 function getNewsDetailLiked(newsId, callback) {
-  loginUserNickname = null;
   $.ajax({
       type: "GET",
       url: `/api/like/${newsId}`,
       error: function (xhr, status, error) {
+        console.log(error);
         alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
       },
       success: function (response) {
-        loginUserNickname = response.loginUserNickname
-        console.log(loginUserNickname);
         callback(response.likedCount.count);
       },
   });
 }
 
+function getUserlikedcheck(newsId) {
+  $.ajax({
+    type: "GET",
+    url: `/api/like/${newsId}/${loginUserId}`,
+    error: function (xhr, status, error) {
+        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+    },
+    success: function (response) {
+      console.log(response);
+      if(response.isLiked) isLiked = true;
+      else isLiked = false;
+    },
+  });
+}
+
 function clickLikedBtn(newsId) {
-  if (!loginUserNickname) {
+  if(!isLiked) {
+    console.log("UP");
     $.ajax({
       type: "POST",
       url: `/api/like/${newsId}`,
       error: function (xhr, status, error) {
-        if (status == 403) {
-          alert("로그인이 필요합니다.");
-        } else {
-          console.log(error);
-          alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-        }
+          alert(xhr.responseJSON.errorMessage);
       },
       success: function () {
         window.location.reload();
       },
     });
   } else {
+    console.log("Down");
     $.ajax({
       type: "DELETE",
       url: `/api/like/${newsId}`,
       error: function (xhr, status, error) {
-        if (status == 403) {
-          alert("로그인이 필요합니다.");
-        } else {
-          alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-        }
+        alert(xhr.responseJSON.errorMessage);
       },
       success: function () {
         window.location.reload();
@@ -423,7 +434,7 @@ function clickLikedBtn(newsId) {
 }
 
 function btnReady(){
-  if(loginUserNickname !== writeNickname){
+  if(loginUserNickname === writeNickname){
     const template = `
       <button onclick=clickUpdateBtn(newsId)>수정</button>
       <button onclick=clickDeleteBtn(newsId)>삭제</button>

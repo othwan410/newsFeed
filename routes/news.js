@@ -50,44 +50,33 @@ router.get("/news/:newsId", async (req, res) => {
   }
 });
 
-router.get("/like/:newsId", authMiddleware, async (req, res) => {
-  let userId = null;
-  try {
-    const { Authorization } = req.cookies;
-    const [authType, authToken] = (Authorization ?? "").split(" ");
-    if (authToken && authType !== "Bearer") {
-      userId = jwt.verify(authToken, "customized_secret_key");
-      userId = {userId};
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({
-      message: "좋아요 조회 오류."
-    });
-  }
+router.get("/like/:newsId", async (req, res) => {
 
   const { newsId } = req.params;
   const likedCount = await NewsLiked.findAndCountAll({
     where: {newsId}
   });
 
-  if(userId){
-    const loginUserNickname = await Users.findOne({ 
-      attributes: [ "nickname" ],
-      where: { userId }
-    });
-
-    res.json({
-      likedCount: likedCount,
-      loginUserNickname : loginUserNickname.nickname
-    });
-  }
-  else{
-    res.json({
-      likedCount: likedCount,
-    });
-  }
+  res.json({
+    likedCount: likedCount,
+  });
 });
+
+router.get("/like/:newsId/:userId", async (req, res) => {
+
+  const { newsId, userId } = req.params;
+  const likedUser = await NewsLiked.findOne({
+    where: {
+      newsId,
+      userId
+    }
+  });
+
+  res.json({
+    isLiked: likedUser,
+  });
+});
+
 
 router.post("/like/:newsId", authMiddleware, async (req, res) => {
   try {
@@ -112,7 +101,6 @@ router.post("/like/:newsId", authMiddleware, async (req, res) => {
 
 router.delete("/like/:newsId", authMiddleware, async (req, res) => {
   try {
-
     const { userId } = res.locals.user;
     const { newsId } = req.params;
 

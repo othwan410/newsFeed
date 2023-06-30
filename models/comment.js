@@ -160,3 +160,9 @@ renderComments();
 function generateCommentId() {
     return comments.length + 1;
 }
+
+// 댓글 신고 내용 저장 함수
+function saveDeclaration(commentId, reason) {
+    console.log("댓글 ID:", commentId);
+    console.log("신고 사유:", reason);
+}

@@ -149,26 +149,11 @@
       </div>
     </form>
     <div class="btncls">
-      <form method="post" action="/news" enctype="multipart/form-data" id="upload_frm">
-        <input type="file" name="imgUpload"/>
-        <button type="submit">전송</button>
+      <form action="/news" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required/>
+        <input type="submit" value="Upload" />
       </form>
-        <!-- 사진 업로드 함수 -->
-      <script>
-        const uploadFrm = document.querySelector('#upload_frm');
-  
-        uploadFrm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const { subject, imgUpload } = e.target;
-  
-          console.log(imgUpload.files[0]);
-          const formData = new FormData();
-          formData.append('imgUpload', imgUpload.files[0]);
-          formData.append('subject', subject.value);
-  
-          axios.post('/news', formData);
-        });
-      </script>
+    
       <button class="btn btn-primary" type="submit" onclick="upload()">작성</button>
       <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
     </div>

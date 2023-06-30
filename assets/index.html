@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./main.css" />
+    <link rel="favicon" href="./img/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic:wght@800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
+      rel="stylesheet"
+    />
+    <title>축스피드</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-item">
+          <h1 class="logo">
+            <a href="localhost:3018"
+              ><img src="./img/logo.png" width="40" alt="logo" />축스피드</a
+            >
+          </h1>
+        </div>
+        <div class="nav-item">
+          <ul class="menu">
+            <li><a href="#">Write</a></li>
+            <li><a href="#">Sign Up</a></li>
+            <div class="space"></div>
+          </ul>
+        </div>
+        <div class="nav-item user-form">
+          <div class="login-form">
+            <input id="id" type="text" placeholder="ID 입력" />
+            <input id="password" type="text" placeholder="PW 입력" />
+            <button onclick="sign_in()">로그인</button>
+          </div>
+          <!-- <div class="login-user">
+            <p class="login-id">접속중인 id : doohyeon</p>
+            <button class="logout-btn" onclick="log_out()">로그아웃</button>
+          </div> -->
+        </div>
+      </nav>
+    </header>
+
+    <div class="main-container">
+      <main>
+        <div class="btn-box">
+          <a onclick="k_football()">국내축구</a>
+          <a onclick="w_football()">해외축구</a>
+          <a class="date-sort-btn" onclick="dateSort()">최신순</a>
+        </div>
+        <!-- 카테고리 표시 -->
+        <p class="news-category">축구소식</p>
+        <div class="news-box">
+          <!-- template -->
+          <!--  -->
+        </div>
+      </main>
+    </div>
+    <footer><p>NodeJs A반 6조 - 노드레인저</p></footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="api.js"></script>
+    <script>
+      $("document").ready(function () {
+        getNews();
+      });
+    </script>
+  </body>
+</html>

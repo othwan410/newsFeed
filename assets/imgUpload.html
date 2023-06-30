@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Image Server</title>
+  	<!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+</head>
+<body>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        Title: <input type="text" name="title1" />
+        <br/>
+        <input type="file" name="myFile1" />
+        <button type="submit">Upload</button>
+    </form>
+</body>
+<script>
+	// submit 버튼을 누를 때 실행
+    document.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault();
+  
+        const formData = new FormData();
+  
+		// FormData 객체에 title1, myFile1 데이터 추가
+        formData.append('title1', e.target.title1.value);
+        formData.append('myFile1', e.target.myFile1.files[0]);
+  
+		// POST /upload로 formData 첨부하여 요청
+        axios.post('/upload', formData);
+    });
+</script>
+</html>

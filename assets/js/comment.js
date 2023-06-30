@@ -1,4 +1,3 @@
-'use strict';
 var loggedInUserId = 1; // 예시로 사용할 로그인된 사용자의 ID
 
 // 댓글 목록 데이터
@@ -159,4 +158,10 @@ renderComments();
 // 댓글 ID 생성 함수 (임시로 사용)
 function generateCommentId() {
     return comments.length + 1;
+}
+
+// 댓글 신고 내용 저장 함수
+function saveDeclaration(commentId, reason) {
+    console.log("댓글 ID:", commentId);
+    console.log("신고 사유:", reason);
 }

@@ -4,9 +4,20 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" type="text/css" href="./detail.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./css/detail.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="favicon" href="./img/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic:wght@800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet" />
     <title>축스피드 | 기사 상세</title>
 </head>
 
@@ -17,40 +28,76 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="/api.js"></script>
+    <script src="./js/api.js"></script>
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newsId = 2// urlParams.get("newsId");
     </script>
+    <header>
+        <nav>
+            <div class="nav-item">
+                <h1 class="logo">
+                    <a href="localhost:3018"><img src="./img/logo.png" width="40" alt="logo" />축스피드</a>
+                </h1>
+            </div>
+            <div class="nav-item">
+                <ul class="menu">
+                    <li><a href="#">Write</a></li>
+                    <li><a href="#">Sign Up</a></li>
+                    <div class="space"></div>
+                </ul>
+            </div>
+            <div class="nav-item user-form">
+                <div class="login-form">
+                    <input id="id" type="text" placeholder="ID 입력" />
+                    <input id="password" type="text" placeholder="PW 입력" />
+                    <button onclick="sign_in()">로그인</button>
+                </div>
+                <!-- <div class="login-user">
+          <p class="login-id">접속중인 id : doohyeon</p>
+          <button class="logout-btn" onclick="log_out()">로그아웃</button>
+        </div> -->
+            </div>
+        </nav>
+    </header>
 
-    <div>
-        <h1 id="newsTitle"></h1>
-        <p id="newsCreatedAt" class="underTitle"></p>
-        <p id="newsUpdatedAt" class="underTitle"></p>
-        <p id="newsNickname" class="underTitle"></p>
-        <img id="newsUrl" src="./1.jpg" />
-        <p id="newsContent"></p>
-        <p id="liked"></p>
+    <div id="nwesDiv">
+        <div id="updateBtnDiv">
+            <button>수정</button>
+            <button>삭제</button>
+        </div>
+        <h1 id="newsTitle">제목</h1>
+        <p id="newsCreatedAt">작성일</p>
+        <p id="newsUpdatedAt">수정일</p>
+        <p id="newsNickname">닉네임</p>
+        <img id="newsImg" src="./img/1.jpg" />
+        <p id="newsContent">내용</p>
+        <p id="liked">3</p>
         <button id="btnLiked" onclick=clickLikedbtn(newsId)>좋아요</button>
     </div>
 
+    <footer>
+        <p>NodeJs A반 6조 - 노드레인저</p>
+    </footer>
+
     <script>
         $(document).ready(function () {
-            getNewsDetail(newsId, function (n) {
-                const [news] = n;
-                $("#newsTitle").text(news.title);
-                // $("#newsUrl").attr("src", news.img);
-                $("#newsNickname").text("작성자: " + news.nickname);
-                $("#newsContent").text(news.content);
-                $("#newsCreatedAt").text("작성일: " + news.createdAt);
-                $("#newsUpdatedAt").text("수정일: " + news.updatedAt);
-            });
+            // getNewsDetail(newsId, function (n) {
+            //     const [news] = n;
+            //     $("#newsTitle").text(news.title);
+            //     // $("#newsImg").attr("src", news.img);
+            //     $("#newsNickname").text("작성자: " + news.nickname);
+            //     $("#newsContent").text(news.content);
+            //     $("#newsCreatedAt").text("작성일: " + news.createdAt);
+            //     $("#newsUpdatedAt").text("수정일: " + news.updatedAt);
+            // });
 
-            getNewsDetailLiked(newsId, function (likedCount) {
-                $("#liked").text(likedCount);
-            })
+            // getNewsDetailLiked(newsId, function (likedCount) {
+            //     $("#liked").text(likedCount);
+            // })
 
+            btnReady();
         });
     </script>
 </body>

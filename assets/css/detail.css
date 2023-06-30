@@ -1,18 +1,19 @@
-*{
-    font-family: 'Single Day', cursive;
-}
-
-body{
-    margin-top:100px;
+#nwesDiv{
+    padding-top: 150px;
 }
 
 #newsTitle{
     text-align: center;
 }
 
+#updateBtnDiv{
+    background-color: aqua;
+    margin-left: 1550px;
+}
+
 #newsCreatedAt{
     font-size: small;
-    margin-left: 300px;
+    margin-left: 500px;
     float: left;
 }
 
@@ -23,12 +24,12 @@ body{
 }
 
 #newsNickname{
-    margin-right: 500px;
-    margin-bottom: 200px;
+    margin-right: 600px;
+    margin-bottom: 100px;
     text-align: right;
 }
 
-#newsUrl{
+#newsImg{
     margin: auto;
     display: block;
 }
@@ -36,12 +37,12 @@ body{
 #newsContent{
     word-break:break-all;
     font-size: 20px;
-    margin: 100px 300px 100px 300px; 
+    margin: 100px 500px 100px 500px; 
     text-align: center;
 }
 
 #btnLiked{
-    margin-top: 15px;
+    margin-top: 2px;
     margin-right: 5px;
     float: right;
 }
@@ -49,4 +50,9 @@ body{
 #liked{
     float: right;
     margin-right: 600px;
+}
+
+footer{
+    text-align: center;
+    margin-top: 300px;
 }

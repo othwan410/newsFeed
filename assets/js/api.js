@@ -9,6 +9,7 @@ function getNews() {
       const news = res.news;
       news.map((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -20,7 +21,7 @@ function getNews() {
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -78,7 +79,7 @@ function login_check() {
         const id = userInfo.id;
 
         const template = `<div class="login-user">
-                            <p class="login-id">접속중인 id : <a href="/modify.html/user/${userId}">${id}</p>
+                            <p class="login-id">접속중인 id : <a href="/modify.html/user/?userId=${userId}">${id}</p>
                           </div>`;
 
         $(".user-form").html(template);
@@ -101,6 +102,7 @@ function k_football() {
       });
       newsList.filter((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -112,7 +114,7 @@ function k_football() {
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -137,6 +139,7 @@ function w_football() {
       });
       newsList.map((item) => {
         newsId = item.newsId;
+        userId = item.UserId;
         img = item.img;
         title = item.title;
         createdAt = item.createdAt.substring(0, 10);
@@ -148,7 +151,7 @@ function w_football() {
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p>${user}</p>
+                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -182,6 +185,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -193,7 +197,7 @@ function dateSort() {
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -215,6 +219,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -226,7 +231,7 @@ function dateSort() {
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -245,6 +250,7 @@ function dateSort() {
           const news = res.news;
           news.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -256,7 +262,7 @@ function dateSort() {
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -282,6 +288,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -293,7 +300,7 @@ function dateSort() {
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -315,6 +322,7 @@ function dateSort() {
           });
           newsList.map((item) => {
             newsId = item.newsId;
+            userId = item.UserId;
             img = item.img;
             title = item.title;
             createdAt = item.createdAt.substring(0, 10);
@@ -326,7 +334,7 @@ function dateSort() {
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p>${user}</p>
+                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -342,41 +350,6 @@ function dateSort() {
       $(".date-sort-btn").html("최신순");
     }
   }
-}
-
-function getNewsDetail(goodsId, callback) {
-  $.ajax({
-    type: "GET",
-    url: `/api/news/${newsId}`,
-    error: function (xhr, status, error) {
-      if (status == 401) {
-        alert("로그인이 필요합니다.");
-      } else {
-        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-      }
-    },
-    success: function (response) {
-      const [news] = response.news;
-      writeNickname = news.nickname;
-      callback(response.news);
-    },
-  });
-}
-
-function getNewsDetailLiked(newsId, callback) {
-  loginUserNickname = null;
-  $.ajax({
-    type: "GET",
-    url: `/api/like/${newsId}`,
-    error: function (xhr, status, error) {
-      alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-    },
-    success: function (response) {
-      loginUserNickname = response.loginUserNickname;
-      console.log(loginUserNickname);
-      callback(response.likedCount.count);
-    },
-  });
 }
 
 function clickLikedbtn(newsId) {

@@ -126,6 +126,10 @@
                 });
         }
 
+
+
+
+        //  유저삭제
         function deleteUserInfo() {
             // 삭제할 사용자 정보 JSON 형태로 만들기
 
@@ -133,42 +137,47 @@
             const passwordDel = document.querySelector('#passwordDel').value;
 
             console.log(userId);
-            // 수정할 사용자 정보 JSON 형태로 만들기
-            const userData = {
-                passwordDel,
-                userId
-            };
 
-            console.log(userData);
+            const confirmDelete = confirm('정말로 삭제하시겠습니까?');
+            // 사용자가 확인 버튼을 클릭한 경우에만 삭제 요청을 보냅니다.
+            if (confirmDelete) {
+                // 수정할 사용자 정보 JSON 형태로 만들기
+                const userData = {
+                    passwordDel,
+                    userId
+                };
+
+                console.log(userData);
 
 
-            const asswordDel = document.querySelector('#passwordDel').value;
+                const asswordDel = document.querySelector('#passwordDel').value;
 
-            console.log(passwordDel);
+                console.log(passwordDel);
 
-            // 삭제 요청 보내기
-            const apiUrl = `http://localhost:3018/api/user/delete/${userId}`;
-            fetch(apiUrl, {
-                method: 'DELETE',
-                body: JSON.stringify(userData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.errorMessage) {
-                        alert(data.errorMessage); // 에러 메시지를 alert으로 표시
-                    } else if (data.message) {
-                        alert(data.message); // 성공 메시지를 alert으로 표시
-                        window.location.href = '/';
-                        // TODO: 처리 완료 후 필요한 동작 수행
+                // 삭제 요청 보내기
+                const apiUrl = `http://localhost:3018/api/user/delete/${userId}`;
+                fetch(apiUrl, {
+                    method: 'DELETE',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
                 })
-                .catch(error => {
-                    console.log(error);
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.errorMessage) {
+                            alert(data.errorMessage); // 에러 메시지를 alert으로 표시
+                        } else if (data.message) {
+                            alert(data.message); // 성공 메시지를 alert으로 표시
+                            window.location.href = '/';
+                            // TODO: 처리 완료 후 필요한 동작 수행
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
         }
 
     </script>

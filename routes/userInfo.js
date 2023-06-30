@@ -164,7 +164,7 @@ router.delete("/user/delete/:userId", async (req, res) => {
     });
 
     //"정말로 ID : " [ ] " 를 삭제하겠습니다." 사이에서 입력받도록 만들기
-    // const confirmChar = "정말로 ID : " + users.id + " 를 삭제하겠습니다."
+    const confirmChar = "정말로 ID : " + users.id + " 를 삭제하겠습니다."
 
 
     const {

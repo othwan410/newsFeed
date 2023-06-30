@@ -18,7 +18,7 @@ function getNews() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -111,7 +111,7 @@ function k_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -148,7 +148,7 @@ function w_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -194,7 +194,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -228,7 +228,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -259,7 +259,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -297,7 +297,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                   <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
@@ -331,7 +331,7 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                   <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>

@@ -2,38 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { Users, News } = require("../models");
 const authMiddleware = require("../middlewares/auth-middleware");
-const { json } = require("sequelize");
+const { json, useInflection } = require("sequelize");
 const router = express.Router();
-
-// 회원가입 API (임시)
-router.post("/users", async (req, res) => {
-  const { id, password, name, nickname } = req.body;
-  const isExistUser = await Users.findOne({ where: { id } });
-
-  if (isExistUser) {
-    return res.status(409).json({ message: "이미 존재하는 아이디입니다." });
-  }
-
-  const user = await Users.create({ id, password, name, nickname });
-
-  return res.status(201).json({ message: "회원가입이 완료되었습니다." });
-});
-
-// 뉴스 추가 API (임시)
-router.post("/news", async (req, res) => {
-  const { newsId, userId, title, content, category, img } = req.body;
-
-  const news = await News.create({
-    newsId,
-    userId,
-    title,
-    content,
-    category,
-    img,
-  });
-
-  return res.status(201).json({ message: "뉴스 생성 완료." });
-});
 
 // 로그인 API
 router.post("/login", async (req, res) => {
@@ -55,8 +25,13 @@ router.post("/login", async (req, res) => {
   );
   // 쿠키 발급
   res.cookie("authorization", `Bearer ${token}`);
-  console.log("토큰 내용물 : "+token+" 토큰 끝")
+  // userID 전송
   return res.status(200).json({ message: "로그인 성공" });
+});
+
+// 로그인 체크 API
+router.get("/logincheck", authMiddleware, async (req, res) => {
+  return res.status(201).json({ userInfo: res.locals.user });
 });
 
 // 로그아웃 API
@@ -65,7 +40,7 @@ router.post("/logout", authMiddleware, async (req, res) => {
   return res.cookie("authorization", "").json({ message: "로그아웃 완료" });
 });
 
-// 뉴스 불러오기 (최신순)
+// 뉴스 불러오기 API (최신순)
 router.get("/getnews", async (req, res) => {
   const newsList = await News.findAll({
     attributes: [
@@ -89,7 +64,7 @@ router.get("/getnews", async (req, res) => {
   res.status(200).json({ news: newsList });
 });
 
-// 뉴스 불러오기 (과거순)
+// 뉴스 불러오기 API (과거순)
 router.get("/getoldnews", async (req, res) => {
   const newsList = await News.findAll({
     attributes: [

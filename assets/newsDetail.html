@@ -27,7 +27,6 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newsId = urlParams.get("newsId");
-        console.log(newsId);
     </script>
 
     <!-- nav -->
@@ -67,12 +66,12 @@
             <button type="button" class="btn btn-primary" type="submit" onclick="remove()">삭제</button>
             
         </div>
-        <h1 id="newsTitle">제목</h1>
-        <p id="newsCreatedAt">작성일</p>
-        <p id="newsUpdatedAt">수정일</p>
-        <p id="newsNickname">닉네임</p>
+        <h1 id="newsTitle"></h1>
+        <p id="newsCreatedAt"></p>
+        <p id="newsUpdatedAt"></p>
+        <p id="newsNickname"></p>
         <img id="newsImg" src="./img/1.jpg" />
-        <p id="newsContent">내용</p>
+        <p id="newsContent"></p>
         <div id="likedDiv">
             <p id="liked">3</p>
             <button id="btnLiked" onclick=clickLikedBtn(newsId)>좋아요</button>
@@ -108,6 +107,8 @@
          <script src="./js/api.js"></script>
          <script>
         $(document).ready(function () {
+            login_check();
+
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
                 $("#newsTitle").text(news.title);
@@ -122,7 +123,6 @@
                 $("#liked").text(likedCount);
             })
 
-            
             btnReady();
         });
     </script>

@@ -398,10 +398,10 @@ function btnReady(){
   }
 }
 
-function clickUpdateBtn(){
+function clickUpdateBtn(newsId){
   console.log('수정');
 }
 
-function clickDeleteBtn(){
+function clickDeleteBtn(newsId){
   console.log('삭제');
 }

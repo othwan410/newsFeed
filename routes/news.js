@@ -69,7 +69,7 @@ router.get("/like/:newsId", authMiddleware, async (req, res) => {
   const { newsId } = req.params;
   const likedCount = await NewsLiked.findAndCountAll({
     where: {newsId}
-   });
+  });
 
   if(userId){
     const loginUserNickname = await Users.findOne({ 
@@ -109,11 +109,11 @@ router.post("/like/:newsId", authMiddleware, async (req, res) => {
     });
   }
 });
-// authMiddleware
-router.delete("/like/:newsId", async (req, res) => {
+
+router.delete("/like/:newsId", authMiddleware, async (req, res) => {
   try {
 
-    const { userId } = {userId : 1}//res.locals.user;
+    const { userId } = res.locals.user;
     const { newsId } = req.params;
 
     await NewsLiked.destroy({where:{ userId, newsId }});

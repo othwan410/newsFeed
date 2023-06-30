@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { News, Users, NewsLiked } = require("../models");
 const router = express.Router();
-
+const authMiddleware = require("../middlewares/auth-middleware.js");
 
 router.get("/news/:newsId", async (req, res) => {
   try {
@@ -27,7 +27,7 @@ router.get("/news/:newsId", async (req, res) => {
 
     const prNews = [news].map((item) => {
         return {
-            newsId: item.postId,
+            newsId: item.newsId,
             userId: item.User.userId,
             title: item.title,
             nickname: item.User.nickname,
@@ -50,14 +50,14 @@ router.get("/news/:newsId", async (req, res) => {
   }
 });
 
-router.get("/like/:newsId", async (req, res) => {
+router.get("/like/:newsId", authMiddleware, async (req, res) => {
   let userId = null;
   try {
     const { Authorization } = req.cookies;
     const [authType, authToken] = (Authorization ?? "").split(" ");
     if (authToken && authType !== "Bearer") {
-       userId = jwt.verify(authToken, "customized_secret_key");
-       userId = {userId};
+      userId = jwt.verify(authToken, "customized_secret_key");
+      userId = {userId};
     }
   } catch (error) {
     console.log(error);
@@ -71,15 +71,61 @@ router.get("/like/:newsId", async (req, res) => {
     where: {newsId}
    });
 
-  const likedUserId = await NewsLiked.findOne({ 
-    attributes: ["userId"],
-        where: { newsId, userId}
-  });
+  if(userId){
+    const loginUserNickname = await Users.findOne({ 
+      attributes: [ "nickname" ],
+      where: { userId }
+    });
 
-  res.json({
+    res.json({
       likedCount: likedCount,
-      userId: likedUserId,
-  });
+      loginUserNickname : loginUserNickname.nickname
+    });
+  }
+  else{
+    res.json({
+      likedCount: likedCount,
+    });
+  }
+});
+
+router.post("/like/:newsId", authMiddleware, async (req, res) => {
+  try {
+
+    const { userId } = res.locals.user;
+    const { newsId } = req.params;
+
+    await NewsLiked.create({
+      newsId : newsId,
+      userId : userId,
+    });
+  
+    res.json({ message: "게시글 좋아요에 성공했습니다." });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      errorMessage: "게시글 좋아요에 실패하였습니다.",
+    });
+  }
+});
+// authMiddleware
+router.delete("/like/:newsId", async (req, res) => {
+  try {
+
+    const { userId } = {userId : 1}//res.locals.user;
+    const { newsId } = req.params;
+
+    await NewsLiked.destroy({where:{ userId, newsId }});
+  
+    res.json({ message: "게시글 좋아요 취소에 성공했습니다." });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      errorMessage: "게시글 좋아요 취소에 실패하였습니다.",
+    });
+  }
 });
 
 module.exports = router;

@@ -1,3 +1,6 @@
+let loginUserNickname = null;
+let writeNickname = null;
+
 function getNews() {
   $.ajax({
     type: "GET",
@@ -15,7 +18,7 @@ function getNews() {
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <h3 onclick="location.href='/newsDetail.html?newsId=${newsId}'>${title}</h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -326,24 +329,60 @@ function getNewsDetail(goodsId, callback) {
             }
         },
         success: function (response) {
+          const [news] = response.news;
+          writeNickname = news.nickname;
             callback(response.news);
         },
     });
 }
 
-function getNewsDetailLiked(goodsId, callback) {
+function getNewsDetailLiked(newsId, callback) {
+  loginUserNickname = null;
+  $.ajax({
+      type: "GET",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+      },
+      success: function (response) {
+        loginUserNickname = response.loginUserNickname
+        console.log(loginUserNickname);
+        callback(response.likedCount.count);
+      },
+  });
+}
+
+function clickLikedbtn(newsId) {
+  if (!loginUserNickname) {
     $.ajax({
-        type: "GET",
-        url: `/api/like/${newsId}`,
-        error: function (xhr, status, error) {
-            if (status == 401) {
-                alert("로그인이 필요합니다.");
-            } else {
-                alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-            }
-        },
-        success: function (response) {
-            callback(response.likedCount.count, response.userId);
-        },
+      type: "POST",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+          if (status == 403) {
+              alert("로그인이 필요합니다.");
+          } else {
+            console.log(error);
+            alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+          }
+      },
+      success: function () {
+        window.location.reload();
+      },
+  });
+  } else {
+    $.ajax({
+      type: "DELETE",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+          if (status == 403) {
+              alert("로그인이 필요합니다.");
+          } else {
+              alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+          }
+      },
+      success: function () {
+        window.location.reload();
+      },
     });
+  }
 }

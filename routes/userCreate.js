@@ -7,6 +7,40 @@ const { Users } = require("../models");
 // 라우터 생성하기
 const router = express.Router();
 
+<<<<<<< HEAD
+
+// 로그인
+//                    비동기
+router.post("/login", async (req, res) => {
+    // 바디에서 id 와  password 를 객체 분해 할당 한다.
+    const { id, password } = req.body;
+    //           동기   모델  하나찾기           닉네임 일치
+    
+    const user = await Users.findOne({ where: { id } });
+
+    // ID과 비밀번호가 유효한지 확인하기
+    // 같은 ID가 없다면
+    if (!user) {
+        return res.status(401).json({ message: "존재하지 않는 ID입니다." });
+    }
+    // 같은 ID가 있지만 비밀번호가 다르다면
+    else if (user.password !== password) {
+        return res.status(401).json({ message: "비밀번호가 일치하지 않습니다." });
+    }
+    // 위의 과정을 모두 통과 = 닉네임과 비밀번호가 유효하다면, 토큰을 생성한다.
+    const token = jwt.sign(
+        {
+            userId: user.userId,
+        },
+        "customized_secret_key" // 비밀키
+    );
+    //토큰을 쿠키로 만든다,      쿠키명      토큰
+    res.cookie("authorization", `Bearer ${token}`);
+    return res.status(200).json({ message: "로그인 성공", userId: user.userId });
+});
+
+=======
+>>>>>>> aaf40c011d247b4b4a60a8929babfb3b5861c30b
 // 회원가입
 // 클라이언트에서 준 정보 처리
 router.post("/user", async (req, res) => {
@@ -59,7 +93,7 @@ router.post("/user", async (req, res) => {
 
     // 비밀번호 검증하기
     // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
+    const passRegex = /^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d@$!%*#?&]{5,}$/
     const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것

@@ -3,8 +3,8 @@ const { Users } = require("../models");
 
 module.exports = async (req, res, next) => {
   try {
-    const { Authorization } = req.cookies;
-    const [authType, authToken] = (Authorization ?? "").split(" ");
+    const { authorization } = req.cookies;
+    const [authType, authToken] = (authorization ?? "").split(" ");
 
     if (!authToken || authType !== "Bearer") {
       res.status(403).send({
@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
       return;
     } 
 
-    const { userId } = jwt.verify(token, "customized_secret_key");
+    const { userId } = jwt.verify(authToken, "customized_secret_key");
     const user = await Users.findOne({ where: { userId } });
 
     if (!user) {
@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
     next();
 
   } catch (error) {
+    console.log(error);
     res.clearCookie("authorization");
     return res.status(400).json({
       message: "비정상적인 요청입니다."

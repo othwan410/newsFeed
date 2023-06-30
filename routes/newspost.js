@@ -7,7 +7,7 @@ const { News } = require("../models");
 const { Op } = require("sequelize");
 
 
-// 게시글 작성 POST : localhost:3018/api/news (성공)
+// 게시글 작성 POST : localhost:3018/sports/news (성공)
 router.post("/news", authMiddleware, async(req, res) => {  
 
     try{ const { UserId } = res.locals.user;
@@ -54,7 +54,7 @@ router.post("/news", authMiddleware, async(req, res) => {
 })
 
 
-// 게시글 수정 PUT : localhost:3018/api/news/newsId (성공)
+// 게시글 수정 PUT : localhost:3018/sports/news/newsId (성공)
 router.put("/news/:newsId", authMiddleware, async(req, res) => {  
     const { newsId } = req.params;
     const { userId } = res.locals.user;
@@ -99,7 +99,7 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
 
 
 
-// 게시글 삭제 DELETE : localhost:3018/api/news/newsId (성공)
+// 게시글 삭제 DELETE : localhost:3018/sports/news/newsId (성공)
 router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
     const { newsId } = req.params;
     const { userId } = res.locals.user;

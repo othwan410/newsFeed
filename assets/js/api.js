@@ -415,7 +415,10 @@ function clickLikedBtn(newsId) {
           alert(xhr.responseJSON.errorMessage);
       },
       success: function () {
-        window.location.reload();
+        getNewsDetailLiked(newsId, function (likedCount) {
+          $("#liked").text(likedCount);
+          getUserlikedcheck(newsId);
+        });
       },
     });
   } else {
@@ -427,7 +430,10 @@ function clickLikedBtn(newsId) {
         alert(xhr.responseJSON.errorMessage);
       },
       success: function () {
-        window.location.reload();
+        getNewsDetailLiked(newsId, function (likedCount) {
+          $("#liked").text(likedCount);
+          getUserlikedcheck(newsId);
+        });
       },
     });
   }

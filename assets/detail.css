@@ -1,0 +1,20 @@
+*{
+    font-family: 'Single Day', cursive;
+}
+
+body{
+    margin:30;
+    background-color:wheat;
+}
+
+header{
+    text-align: center;
+    font-size: 50px;
+}
+
+
+.movieInfo{
+    font-size: 20px;
+}
+
+

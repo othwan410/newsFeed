@@ -4,6 +4,11 @@
     <title>게시물 댓글 시스템</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
+        .comment-container {
+            background-color: lightyellow;
+            border-radius: 10px;
+            padding: 10px;
+        }
         .comment {
             margin-bottom: 10px;
             position: relative;
@@ -43,8 +48,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div id="comments">
-                    <!-- 댓글 목록이 표시될 부분 -->
+                <div class="comment-container">
+                    <div id="comments">
+                        <!-- 댓글 목록이 표시될 부분 -->
+                    </div>
                 </div>
             </div>
         </div><br>
@@ -61,6 +68,6 @@
         </div>
     </div>
 
-    <script src="comment.js"></script>
+    <script src="/models/comment.js"></script>
 </body>
 </html>

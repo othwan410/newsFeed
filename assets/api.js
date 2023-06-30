@@ -17,8 +17,8 @@ function getNews() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -60,7 +60,7 @@ function log_out() {
     type: "POST",
     url: "/logout",
     success: function () {
-      window.location.href = "/";
+      location.reload();
     },
   });
 }
@@ -78,7 +78,7 @@ function login_check() {
         const id = userInfo.id;
 
         const template = `<div class="login-user">
-                            <p class="login-id">접속중인 id : <a href="/user/${userId}">${id}</p>
+                            <p class="login-id">접속중인 id : <a href="/modify.html/user/${userId}">${id}</p>
                           </div>`;
 
         $(".user-form").html(template);
@@ -109,8 +109,8 @@ function k_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -145,8 +145,8 @@ function w_football() {
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
                               </div>
@@ -190,8 +190,8 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p>${user}</p>
                                   </div>
@@ -223,8 +223,8 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p>${user}</p>
                                   </div>
@@ -253,8 +253,8 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p>${user}</p>
                                   </div>
@@ -290,8 +290,8 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p>${user}</p>
                                   </div>
@@ -323,8 +323,8 @@ function dateSort() {
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
+                                    <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
                                     <p>${user}</p>
                                   </div>

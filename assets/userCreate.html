@@ -8,81 +8,122 @@
 
 <body>
     <h1>회원가입</h1>
-    <form id="signupForm">
+    <!-- 방법1 -->
+    <script>
+        function submitForm() {
+            var form = document.getElementById("signupForm");
+            form.target = "_blank"; // 새 창으로 열기
+            form.submit();
+            window.location.reload(); // 기존 창 새로고침
+        }
+    </script>
+
+
+
+
+
+    <form id="signupForm" action="http://localhost:3018/api/user" method="POST">
         <div class="input">
             <div class="left-input">
-                <label for="id">ID :</label>
-                <label for="password">비밀번호 :</label>
-                <label for="confirmPassword">비밀번호 다시 입력 :</label>
-                <label for="name">이름 :</label>
-                <label for="nickname">닉네임 :</label>
-                <label for="message">나의 한마디 :</label>
+                <label class="row" for="id">ID :</label>
+                <label class="row" for="password">비밀번호 :</label>
+                <label class="row" for="confirmPassword">비밀번호 다시 입력 :</label>
+                <label class="row" for="name">이름 :</label>
+                <label class="row" for="nickname">닉네임 :</label>
+                <label class="row" for="message">나의 한마디 :</label>
             </div>
             <div class="right-input">
-                <input type="text" id="id" name="id" required><br>
-                <input type="password" id="password" name="password" required><br>
-                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-                <input type="text" id="name" name="name" required><br>
-                <input type="text" id="nickname" name="nickname" required><br>
-                <input type="text" id="message" name="message"><br>
+                <input class="row" type="text" id="id" name="id" required><br>
+                <!-- autocomplete="off" 자동완성 사용안함 -->
+                <input class="row" type="password" id="password" name="password" required autocomplete="off"><br>
+                <input class="row" type="password" id="confirmPassword" name="confirmPassword" required autocomplete="off"><br>
+                <input class="row" type="text" id="name" name="name" required><br>
+                <input class="row" type="text" id="nickname" name="nickname" required><br>
+                <input class="row" type="text" id="message" name="message"><br>
             </div>
         </div>
+        <!-- 방법 1,2 -->
+        <button type="button" class="button" onclick="submitForm()">회원가입</button>
+        <!-- 방법 3 -->
+        <!-- <button type="button"
+            onclick="submitForm('password','confirmPassword','name','nickname','message')">회원가입</button> -->
 
-
-
-
-
-        <!-- <label for="id">ID:</label>
-        <input type="text" id="id" name="id" required><br>
-
-        <label for="password">비밀번호:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <label for="confirmPassword">비밀번호 다시 입력:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="nickname">닉네임:</label>
-        <input type="text" id="nickname" name="nickname" required><br>
-
-        <label for="message">나의 한마디.:</label>
-        <input type="text" id="message" name="message"><br> -->
-
-        <button type="submit">회원가입</button>
     </form>
 
-    <script>
-        document.getElementById("signupForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // 기본 폼 제출 동작 방지
-
-            // 폼 데이터 수집
-            const formData = new FormData(this);
-
-            // POST 요청을 보낼 URL 설정
-            const url = "localhost:3018/api/user";
-
-            // POST 요청 보내기
-            fetch(url, {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // 응답 처리
-                    if (data.message) {
-                        alert(data.message); // 회원가입 성공 메시지
-                        window.location.href = "/index.html"; // 메인 페이지로
-                    } else if (data.errorMessage) {
-                        alert(data.errorMessage); // 에러 메시지
+        <!-- 방법2 -->
+        <!-- <script>
+            function submitForm() {
+                var form = document.getElementById("signupForm");
+                var formData = new FormData(form);
+    
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "http://localhost:3018/api/user");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // 성공적인 응답 처리
+                            console.log(xhr.responseText);
+                            // 새 창 열기
+                            window.open("", "_blank");
+                            // 기존 창 새로고침
+                            window.location.reload();
+                        } else {
+                            // 오류 응답 처리
+                            console.log("오류:", xhr.status);
+                        }
                     }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-        });
-    </script>
+                };
+                xhr.send(formData);
+            }
+        </script> -->
+
+
+    <!-- 방법3 -->
+    <!-- <script>
+        function submitForm(passwordField, confirmPasswordField, nameField, nicknameField, messageField) {
+            var form = document.getElementById("signupForm");
+            //  안에 form을 빼서 빈 것을 만들기도 도전했는데 실패
+            var formData = new FormData();
+
+            var password = document.getElementById(passwordField).value;
+            var confirmPassword = document.getElementById(confirmPasswordField).value;
+            var name = document.getElementById(nameField).value;
+            var nickname = document.getElementById(nicknameField).value;
+            var message = document.getElementById(messageField).value;
+
+            if (password !== confirmPassword) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return;
+            }
+
+            formData.set("password", password);
+            formData.set("confirmPassword", confirmPassword);
+            formData.set("name", name);
+            formData.set("nickname", nickname);
+            formData.set("message", message);
+
+            console.log(formData)
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:3018/api/user");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 성공적인 응답 처리
+                        console.log(xhr.responseText);
+                        // 새 창 열기
+                        window.open("", "_blank");
+                        // 기존 창 새로고침
+                        window.location.reload();
+                    } else {
+                        // 오류 응답 처리
+                        console.log("오류:", xhr.status);
+                    }
+                }
+            };
+            xhr.send(formData);
+        }
+    </script> -->
 </body>
 
 </html>

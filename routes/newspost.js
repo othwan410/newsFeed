@@ -6,39 +6,25 @@ const authMiddleware = require("../middlewares/auth-middleware.js")
 const { News } = require("../models");
 const { Op } = require("sequelize");
 const multer = require('multer'); // npm i multer
-const fs = require('fs');
 
 
 // 사진 업로드
-try {
-	fs.readdirSync('uploads'); // 폴더 확인
-} catch(err) {
-	console.error('uploads 폴더가 없습니다. 폴더를 생성합니다.');
-    fs.mkdirSync('uploads'); // 폴더 생성
-}
 
 const upload = multer({
-    storage: multer.diskStorage({ // 저장한공간 정보 : 하드디스크에 저장
-        destination(req, file, done) { // 저장 위치
-            done(null, 'uploads/'); // uploads라는 폴더 안에 저장
+    storage : multer.diskStorage({
+        destination(req, file, done){
+            done(null, "uploads")
         },
-        filename(req, file, done) { // 파일명을 어떤 이름으로 올릴지
-            const ext = path.extname(file.originalname); // 파일의 확장자
-            done(null, path.basename(file.originalname, ext) + Date.now() + ext); // 파일이름 + 날짜 + 확장자 이름으로 저장
-        }
+        filename(req, file, done){
+            const ext = path.extname(file.originalname); 
+            done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+        },
     }),
-    limits: { fileSize: 5 * 1024 * 1024 } // 5메가로 용량 제한
-});
-// => 이렇게 설정한 upload라는 객체를 뒤에 라우터에 장착하면 된다.
-
-// storage 속성: 어디에(filename) 어떤이름으로(filename) 저장할지
-// req: 요청에대한정보 file:업로드파일정보 done:매개변수는 함수 (done의 첫번째 인수=에러, 두번째 인수=실제경로or파일)
-
-// 단순 웹페이지 get요청 들어오면 html을 띄워준다.
-router.get("news", (req, res) => {
-    res.sendFile(path.join(__dirname, 'create.html'));
+    limits : {fileSize : 5 * 1024 * 1024},
 })
 
+// 업로드 화면
+// storage 속성 안에는 어디에 (destination) 어떤 이름으로 (filename) 저장할지
 
 // 게시글 작성 POST : localhost:3018/sports/news (성공)
 router.post("/news", upload.single('image'), authMiddleware, async(req, res) => {   // 하나만업로드, single Middleware

@@ -16,7 +16,7 @@ app.use(express.static("assets"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use("/", [homeRouter, newsRouter]);
+app.use("/", [homeRouter]);
 // app.use(cors()); // CORS, 삭제하지 마세요 
 app.use("/api", [userCreateRouter, userInfoeRouter, newspostRouter, newsRouter]);
 

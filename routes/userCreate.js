@@ -59,7 +59,7 @@ router.post("/user", async (req, res) => {
 
     // 비밀번호 검증하기
     // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-    const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
+    const passRegex = /^(?=.*[A-Za-z\d!@#$%^&*]).{6,20}$/
     const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것

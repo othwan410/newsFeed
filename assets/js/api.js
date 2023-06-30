@@ -1,3 +1,6 @@
+let loginUserNickname = null;
+let writeNickname = null;
+
 function getNews() {
   $.ajax({
     type: "GET",
@@ -11,10 +14,10 @@ function getNews() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                <a href="/localhost:3018/news/${newsId}"><img src="http://placehold.it/360x300" alt="#" /></a>
                                 <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
                                 <p>${user}</p>
@@ -76,7 +79,7 @@ function k_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
@@ -112,7 +115,7 @@ function w_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
-        const template = `<ul>
+        const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
@@ -157,16 +160,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -190,16 +193,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -220,16 +223,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`축구소식`);
             $(".news-box").append(template);
@@ -257,16 +260,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -290,16 +293,16 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
-            const template = `<ul>
-                            <li class="news-list">
-                              <div class="news-card">
-                                <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
-                                <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
-                                <p>${createdAt}</p>
-                                <p>${user}</p>
-                              </div>
-                            </li>
-                          </ul>`;
+            const template = `<ul class="news-item">
+                                <li class="news-list">
+                                  <div class="news-card">
+                                    <a href="/localhost:3018/news/${newsId}"><img src="${img}" alt="#" /> 사진</a>
+                                    <h3><a href="/localhost:3018/news/${newsId}">${title}</a></h3>
+                                    <p>${createdAt}</p>
+                                    <p>${user}</p>
+                                  </div>
+                                </li>
+                              </ul>`;
 
             $(".news-category").html(`${item.category}축구`);
             $(".news-box").append(template);
@@ -326,24 +329,71 @@ function getNewsDetail(goodsId, callback) {
             }
         },
         success: function (response) {
+          const [news] = response.news;
+          writeNickname = news.nickname;
             callback(response.news);
         },
     });
 }
 
-function getNewsDetailLiked(goodsId, callback) {
+function getNewsDetailLiked(newsId, callback) {
+  loginUserNickname = null;
+  $.ajax({
+      type: "GET",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+        alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+      },
+      success: function (response) {
+        loginUserNickname = response.loginUserNickname
+        console.log(loginUserNickname);
+        callback(response.likedCount.count);
+      },
+  });
+}
+
+function clickLikedbtn(newsId) {
+  if (!loginUserNickname) {
     $.ajax({
-        type: "GET",
-        url: `/api/like/${newsId}`,
-        error: function (xhr, status, error) {
-            if (status == 401) {
-                alert("로그인이 필요합니다.");
-            } else {
-                alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
-            }
-        },
-        success: function (response) {
-            callback(response.likedCount.count, response.userId);
-        },
+      type: "POST",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+          if (status == 403) {
+              alert("로그인이 필요합니다.");
+          } else {
+            console.log(error);
+            alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+          }
+      },
+      success: function () {
+        window.location.reload();
+      },
+  });
+  } else {
+    $.ajax({
+      type: "DELETE",
+      url: `/api/like/${newsId}`,
+      error: function (xhr, status, error) {
+          if (status == 403) {
+              alert("로그인이 필요합니다.");
+          } else {
+              alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
+          }
+      },
+      success: function () {
+        window.location.reload();
+      },
     });
+  }
+}
+
+function btnReady(){
+  if(loginUserNickname === writeNickname){
+  //   const template = `
+  //     <button>수정</button>
+  //     <button>삭제</button>
+  //   `;
+
+  // $("#updateBtnDiv").append(template);
+  }
 }

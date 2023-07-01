@@ -49,11 +49,11 @@
                 <div class="login-form">
                     <input id="id" type="text" placeholder="ID 입력" />
                     <input id="password" type="text" placeholder="PW 입력" />
-                    <button onclick="sign_in()">로그인</button>
+                    <button onclick="signIn()">로그인</button>
                 </div>
             </div>
             <div class="nav-item logout-btn blind">
-                <button onclick="log_out()">로그아웃</button>
+                <button onclick="logOut()">로그아웃</button>
             </div>
         </nav>
     </header>
@@ -77,7 +77,6 @@
             <button id="btnLiked" onclick=clickLikedBtn(newsId)>좋아요</button>
         </div>
     </div>
-    <script src="./js/api.js"></script>
 
 
     <!-- 댓글 -->
@@ -97,17 +96,15 @@
         </form>
     </div>
 
-    <script src="./js/comment.js"></script>
-
     <footer>
         <p>NodeJs A반 6조 - 노드레인저</p>
     </footer>
 
 
-    <script src="./js/api.js"></script>
+    <script src="./js/comment.js"></script>
     <script>
         $(document).ready(function () {
-            login_check();
+            loginCheck();
 
             getNewsDetail(newsId, function (n) {
                 const [news] = n;

@@ -11,13 +11,13 @@ function getNews() {
         newsId = item.newsId;
         userId = item.UserId;
         img = item.img;
-        title = item.title;
+        if (item.title.length > 30) {
+          title = item.title.substring(0, 31) + " ...";
+        } else {
+          title = item.title;
+        }
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
-
-        if (title.length > 40) {
-          return (title = title.substring(0, 41) + "...");
-        }
 
         const template = `<ul class="news-item">
                             <li class="news-list">
@@ -109,13 +109,13 @@ function kFootball() {
         newsId = item.newsId;
         userId = item.UserId;
         img = item.img;
-        title = item.title;
+        if (item.title.length > 30) {
+          title = item.title.substring(0, 31) + " ...";
+        } else {
+          title = item.title;
+        }
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
-
-        if (title.length > 40) {
-          return (title = title.substring(0, 41) + "...");
-        }
 
         const template = `<ul class="news-item">
                             <li class="news-list">
@@ -150,13 +150,13 @@ function wFootball() {
         newsId = item.newsId;
         userId = item.UserId;
         img = item.img;
-        title = item.title;
+        if (item.title.length > 30) {
+          title = item.title.substring(0, 31) + " ...";
+        } else {
+          title = item.title;
+        }
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
-
-        if (title.length > 40) {
-          return (title = title.substring(0, 41) + "...");
-        }
 
         const template = `<ul class="news-item">
                             <li class="news-list">
@@ -200,13 +200,13 @@ function dateSort() {
             newsId = item.newsId;
             userId = item.UserId;
             img = item.img;
-            title = item.title;
+            if (item.title.length > 30) {
+              title = item.title.substring(0, 31) + " ...";
+            } else {
+              title = item.title;
+            }
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
-
-            if (title.length > 40) {
-              return (title = title.substring(0, 41) + "...");
-            }
 
             const template = `<ul class="news-item">
                                 <li class="news-list">
@@ -238,13 +238,13 @@ function dateSort() {
             newsId = item.newsId;
             userId = item.UserId;
             img = item.img;
-            title = item.title;
+            if (item.title.length > 30) {
+              title = item.title.substring(0, 31) + " ...";
+            } else {
+              title = item.title;
+            }
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
-
-            if (title.length > 40) {
-              return (title = title.substring(0, 41) + "...");
-            }
 
             const template = `<ul class="news-item">
                                 <li class="news-list">
@@ -273,13 +273,13 @@ function dateSort() {
             newsId = item.newsId;
             userId = item.UserId;
             img = item.img;
-            title = item.title;
+            if (item.title.length > 30) {
+              title = item.title.substring(0, 31) + " ...";
+            } else {
+              title = item.title;
+            }
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
-
-            if (title.length > 40) {
-              return (title = title.substring(0, 41) + "...");
-            }
 
             const template = `<ul class="news-item">
                                 <li class="news-list">
@@ -315,13 +315,13 @@ function dateSort() {
             newsId = item.newsId;
             userId = item.UserId;
             img = item.img;
-            title = item.title;
+            if (item.title.length > 30) {
+              title = item.title.substring(0, 31) + " ...";
+            } else {
+              title = item.title;
+            }
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
-
-            if (title.length > 40) {
-              return (title = title.substring(0, 41) + "...");
-            }
 
             const template = `<ul class="news-item">
                                 <li class="news-list">
@@ -353,13 +353,13 @@ function dateSort() {
             newsId = item.newsId;
             userId = item.UserId;
             img = item.img;
-            title = item.title;
+            if (item.title.length > 30) {
+              title = item.title.substring(0, 31) + " ...";
+            } else {
+              title = item.title;
+            }
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
-
-            if (title.length > 40) {
-              return (title = title.substring(0, 41) + "...");
-            }
 
             const template = `<ul class="news-item">
                                 <li class="news-list">

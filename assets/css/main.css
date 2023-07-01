@@ -112,6 +112,12 @@ nav {
   height: 15vw;
 }
 
+.news-item a,
+.news-item h3,
+.news-item p {
+  margin: 2px 0;
+}
+
 /* 푸터 */
 footer {
   width: 100%;

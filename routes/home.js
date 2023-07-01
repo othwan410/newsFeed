@@ -6,7 +6,7 @@ const { json, useInflection } = require("sequelize");
 const router = express.Router();
 
 // 로그인 API
-router.post("/login", async (req, res) => {
+router.post("/api/login", async (req, res) => {
   // id와 pw를 body로 입력받음
   const { id, password } = req.body;
   // id로 일치하는 유저 검색
@@ -30,18 +30,18 @@ router.post("/login", async (req, res) => {
 });
 
 // 로그인 체크 API
-router.get("/logincheck", authMiddleware, async (req, res) => {
+router.get("/api/logincheck", authMiddleware, async (req, res) => {
   return res.status(201).json({ userInfo: res.locals.user });
 });
 
 // 로그아웃 API
-router.post("/logout", authMiddleware, async (req, res) => {
+router.post("/api/logout", authMiddleware, async (req, res) => {
   // 쿠키 삭제
   return res.cookie("authorization", "").json({ message: "로그아웃 완료" });
 });
 
 // 뉴스 불러오기 API (최신순)
-router.get("/getnews", async (req, res) => {
+router.get("/api/getnews", async (req, res) => {
   const newsList = await News.findAll({
     attributes: [
       "newsId",
@@ -65,7 +65,7 @@ router.get("/getnews", async (req, res) => {
 });
 
 // 뉴스 불러오기 API (과거순)
-router.get("/getoldnews", async (req, res) => {
+router.get("/api/getoldnews", async (req, res) => {
   const newsList = await News.findAll({
     attributes: [
       "newsId",

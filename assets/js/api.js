@@ -4,7 +4,7 @@ let writeNickname = null;
 function getNews() {
   $.ajax({
     type: "GET",
-    url: "/getnews",
+    url: "/api/getnews",
     success: function (res) {
       const news = res.news;
       news.map((item) => {
@@ -15,13 +15,17 @@ function getNews() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
+        if (title.length > 40) {
+          return (title = title.substring(0, 41) + "...");
+        }
+
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -34,32 +38,33 @@ function getNews() {
 }
 
 // 로그인 버튼
-function sign_in() {
+function signIn() {
   let id = $("#id").val();
   let password = $("#password").val();
   console.log(id, password);
   $.ajax({
     type: "POST",
-    url: "/login",
+    url: "/api/login",
     data: {
       id: id,
       password: password,
     },
     success: function (res) {
       console.log("로그인 성공");
-      login_check();
+      loginCheck();
     },
     error: function (error) {
       console.log("로그인 실패");
+      alert(error.responseJSON.message);
     },
   });
 }
 
 // 로그아웃 버튼
-function log_out() {
+function logOut() {
   $.ajax({
     type: "POST",
-    url: "/logout",
+    url: "/api/logout",
     success: function () {
       location.reload();
     },
@@ -67,11 +72,11 @@ function log_out() {
 }
 
 // 로그인 체크
-function login_check() {
+function loginCheck() {
   if (document.cookie) {
     $.ajax({
       type: "GET",
-      url: "/logincheck",
+      url: "/api/logincheck",
       success: function (res) {
         const userInfo = res.userInfo;
 
@@ -79,7 +84,7 @@ function login_check() {
         const id = userInfo.id;
 
         const template = `<div class="login-user">
-                            <p class="login-id">접속중인 id : <a href="/modify.html/user/?userId=${userId}">${id}</p>
+                            <p class="login-id">접속중인 id : <a href="/userInfo.html?userId=${userId}">${id}</p>
                           </div>`;
 
         $(".user-form").html(template);
@@ -90,11 +95,11 @@ function login_check() {
 }
 
 // 국내축구 카테고리
-function k_football() {
+function kFootball() {
   $(".news-box").empty();
   $.ajax({
     type: "GET",
-    url: "/getnews",
+    url: "/api/getnews",
     success: function (res) {
       const news = res.news;
       const newsList = news.filter((a) => {
@@ -108,13 +113,17 @@ function k_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
+        if (title.length > 40) {
+          return (title = title.substring(0, 41) + "...");
+        }
+
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -127,11 +136,11 @@ function k_football() {
 }
 
 // 해외축구 카테고리
-function w_football() {
+function wFootball() {
   $(".news-box").empty();
   $.ajax({
     type: "GET",
-    url: "/getnews",
+    url: "/api/getnews",
     success: function (res) {
       const news = res.news;
       const newsList = news.filter((a) => {
@@ -145,13 +154,17 @@ function w_football() {
         createdAt = item.createdAt.substring(0, 10);
         user = item.User.nickname;
 
+        if (title.length > 40) {
+          return (title = title.substring(0, 41) + "...");
+        }
+
         const template = `<ul class="news-item">
                             <li class="news-list">
                               <div class="news-card">
                                 <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                 <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                 <p>${createdAt}</p>
-                                <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                               </div>
                             </li>
                           </ul>`;
@@ -177,7 +190,7 @@ function dateSort() {
     if (category === "국내축구") {
       $.ajax({
         type: "GET",
-        url: "/getoldnews",
+        url: "/api/getoldnews",
         success: function (res) {
           const news = res.news;
           const newsList = news.filter((a) => {
@@ -191,13 +204,17 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
+            if (title.length > 40) {
+              return (title = title.substring(0, 41) + "...");
+            }
+
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                    <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -211,7 +228,7 @@ function dateSort() {
     } else if (category === "해외축구") {
       $.ajax({
         type: "GET",
-        url: "/getoldnews",
+        url: "/api/getoldnews",
         success: function (res) {
           const news = res.news;
           const newsList = news.filter((a) => {
@@ -225,13 +242,17 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
+            if (title.length > 40) {
+              return (title = title.substring(0, 41) + "...");
+            }
+
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                    <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -245,7 +266,7 @@ function dateSort() {
     } else {
       $.ajax({
         type: "GET",
-        url: "/getoldnews",
+        url: "/api/getoldnews",
         success: function (res) {
           const news = res.news;
           news.map((item) => {
@@ -256,13 +277,17 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
+            if (title.length > 40) {
+              return (title = title.substring(0, 41) + "...");
+            }
+
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
                                     <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                    <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -280,7 +305,7 @@ function dateSort() {
     if (category === "국내축구") {
       $.ajax({
         type: "GET",
-        url: "/getnews",
+        url: "/api/getnews",
         success: function (res) {
           const news = res.news;
           const newsList = news.filter((a) => {
@@ -294,13 +319,17 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
+            if (title.length > 40) {
+              return (title = title.substring(0, 41) + "...");
+            }
+
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                   <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                    <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;
@@ -314,7 +343,7 @@ function dateSort() {
     } else if (category === "해외축구") {
       $.ajax({
         type: "GET",
-        url: "/getnews",
+        url: "/api/getnews",
         success: function (res) {
           const news = res.news;
           const newsList = news.filter((a) => {
@@ -328,13 +357,17 @@ function dateSort() {
             createdAt = item.createdAt.substring(0, 10);
             user = item.User.nickname;
 
+            if (title.length > 40) {
+              return (title = title.substring(0, 41) + "...");
+            }
+
             const template = `<ul class="news-item">
                                 <li class="news-list">
                                   <div class="news-card">
-                                   <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
+                                    <a href="/newsDetail.html?newsId=${newsId}"><img src="${img}" alt="news_image" /></a>
                                     <h3><a href="/newsDetail.html?newsId=${newsId}">${title}</a></h3>
                                     <p>${createdAt}</p>
-                                    <p><a href="modify.html/user/?userId=${userId}">${user}</a></p>
+                                    <p><a href="/userInfo.html?userId=${userId}">${user}</a></p>
                                   </div>
                                 </li>
                               </ul>`;

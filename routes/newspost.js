@@ -59,12 +59,13 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
     const { title, content, category, img } = req.body;
     
     const post = await News.findOne({where: { newsId }});
+  
     // 유효성 검사
     if (!post || !newsId) {
         return res.status(404).json({
             errorMessage: "게시글이 존재하지 않습니다."
         })
-    } else if (userId !== post.userId){
+    } else if (userId !== post.userId) {
         return res.status(404).json({
             errorMessage: "게시글 수정 권한이 없습니다."
         })
@@ -80,19 +81,21 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
         return res.status(400).json({
             errorMessage: "카테고리를 선택해주세요."
         })
-    } 
+    }
 
     // 수정
     await News.update(
         { title, content, category, img },
-        { where : {
-            [Op.and]: [{newsId}, {UserId: userId}],
-        }}
-    );  
-        res.send({ result: "success" });
-        // return res.status(200).json({
-        //     message: "게시글이 수정되었습니다."
-        // });
+        {
+            where: {
+                [Op.and]: [{ newsId }, { UserId: userId }],
+            }
+        }
+    );
+    res.send({ result: "success" });
+    // return res.status(200).json({
+    //     message: "게시글이 수정되었습니다."
+    // });
 });
 
 
@@ -102,20 +105,20 @@ router.delete("/news/:newsId", authMiddleware, async (req, res) => {
     const { newsId } = req.params;
     const { userId } = res.locals.user;
 
-    const post = await News.findOne({ where : { newsId }});
+    const post = await News.findOne({ where: { newsId } });
 
-    if (!post){
+    if (!post) {
         return res.status(404).json({
             errorMessage: "게시글이 존재하지 않습니다."
         });
-    } else if (post.userId !== userId){
+    } else if (post.userId !== userId) {
         return res.status(404).json({
             errorMessage: "게시글 삭제 권한이 없습니다."
         });
     }
     await News.destroy({
         where: {
-            [Op.and]: [{newsId}, {UserId: userId}]
+            [Op.and]: [{ newsId }, { UserId: userId }]
         }
     });
     res.send({ result: "success" });

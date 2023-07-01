@@ -14,7 +14,7 @@ router.get("/news/:newsId", async (req, res) => {
 
     const { newsId } = req.params;
     const news = await News.findOne({ 
-        attributes: ["newsId", "userId",  "title", "content","img", "createdAt", "updatedAt"],
+        attributes: ["newsId", "userId",  "title", "content", "img", "createdAt", "updatedAt"],
         include: [
             {
             model: Users,
@@ -23,12 +23,11 @@ router.get("/news/:newsId", async (req, res) => {
         ],
         where: { newsId }
     });
-    console.log(news.img);
 
     const prNews = [news].map((item) => {
         return {
             newsId: item.newsId,
-            userId: item.User.userId,
+            userId: item.userId,
             title: item.title,
             nickname: item.User.nickname,
             content: item.content,

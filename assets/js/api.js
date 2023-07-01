@@ -1,7 +1,7 @@
 let loginUserNickname = null;
 let writeNickname = null;
 let loginUserId = null;
-let isLiked = false;
+let isLiked = null;
 
 function getNews() {
   $.ajax({
@@ -39,7 +39,6 @@ function getNews() {
 function sign_in() {
   let id = $("#id").val();
   let password = $("#password").val();
-  console.log(id, password);
   $.ajax({
     type: "POST",
     url: "/login",
@@ -69,10 +68,7 @@ function log_out() {
 
 // 로그인 체크
 function login_check() {
-  const cookie = document.cookie
-  console.log(cookie.replace('authorization=', ''));
   if (document.cookie) {
-    console.log(document.cookie);
     $.ajax({
       type: "GET",
       url: "/logincheck",
@@ -88,10 +84,11 @@ function login_check() {
 
         $(".user-form").html(template);
         $(".logout-btn").removeClass("blind");
+        $("#signUpList").hide();
+        document.getElementById("writeA").onclick = '';
 
         loginUserNickname = userInfo.nickname;
         loginUserId = userId;
-        console.log(loginUserId);
       },
     });
   }
@@ -401,7 +398,6 @@ function getUserlikedcheck(newsId) {
         alert("알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.");
     },
     success: function (response) {
-      console.log(response);
       if(response.isLiked) isLiked = true;
       else isLiked = false;
     },
@@ -410,7 +406,6 @@ function getUserlikedcheck(newsId) {
 
 function clickLikedBtn(newsId) {
   if(!isLiked) {
-    console.log("UP");
     $.ajax({
       type: "POST",
       url: `/api/like/${newsId}`,
@@ -425,7 +420,6 @@ function clickLikedBtn(newsId) {
       },
     });
   } else {
-    console.log("Down");
     $.ajax({
       type: "DELETE",
       url: `/api/like/${newsId}`,
@@ -454,23 +448,16 @@ function btnReady(){
 }
 
 function clickUpdateBtn(newsId){
-  console.log('수정');
 }
 
 function clickDeleteBtn(newsId){
-  console.log('삭제');
-}
-
-// 게시글 삭제  
-function remove() {
   $.ajax({
     type: "DELETE",
     url: `http://localhost:3018/api/news/${newsId}`,
-    data: {},
     success: function(response) {
       if (response["result"] == "success"){
         alert("글이 정상적으로 삭제되었습니다.")
-        location.href="/news"
+        location.href="/"
       }
     }
   })

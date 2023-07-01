@@ -40,9 +40,9 @@
             </div>
             <div class="nav-item">
                 <ul class="menu">
-                    <li><a href="#">Write</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <div class="space"></div>
+                    <li><a id="writeA" href="/create.html" onclick="alert('로그인 후 이용 가능합니다.');return false;">Write</a>
+                    </li>
+                    <li id="signUpList"><a href="/userCreate.html">SignUp</a></li>
                 </ul>
             </div>
             <div class="nav-item user-form">
@@ -51,10 +51,9 @@
                     <input id="password" type="text" placeholder="PW 입력" />
                     <button onclick="sign_in()">로그인</button>
                 </div>
-                <!-- <div class="login-user">
-          <p class="login-id">접속중인 id : doohyeon</p>
-          <button class="logout-btn" onclick="log_out()">로그아웃</button>
-        </div> -->
+            </div>
+            <div class="nav-item logout-btn blind">
+                <button onclick="log_out()">로그아웃</button>
             </div>
         </nav>
     </header>
@@ -66,7 +65,11 @@
         <h1 id="newsTitle"></h1>
         <p id="newsCreatedAt"></p>
         <p id="newsUpdatedAt"></p>
-        <p id="newsNickname"></p>
+        <p id="newsCreatedAt"></p>
+        <p id="newsUpdatedAt"></p>
+        <div id="newsNicknameDiv">
+            <a id="newsNickname"></a>
+        </div>
         <img id="newsImg" src= />
         <p id="newsContent"></p>
         <div id="likedDiv">
@@ -108,10 +111,10 @@
 
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
-                console.log(n);
                 $("#newsTitle").text(news.title);
                 $("#newsImg").attr("src", news.img);
                 $("#newsNickname").text("작성자: " + news.nickname);
+                $("#newsNickname").attr("href", "http://localhost:3018/userInfo.html?userId=" + news.userId);
                 $("#newsContent").text(news.content);
                 $("#newsCreatedAt").text("작성일: " + news.createdAt);
                 $("#newsUpdatedAt").text("수정일: " + news.updatedAt);
@@ -119,9 +122,9 @@
 
             getNewsDetailLiked(newsId, function (likedCount) {
                 $("#liked").text(likedCount);
+                btnReady();
+                getUserlikedcheck(newsId);
             })
-
-            btnReady();
         });
     </script>
 </body>

@@ -103,9 +103,6 @@ router.post("/user", async (req, res) => {
   }
 
   //  닉네임 검증
-  // 닉네임도 id와 똑같이 처리한다.
-  const nickRegex = /^[A-Za-z\d!@#$%^&()[\]{}가-힣ㄱ-ㅎㅏ-ㅣ*.,';:']{3,10}$/;
-  const nickCheck = nickRegex.test(nickname);
 
   if (!nickCheck) {
     res.status(400).json({

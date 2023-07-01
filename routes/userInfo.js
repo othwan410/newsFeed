@@ -10,7 +10,7 @@ router.get("/user/:userId", async (req, res) => {
 
     const user = await Users.findOne({
         // 검색 결과에서 가져올 속성들
-        attributes: ["nickname", "message"],
+        attributes: ["nickname", "message", "createdAt"],
         // 검색 조건은 userId이다.
         where: { userId },
     });

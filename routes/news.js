@@ -1,5 +1,4 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const { News, Users, NewsLiked } = require("../models");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware.js");
@@ -24,6 +23,7 @@ router.get("/news/:newsId", async (req, res) => {
         ],
         where: { newsId }
     });
+    console.log(news.img);
 
     const prNews = [news].map((item) => {
         return {
@@ -37,7 +37,7 @@ router.get("/news/:newsId", async (req, res) => {
             updatedAt: item.updatedAt,
         };
     });
-
+    
     res.json({
         news: prNews,
     });

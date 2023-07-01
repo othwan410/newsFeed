@@ -69,7 +69,10 @@ function log_out() {
 
 // 로그인 체크
 function login_check() {
+  const cookie = document.cookie
+  console.log(cookie.replace('authorization=', ''));
   if (document.cookie) {
+    console.log(document.cookie);
     $.ajax({
       type: "GET",
       url: "/logincheck",

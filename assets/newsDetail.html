@@ -62,15 +62,12 @@
     <!-- 뉴스 -->
     <div id="nwesDiv">
         <div id="updateBtnDiv">
-            <button type="button" class="btn btn-primary" onClick="location.href='modify.html'">수정</button>
-            <button type="button" class="btn btn-primary" type="submit" onclick="remove()">삭제</button>
-            
         </div>
         <h1 id="newsTitle"></h1>
         <p id="newsCreatedAt"></p>
         <p id="newsUpdatedAt"></p>
         <p id="newsNickname"></p>
-        <img id="newsImg" src="./img/1.jpg" />
+        <img id="newsImg" src= />
         <p id="newsContent"></p>
         <div id="likedDiv">
             <p id="liked">3</p>
@@ -103,14 +100,15 @@
         <p>NodeJs A반 6조 - 노드레인저</p>
     </footer>
 
-    
-         <script src="./js/api.js"></script>
-         <script>
+
+    <script src="./js/api.js"></script>
+    <script>
         $(document).ready(function () {
             login_check();
 
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
+                console.log(n);
                 $("#newsTitle").text(news.title);
                 $("#newsImg").attr("src", news.img);
                 $("#newsNickname").text("작성자: " + news.nickname);

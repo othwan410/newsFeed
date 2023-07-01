@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     img: {
       allowNull: true, //  NULL
-      type: DataTypes.STRING.BINARY,
+      type: DataTypes.STRING,
     },
     category: {
       allowNull: false, // NOT NULL

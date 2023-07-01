@@ -1,4 +1,5 @@
 // 이상우 게시글 생성, 수정, 삭제
+// http://localhost:3018/create.html
 
 const express = require("express");
 const router = express.Router();
@@ -7,12 +8,13 @@ const { News } = require("../models");
 const { Op } = require("sequelize");
 const upload = require("../middlewares/upload-middleware.js");
 
+
 // 게시글 작성 POST : localhost:3018/sports/news (성공)
-// authMiddleware
-router.post("/news", upload.single('image'), async(req, res) => {  
+
+router.post("/news", authMiddleware, upload.single('image'), async(req, res) => {  
     try{ 
-        // const { UserId } = res.locals.user;
-        const { UserId,title, content, category} = req.body;
+        const { UserId } = res.locals.user;
+        const { title, content, category } = req.body;
         const imageUrl = req.file.location;
 
         // 유효성 검사
@@ -53,15 +55,16 @@ router.post("/news", upload.single('image'), async(req, res) => {
 
 
 // 게시글 수정 PUT : localhost:3018/sports/news/newsId (성공)
-router.put("/news/:newsId", authMiddleware, async(req, res) => {  
+router.put("/news/:newsId", authMiddleware, upload.single('image'), async(req, res) => {  
     const { newsId } = req.params;
     const { userId } = res.locals.user;
-    const { title, content, category, img } = req.body;
+    const { title, content, category } = req.body;
+    const imageUrl = req.file.location;
     
     const post = await News.findOne({where: { newsId }});
   
     // 유효성 검사
-    if (!post || !newsId) {
+    if (!post) {
         return res.status(404).json({
             errorMessage: "게시글이 존재하지 않습니다."
         })
@@ -85,7 +88,7 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
 
     // 수정
     await News.update(
-        { title, content, category, img },
+        { title, content, category, img:imageUrl },
         {
             where: {
                 [Op.and]: [{ newsId }, { UserId: userId }],
@@ -100,7 +103,7 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
 
 
 
-// 게시글 삭제 DELETE : localhost:3018/sports/news/newsId (성공)
+// 게시글 삭제 DELETE : localhost:3018/api/news/newsId (성공)
 router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
     const { newsId } = req.params;
     const { userId } = res.locals.user;

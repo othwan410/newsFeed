@@ -5,7 +5,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -24,148 +25,74 @@
 
   <!-- 날짜 CDN -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-
+  
   <title>게시글 수정</title>
 </head>
-<style>
-  .body {
-    background-image: url("https://c.wallhere.com/photos/3d/f7/Liverpool_FC_soccer_men_sport-201243.jpg!d");
-  }
 
-  .form-control {
-    background-color: transparent;
-  }
 
-  .wrap {
-    width: 60%;
-    margin: auto;
-    margin-top: 30px;
-  }
 
-  .form-group {
-    margin-top: 20px;
-  }
-
-  .label {
-    margin-top: 20px;
-  }
-
-  .btncls {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-    margin-top: 10px;
-  }
-
-  .btn-primary {
-    margin-left: 20px;
-  }
-
-  .inputPwd {
-    width: 200px;
-    margin-left: 10px;
-    -webkit-text-security: disc;
-  }
-</style>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
-<script src="./js/api.js"></script>
 
 <script>
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const newsId = urlParams.get("newsId");
 
-
-
-  // 게시글 수정 
-  function correct() {
-    $.ajax({
-      type: "PUT",
-      url: `http://localhost:3018/api/news/${newsId}`,
-      dataType: "text",
-      data: {
-        title: $("#title").val(),
-        content: $("#content").val(),
-        category: $("input[name=flexRadioDefault]:checked").val()
-      },
-      success: function (response) {
-        if (response["result"] == "success") {
-          alert("글이 정상적으로 수정되었습니다.");
-          window.location.href = "/news"
-        }
-      }
-    });
-  }
-
   //취소 버튼 시 뒤로가기 기능
   function back() {
     location.href = 'javascript:history.back();'
   }
 
-
-
-
-
 </script>
 
 <body class="body">
+  <link rel="stylesheet" href="./css/modify.css" />
   <div class='wrap'>
     <h1>게시글 수정</h1>
-    <form class="form-group" action="http://localhost:3018/news" method="PUT">
+    <form class="form-group" action="http://localhost:3018/api/news" method="PUT">
       <div class="form-group">
         <div class="label" style="float: left">
-          <label style="font-weight: bold;">제목 :</label> <!--for="flexRadioDefault1"-->
+          <form id="form">
+            
+            <!-- 제목 입력 -->
+          <label style="font-weight: bold;">제목 :</label>
           <input type="text" id="title" placeholder="제목을 입력해 주세요.">
         </div>
-        <div style="float: right">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외"
-              checked>
-            <label class="form-check-label"> <!--for="flexRadioDefault1"-->
-              해외축구
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내"
-              checked>
-            <label class="form-check-label" for="flexRadioDefault2">
-              국내축구
-            </label>
-          </div>
+
+        <!-- 카테고리 설정 -->
+        <div class="content" style="float: right">
+          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1" value="해외" checked>
+          <label class="form-check-label" for="flexRadioDefault1" value="해외">해외축구</label>
+          <br />
+          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault2" value="국내" checked>
+          <label class="form-check-label" for="flexRadioDefault2" value="국내">국내축구</label>
+          <div id="categoryresult"></div>
         </div>
         <br>
+
+         <!-- 게시글 내용 입력 -->
         <div class="label">
-          <textarea id="content" class="form-control" id="borderContent" type="text" rows="20"
-            placeholder="내용을 입력해 주세요."></textarea>
+          <textarea id="content" class="form-control" id="borderContent" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
         </div>
+        <script src='./js/post.js'></script>
       </div>
     </form>
-    <div class="btncls">
-      <form method="post" action="/news" enctype="multipart/form-data" id="upload_frm">
-        <input type="file" name="imgUpload"/>
-        <button type="submit">전송</button>
-      </form>
-      <!-- 사진 업로드 함수 -->
-      <script>
-        const uploadFrm = document.querySelector('#upload_frm');
-  
-        uploadFrm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const { subject, imgUpload } = e.target;
-  
-          console.log(imgUpload.files[0]);
-          const formData = new FormData();
-          formData.append('imgUpload', imgUpload.files[0]);
-          formData.append('subject', subject.value);
-  
-          axios.post('/news', formData);
-        });
-      </script>
+
+        <!-- 사진 업로드 -->
+        <div class="btncls">
+          <form action="/news" method="post" enctype="multipart/form-data">
+            <label for='files'></label>
+            <input type="file" name="image" id="files" multiple>
+            <!-- <input class="submit-btn" type="submit" value="저장" /> -->
+          </form>
+          <script src='./js/post.js'></script>
+      
+          <!-- 게시글 전체 업로드 -->
       <button class="btn btn-primary" type="submit" onclick="correct()">수정 완료</button>
       <button class="btn btn-primary" type="submit" onclick="back()">취소</button>
     </div>
   </div>
+  <script src='./js/post.js'></script>
 </body>
 </html>

@@ -35,14 +35,24 @@
         </div>
         <div class="nav-item user-form">
           <div class="login-form">
-            <input id="id" type="text" placeholder="ID 입력" />
-            <input id="password" type="text" placeholder="PW 입력" />
-            <button onclick="sign_in()">로그인</button>
+            <input
+              id="id"
+              type="text"
+              placeholder="ID 입력"
+              onKeyPress="if (event.keyCode==13){signIn();}"
+            />
+            <input
+              id="password"
+              type="password"
+              placeholder="PW 입력"
+              onKeyPress="if (event.keyCode==13){signIn();}"
+            />
+            <button onclick="signIn()">로그인</button>
           </div>
           <!-- login user template -->
         </div>
         <div class="nav-item logout-btn blind">
-          <button onclick="log_out()">로그아웃</button>
+          <button onclick="logOut()">로그아웃</button>
         </div>
       </nav>
     </header>
@@ -50,8 +60,8 @@
     <div class="main-container">
       <main>
         <div class="btn-box">
-          <a onclick="k_football()">국내축구</a>
-          <a onclick="w_football()">해외축구</a>
+          <a onclick="kFootball()">국내축구</a>
+          <a onclick="wFootball()">해외축구</a>
           <a class="date-sort-btn" onclick="dateSort()">최신순</a>
         </div>
         <!-- 카테고리 표시 -->
@@ -68,7 +78,7 @@
     <script>
       $("document").ready(function () {
         getNews();
-        login_check();
+        loginCheck();
       });
     </script>
   </body>

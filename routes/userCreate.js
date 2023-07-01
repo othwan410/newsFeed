@@ -53,7 +53,7 @@ router.post("/user", async (req, res) => {
   if (isExistUserID) {
     return res.status(409).json({ message: "이미 존재하는 ID입니다.." });
   }
-
+  
   // id가 조건을 만족하지 않는다면,
   if (!idCheck) {
     res.status(400).json({
@@ -64,6 +64,9 @@ router.post("/user", async (req, res) => {
     return;
   }
 
+  // 닉네임도 id와 똑같이 처리한다.
+  const nickRegex = /^[A-Za-z\d!@#$%^&()[\]{}가-힣ㄱ-ㅎㅏ-ㅣ*.,';:']{3,10}$/;
+  const nickCheck = nickRegex.test(nickname);
 
   //  비밀번호 검증
   // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
@@ -115,7 +118,6 @@ router.post("/user", async (req, res) => {
   // 닉네임 중복 확인
   const isExistUserNickname = await Users.findOne({ where: { nickname } });
 
-
   // 존재한다면 경고를 띄운다.
   if (isExistUserNickname) {
     return res.status(409).json({ message: "이미 존재하는 닉네임입니다." });
@@ -132,8 +134,6 @@ router.post("/user", async (req, res) => {
     });
     return;
   }
-
-
 
   const user = await Users.create({
     id,

@@ -15,9 +15,12 @@ router.post('/comments', (req, res) => {
 router.put('/comments/:id', (req, res) => {
   const commentId = req.params.id;
   const updatedComment = req.body;
-  const commentIndex = comments.findIndex(comment => comment.id === commentId);
-  
+  const commentIndex = comments.findIndex(comment => comment.id === String(commentId));
+
   if (commentIndex !== -1) {
+    if (!updatedComment.id) {
+      updatedComment.id = commentId;
+    }
     comments[commentIndex] = updatedComment;
     res.sendStatus(200);
   } else {
@@ -28,8 +31,8 @@ router.put('/comments/:id', (req, res) => {
 // 댓글 삭제
 router.delete('/comments/:id', (req, res) => {
   const commentId = req.params.id;
-  const commentIndex = comments.findIndex(comment => comment.id === commentId);
-  
+  const commentIndex = comments.findIndex(comment => comment.id === String(commentId));
+
   if (commentIndex !== -1) {
     comments.splice(commentIndex, 1);
     res.sendStatus(200);

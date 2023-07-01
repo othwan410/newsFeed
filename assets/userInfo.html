@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>축스피드 회원정보</title>
+    <link rel="stylesheet" href="./userInfo.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="jwt-decode.js"></script>
+
+</head>
+
+<body>
+    <h1>닉네임 조회</h1>
+
+    <div id="signupForm">
+        <div class="input">
+            <div class="left-input">
+                <label class="row" for="nickname">닉네임 :</label>
+            </div>
+            <div class="right-input">
+                <input class="row" type="text" id="nickname" name="nickname" required><br>
+            </div>
+        </div>
+        <button type="button" class="button" onclick="submitForm()">회원 조회</button>
+    </div>
+
+
+    <h1>내 회원 정보 조회/수정</h1>
+    <input type="password" id="password" placeholder="비밀번호">
+    <button onclick="getUserInfo()">조회/수정</button>
+
+    <div id="modal" class="input">
+        <div id="idmoal">ID : </div>
+        <input type="text" id="messageModal" placeholder="메시지">
+        <div id="nameModal">이름 : </div>
+        <input type="text" id="nicknameModal" placeholder="닉네임">
+        <input type="password" id="passwordDel" placeholder="비밀번호" autocomplete="off">
+        <input type="password" id="passwordConfirmModal" placeholder="비밀번호 확인" autocomplete="off">
+
+        <button onclick="updateUserInfo()">수정</button>
+        <button onclick="deleteUserInfo()">삭제</button>
+    </div>
+
+    <script>
+
+        function getUserInfo() {
+            // 쿠키 가져오기
+            const cookie = document.cookie;
+
+            // 쿠키확인
+            const matches = cookie.match(/Bearer%20(.+)/);
+            if (matches && matches[1]) {
+                const token = decodeURIComponent(matches[1]);
+                const decodedToken = jwt_decode(token);
+                // console.log(decodedToken);
+                userId = decodedToken.userId; // 전역 변수에 값 할당
+
+                // 비밀번호 입력값 가져오기
+                const passwordInput = document.querySelector('#password');
+                const password = passwordInput.value;
+
+                // POST 요청 보내기
+                const apiUrl = `http://localhost:3018/api/user/info/${userId}?password=${password}`;
+                fetch(apiUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+
+                        // 모달에 값 채워넣기
+                        document.getElementById('idmoal').innerText = "ID : " + data.id;
+                        document.getElementById('nameModal').innerText = "이름: " + data.id;
+                        document.querySelector('#nicknameModal').value = data.nickname;
+                        document.querySelector('#messageModal').value = data.message;
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        }
+
+
+
+        function updateUserInfo() {
+
+            // 수정할 사용자 정보 JSON 형태로 만들기
+            const userData = {
+                id: document.querySelector('#idmoal').innerText,
+                name: document.querySelector('#nameModal').value,
+                nickname: document.querySelector('#nicknameModal').value,
+                password: document.querySelector('#passwordDel').value,
+                confirmPassword: document.querySelector('#passwordConfirmModal').value,
+                message: document.querySelector('#messageModal').value
+            };
+
+            console.log(userData);
+
+            // PATCH 요청 보내기
+            const apiUrl = `http://localhost:3018/api/user/update/${userId}`;
+            fetch(apiUrl, {
+                method: 'PATCH',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.errorMessage) {
+                        alert(data.errorMessage); // 에러 메시지를 alert으로 표시
+                    } else if (data.message) {
+                        alert(data.message); // 성공 메시지를 alert으로 표시
+                        window.location.href = '/';
+                        // TODO: 처리 완료 후 필요한 동작 수행
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
+
+
+
+        //  유저삭제
+        function deleteUserInfo() {
+            // 삭제할 사용자 정보 JSON 형태로 만들기
+
+
+            const passwordDel = document.querySelector('#passwordDel').value;
+
+            console.log(userId);
+
+            const confirmDelete = confirm('정말로 삭제하시겠습니까?');
+            // 사용자가 확인 버튼을 클릭한 경우에만 삭제 요청을 보냅니다.
+            if (confirmDelete) {
+                // 수정할 사용자 정보 JSON 형태로 만들기
+                const userData = {
+                    passwordDel,
+                    userId
+                };
+
+                console.log(userData);
+
+
+                const asswordDel = document.querySelector('#passwordDel').value;
+
+                console.log(passwordDel);
+
+                // 삭제 요청 보내기
+                const apiUrl = `http://localhost:3018/api/user/delete/${userId}`;
+                fetch(apiUrl, {
+                    method: 'DELETE',
+                    body: JSON.stringify(userData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.errorMessage) {
+                            alert(data.errorMessage); // 에러 메시지를 alert으로 표시
+                        } else if (data.message) {
+                            alert(data.message); // 성공 메시지를 alert으로 표시
+                            window.location.href = '/';
+                            // TODO: 처리 완료 후 필요한 동작 수행
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        }
+
+    </script>
+
+
+    <script>
+        function submitForm() {
+            var nickname = document.getElementById("nickname").value;
+            var url = "http://localhost:3018/api/user/" + nickname;
+
+            // GET 요청 보내기
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.data && data.data.message) {
+                        // message 값이 존재하면 alert으로 표시
+                        alert(nickname + " 님의 한마디 입니다" + "\n: " + data.data.message);
+                    } else {
+                        alert("메시지를 가져오지 못했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error("API 요청 중 오류가 발생했습니다.", error);
+                });
+        }
+    </script>
+
+</body>
+
+</html>

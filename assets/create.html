@@ -5,9 +5,10 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -91,7 +92,7 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
   crossorigin="anonymous"></script>
-<script src="./js/api.js"></script>
+<script src="./js/multer.js"></script>
 <script>
 
   // 게시글 생성
@@ -101,10 +102,9 @@
       url: `http://localhost:3018/api/news`,
       data: {
         //post 보낼 데이터
-        title: $("#title").val(), // QuerySelector (#id) #하면 아이디
+        title: $("#title").val(), // QuerySelector (#id) #아이디
         content: $("#content").val(),
         category: $("input[name=flexRadioDefault]:checked").val(), // 카테고리 value값 가져옴
-        img: $("#uploadFiles").val(), // 이미지 = 바이너리 데이터로 변경 BLOB // 출력은 BLOB를 이미지로 변경하는 라이브러리 이용(Multer)   
       },
       success: function (response) {
         if (response['result'] == "success") {
@@ -115,53 +115,14 @@
     });
   }
 
-  //////////////////////////
-  // 바이너리 업로드 (img파일)
-  function Uploader(file) {
-    this._file = file;
-    this._xhr = new XMLHttpRequest();
-    this._xhr.addEventListener("load", transferComplete);
-
-    // 파일 하나에 대한 업로드를 시작한다.
-    this.startUpload = function () {
-      var reader = new FileReader();
-      var fileName = this._file.name;
-      var xhr = this._xhr;
-
-      // FileReader에서 파일 내용을 모두 읽은 경우 AJAX으로 전송한다.
-      reader.onload = function (evt) {
-        xhr.open("POST", "upload.asp", true);
-        // 파일 이름은 file-name에 명시한다.
-        xhr.setRequestHeader("file-name", encodeURIComponent(fileName));
-        xhr.send(evt.target.result);
-      };
-      reader.readAsArrayBuffer(file);
-    }
-
-    function transferComplete() {
-      // 성공적으로 업로드된 경우 UI에 출력한다.
-      if (this.status == 200) {
-        var li = document.createElement("li");
-        li.innerHTML = this.responseText;
-        document.getElementById("resultList").appendChild(li);
-      }
-    }
-  }
-  function fileUpload() {
-    var uploadFiles = document.getElementById("uploadFiles");
-    var uploader = new Uploader(uploadFiles.files[0]);
-    uploader.startUpload();
-  }
-    //////////////////////////
-
 </script>
 
 <body class="body">
   <div class='wrap'>
     <h1 class="post">게시글 작성</h1>
-    <form class="form-group" action="http://localhost:3018/news" method="POST">
+    <form class="form-group" action="/news" method="post">
       <div class="label" style="float: left">
-        <label class="post" style="font-weight: bold;">제목 :</label> <!-- for="exampleFormControlInput1" -->
+        <label class="post" style="font-weight: bold;">제목 :</label> 
         <input type="text" id="title" placeholder="제목을 입력해 주세요." />
       </div>
       <div class="content" style="float: right">
@@ -182,17 +143,18 @@
       </div>
       <br>
       <div class="label">
-        <label style="float: left"></label> <!-- for="exampleFormControlInput1" -->
+        <label style="float: left"></label> 
         <textarea id="content" class="form-control" id="borderContent" type="text" rows="20"
           placeholder="내용을 입력해 주세요."></textarea>
       </div>
     </form>
     <div class="btncls">
-      <input type="file" id="uploadFiles">
-      <button id="uploadBtn" type="button" value="업로드" onclick="fileUpload()">파일 등록</button>
-      <ul id="resultList"></ul>
-      <!-- <img src="" class="uploadImage"> -->
-      <button class="btn btn-primary" type="submit" onclick="upload()">작성 완료</button>
+      <form action="/news" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required/>
+        <input type="submit" value="Upload" />
+      </form>
+    
+      <button class="btn btn-primary" type="submit" onclick="upload()">작성</button>
       <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
     </div>
   </div>

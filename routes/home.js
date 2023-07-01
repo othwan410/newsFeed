@@ -11,6 +11,7 @@ router.post("/api/login", async (req, res) => {
   const { id, password } = req.body;
   // id로 일치하는 유저 검색
   const user = await Users.findOne({ where: { id } });
+  console.log(user);
   if (!user) {
     return res.status(401).json({ message: "존재하지 않는 아이디입니다." });
   } else if (user.password !== password) {

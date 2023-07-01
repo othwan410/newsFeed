@@ -3,7 +3,7 @@ const { Users } = require("../models");
 
 const router = express.Router();
 
-// 사용자 조회
+// 닉네임 조회
 // 닉네임으로 상대 정보를 받아오고, 그것으로 남김말을 본다.
 router.get("/user/:nickname", async (req, res) => {
     const { nickname } = req.params;
@@ -29,16 +29,13 @@ router.get("/user/:nickname", async (req, res) => {
 
 // userId는 숫자 값이며, 닉네임은 숫자만으로도 만들 수 있기 때문에,
 // 닉네임과 userId가 겹칠 수 있다. 그래서 /info 로 한번 더 경로를 만든다.
-router.get("/user/info/:userId", async (req, res) => {
-
+router.post("/user/info/:userId", async (req, res) => {
     const { userId } = req.params;
 
-    const {
-        password
-    } = req.body;
+    const { password } = req.body;
 
     const user = await Users.findOne({
-        attributes: ["userId", "nickname", "createdAt", "updatedAt", "name", "message", "password"],
+        attributes: ["userId","id", "nickname", "createdAt", "updatedAt", "name", "message", "password"],
         where: { userId },
     });
 
@@ -46,20 +43,19 @@ router.get("/user/info/:userId", async (req, res) => {
         return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
     } else if (password !== user.password) {
         return res.status(404).json({ message: "비밀번호가 일치하지 않습니다." });
+    } else {
+        const { id,password, name, nickname, message, userId } = user;
+        return res.status(200).json({ id, password, name, nickname, message, userId });
     }
-    else {
-        return res.status(201).json({
-            message:
-                user.userId + "당신의 정보는 아래와 같습니다.\n이름 : " + user.name
-        });
-    }
-
-    // 역시 별도의 버튼을 누르면 아래의 라우터가 작동하게 하자.
 });
+
+
+
+
 
 // 정보 수정, put 을 사용하면 모두 입력해야하므로 patch로 한다.
 // api 명세서에는 put으로 되어있으니 나중에 말해야한다.
-router.patch("/user/info/:userId", async (req, res) => {
+router.patch("/user/update/:userId", async (req, res) => {
 
     const { userId } = req.params;
 
@@ -75,14 +71,16 @@ router.patch("/user/info/:userId", async (req, res) => {
     // }
 
     const {
-        passwordNew,
-        confirmPasswordNew,
-        message,
-        nickname
+        id,
+        name,
+        nickname,
+        password,
+        confirmPassword,
+        message
     } = req.body;
 
     //  비밀번호 검증
-    if (passwordNew !== confirmPasswordNew) {
+    if (password !== confirmPassword) {
         res.status(400).json({
             errorMessage: "비밀번호가 일치하지 않습니다..",
         });
@@ -90,10 +88,10 @@ router.patch("/user/info/:userId", async (req, res) => {
     }
 
     const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{6,20}$/
-    const passCheck = passRegex.test(passwordNew);
+    const passCheck = passRegex.test(password);
 
     // 위의 조건 + id 를 포함하지 않을 것
-    if (!passCheck || passwordNew.includes(users.id)) {
+    if (!passCheck || password.includes(users.id)) {
         res.status(400).json({
             errorMessage:
                 "password는 ID를 포함하지 않는, 영어, 숫자, 특수문자(!@#$%^&*)를 포함한 6~20 글자여야합니다.",
@@ -141,7 +139,7 @@ router.patch("/user/info/:userId", async (req, res) => {
 
     const user = await Users.update(
         {
-            password: passwordNew,
+            password,
             message,
             nickname
         },
@@ -164,30 +162,26 @@ router.delete("/user/delete/:userId", async (req, res) => {
         attributes: ["userId", "nickname", "createdAt", "updatedAt", "name", "message", "password", "id"],
         where: { userId },
     });
-    
+
     //"정말로 ID : " [ ] " 를 삭제하겠습니다." 사이에서 입력받도록 만들기
-    // const confirmChar = "정말로 ID : " + users.id + " 를 삭제하겠습니다."
+    const confirmChar = "정말로 ID : " + users.id + " 를 삭제하겠습니다."
 
 
     const {
         id,
-        passwordNew,
-        confirm
+        passwordDel,
     } = req.body;
 
-    if (passwordNew !== users.password) {
+    console.log(passwordDel);
+    console.log(users.password);
+
+    if (passwordDel !== users.password) {
         res.status(400).json({
             errorMessage: "비밀번호가 일치하지 않습니다.",
         });
         return
     }
 
-    if (users.id !== confirm) {
-        res.status(400).json({
-            errorMessage: "삭제 문구를 다시 확인해 주세요.",
-        });
-        return
-    }
 
     const user = await Users.destroy({
         where: {

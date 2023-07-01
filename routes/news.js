@@ -1,5 +1,4 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const { News, Users, NewsLiked } = require("../models");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware.js");
@@ -15,7 +14,7 @@ router.get("/news/:newsId", async (req, res) => {
 
     const { newsId } = req.params;
     const news = await News.findOne({ 
-        attributes: ["newsId", "userId",  "title", "content","img", "createdAt", "updatedAt"],
+        attributes: ["newsId", "userId",  "title", "content", "img", "createdAt", "updatedAt"],
         include: [
             {
             model: Users,
@@ -28,7 +27,7 @@ router.get("/news/:newsId", async (req, res) => {
     const prNews = [news].map((item) => {
         return {
             newsId: item.newsId,
-            userId: item.User.userId,
+            userId: item.userId,
             title: item.title,
             nickname: item.User.nickname,
             content: item.content,
@@ -37,7 +36,7 @@ router.get("/news/:newsId", async (req, res) => {
             updatedAt: item.updatedAt,
         };
     });
-
+    
     res.json({
         news: prNews,
     });
@@ -50,44 +49,33 @@ router.get("/news/:newsId", async (req, res) => {
   }
 });
 
-router.get("/like/:newsId", authMiddleware, async (req, res) => {
-  let userId = null;
-  try {
-    const { Authorization } = req.cookies;
-    const [authType, authToken] = (Authorization ?? "").split(" ");
-    if (authToken && authType !== "Bearer") {
-      userId = jwt.verify(authToken, "customized_secret_key");
-      userId = {userId};
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({
-      message: "좋아요 조회 오류."
-    });
-  }
+router.get("/like/:newsId", async (req, res) => {
 
   const { newsId } = req.params;
   const likedCount = await NewsLiked.findAndCountAll({
     where: {newsId}
-   });
+  });
 
-  if(userId){
-    const loginUserNickname = await Users.findOne({ 
-      attributes: [ "nickname" ],
-      where: { userId }
-    });
-
-    res.json({
-      likedCount: likedCount,
-      loginUserNickname : loginUserNickname.nickname
-    });
-  }
-  else{
-    res.json({
-      likedCount: likedCount,
-    });
-  }
+  res.json({
+    likedCount: likedCount,
+  });
 });
+
+router.get("/like/:newsId/:userId", async (req, res) => {
+
+  const { newsId, userId } = req.params;
+  const likedUser = await NewsLiked.findOne({
+    where: {
+      newsId,
+      userId
+    }
+  });
+
+  res.json({
+    isLiked: likedUser,
+  });
+});
+
 
 router.post("/like/:newsId", authMiddleware, async (req, res) => {
   try {
@@ -109,11 +97,10 @@ router.post("/like/:newsId", authMiddleware, async (req, res) => {
     });
   }
 });
-// authMiddleware
-router.delete("/like/:newsId", async (req, res) => {
-  try {
 
-    const { userId } = {userId : 1}//res.locals.user;
+router.delete("/like/:newsId", authMiddleware, async (req, res) => {
+  try {
+    const { userId } = res.locals.user;
     const { newsId } = req.params;
 
     await NewsLiked.destroy({where:{ userId, newsId }});

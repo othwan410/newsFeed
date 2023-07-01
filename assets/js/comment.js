@@ -1,4 +1,5 @@
 var loggedInUserId = 1; // 예시로 사용할 로그인된 사용자의 ID
+var comments = []; // 초기 댓글 목록을 빈 배열로 초기화
 
 // 댓글 작성 기능
 function addComment(content) {
@@ -11,13 +12,15 @@ function addComment(content) {
     id: generateCommentId(),
     content: content,
     userId: loggedInUserId,
+    nickname: '작성자 닉네임', // 작성자 닉네임 설정
     reportCount: 0
   };
 
   $.ajax({
     type: 'POST',
     url: '/comments',
-    data: newComment,
+    data: JSON.stringify(newComment), // 객체를 문자열로 변환하여 전송
+    contentType: 'application/json', // 전송하는 데이터 타입을 명시
     success: function () {
       comments.push(newComment);
       renderComments();
@@ -131,6 +134,14 @@ function createCommentElement(comment) {
   var contentElement = $('<span>').addClass('content').text(comment.content);
   var actionsElement = $('<span>').addClass('actions');
 
+  // 닉네임을 표시하는 요소 생성
+  var nicknameElement = $('<span>').addClass('nickname').text(comment.nickname);
+  // 클릭 이벤트 핸들러 추가
+  nicknameElement.on('click', function() {
+    // 네비게이션 코드를 여기에 추가
+    window.location.href = 'http//localhost:3018/userinfo.html?userid=';
+  });
+
   var editButton = $('<button>').text('수정');
   editButton.on('click', function() {
     editComment(comment.id);
@@ -147,7 +158,7 @@ function createCommentElement(comment) {
   });
 
   actionsElement.append(editButton, deleteButton, reportButton);
-  commentElement.append(contentElement, actionsElement);
+  commentElement.append(nicknameElement, contentElement, actionsElement);
 
   return commentElement;
 }
@@ -182,16 +193,15 @@ function generateCommentId() {
 
 // 댓글 신고 내용 저장 함수
 function saveDeclaration(commentId, reason) {
-    $.ajax({
-      type: 'POST',
-      url: '/comments/' + commentId + '/declaration',
-      data: { reason: reason },
-      success: function(response) {
-        console.log('댓글 신고가 성공적으로 저장되었습니다.');
-      },
-      error: function() {
-        console.error('댓글 신고 저장에 실패했습니다.');
-      }
-    });
-  }
-  
+  $.ajax({
+    type: 'POST',
+    url: '/comments/' + commentId + '/declaration',
+    data: { reason: reason },
+    success: function(response) {
+      console.log('댓글 신고가 성공적으로 저장되었습니다.');
+    },
+    error: function() {
+      console.error('댓글 신고 저장에 실패했습니다.');
+    }
+  });
+}

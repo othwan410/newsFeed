@@ -4,6 +4,31 @@
 <head>
     <title>축스피드 회원가입.</title>
     <link rel="stylesheet" href="./css/userCreate.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <nav>
+        <div class="nav-item">
+            <h1 class="logo">
+                <a href="/"><img src="./img/logo.png" width="40" alt="logo" />축스피드</a>
+            </h1>
+        </div>
+        <div class="nav-item">
+            <ul class="menu">
+                <li><a href="/create.html">Write</a></li>
+                <li><a href="/userCreate.html">SignUp</a></li>
+            </ul>
+        </div>
+        <div class="nav-item user-form">
+            <div class="login-form">
+                <input id="id" type="text" placeholder="ID 입력" />
+                <input id="password" type="password" placeholder="PW 입력" autocomplete="off" />
+                <button onclick="sign_in()">로그인</button>
+            </div>
+            <!-- login user template -->
+        </div>
+        <div class="nav-item logout-btn blind">
+            <button onclick="log_out()">로그아웃</button>
+        </div>
+    </nav>
     <script>
         function submitForm() {
             // 폼 데이터 수집
@@ -60,29 +85,32 @@
 </head>
 
 <body>
-    <h1>회원가입</h1>
-    <form id="signupForm">
-        <div class="input">
-            <div class="left-input">
-                <label for="id">ID :</label>
-                <label for="password">비밀번호 :</label>
-                <label for="confirmPassword">비밀번호 다시 입력 :</label>
-                <label for="name">이름 :</label>
-                <label for="nickname">닉네임 :</label>
-                <label for="message">나의 한마디 :</label>
+    <div class="main-container">
+        <h1>회원가입</h1>
+        <form id="signupForm">
+            <div class="input">
+                <div class="left-input">
+                    <label for="id">ID :</label>
+                    <label for="password">비밀번호 :</label>
+                    <label for="confirmPassword">비밀번호 다시 입력 :</label>
+                    <label for="name">이름 :</label>
+                    <label for="nickname">닉네임 :</label>
+                    <label for="message">나의 한마디 :</label>
+                </div>
+                <div class="right-input">
+                    <input type="text" id="id" name="id" required><br>
+                    <input type="password" id="password" name="password" required><br>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+                    <input type="text" id="name" name="name" required><br>
+                    <input type="text" id="nickname" name="nickname" required><br>
+                    <input type="text" id="message" name="message"><br>
+                </div>
             </div>
-            <div class="right-input">
-                <input type="text" id="id" name="id" required><br>
-                <input type="password" id="password" name="password" required><br>
-                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-                <input type="text" id="name" name="name" required><br>
-                <input type="text" id="nickname" name="nickname" required><br>
-                <input type="text" id="message" name="message"><br>
-            </div>
-        </div>
-        <button class="btn" type="button" onclick="submitForm()">회원가입</button>
+            <button class="btn" type="button" onclick="submitForm()">회원가입</button>
 
-    </form>
+        </form>
+    </div>
+
 </body>
 
 </html>

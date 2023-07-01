@@ -64,10 +64,6 @@ router.post("/user", async (req, res) => {
     return;
   }
 
-  // 닉네임도 id와 똑같이 처리한다.
-  const nickRegex = /^[A-Za-z\d!@#$%^&()[\]{}가-힣ㄱ-ㅎㅏ-ㅣ*.,';:']{3,10}$/;
-  const nickCheck = nickRegex.test(nickname);
-
   //  비밀번호 검증
   // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
   const passRegex = /^(?=.*[A-Za-z\d!@#$%^&*]).{6,20}$/

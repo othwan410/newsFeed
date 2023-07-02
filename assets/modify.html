@@ -1,5 +1,5 @@
 <!-- 이상우 뉴스수정-->
-
+<!-- http://localhost:3018/modify.html?newsId=3 -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +31,8 @@
 
 
 
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
 
 <script>
   const queryString = window.location.search;
@@ -49,7 +50,8 @@
   <link rel="stylesheet" href="./css/modify.css" />
   <div class='wrap'>
     <h1>게시글 수정</h1>
-    <!-- <form class="form-group" action="http://localhost:3018/api/news" method="PUT"> -->
+    <!-- "/api/news/newsId="+newsId = newsId가 앞의 문자열 뒤에 붙음. -->
+    <form class="form-group" action="/api/news/newsId="+newsId method="PUT" enctype="multipart/form-data"> 
       <div class="form-group">
         <div class="label" style="float: left">
             
@@ -60,10 +62,10 @@
 
         <!-- 카테고리 설정 -->
         <div class="content" style="float: right">
-          <input class="form-check-input" type="radio" name="radio" id="foreign" value="해외" checked>
+          <input class="form-check-input" type="radio" name="category" id="radio" value="해외" checked>
           <label class="form-check-label" for="flexRadioDefault1" value="해외">해외축구</label>
           <br />
-          <input class="form-check-input" type="radio" name="radio" id="domestic" value="국내" checked>
+          <input class="form-check-input" type="radio" name="category" id="radio" value="국내" checked>
           <label class="form-check-label" for="flexRadioDefault2" value="국내">국내축구</label>
           <div id="categoryresult"></div>
         </div>
@@ -71,25 +73,35 @@
 
          <!-- 게시글 내용 입력 -->
         <div class="label">
-          <label style="float: left"></label>
-          <textarea id="content" class="form-control" id="borderContent" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
-        <script src='./js/post.js'></script>
+          <textarea id="content" class="form-control" name ="content" id="borderContent" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
+        </div>
       </div>
-
         <!-- 사진 업로드 -->
-        <!-- <div class="btncls">
-          <form action="/news" method="post" enctype="multipart/form-data">
+        <div class="btncls">
             <label for='files'></label>
-            <input type="file" name="image" id="files" multiple>
-            <input class="submit-btn" type="submit" value="저장" />
-          </form> -->
-
-      
+            <input type="file" name="image" id="image">
+     
           <!-- 게시글 전체 업로드 -->
-      <button class="btn btn-primary" onclick="correct()">수정 완료</button>
-      <button class="btn btn-primary" onclick="back()">취소</button>
+
+      <button class="btn btn-primary" type="submit" type="submit">수정 완료</button>
+    </form>
+      <button class="btn btn-primary" type="submit" onclick="back()">취소</button>
     </div>
   </div>
-  <script src='./js/post.js'></script>
+  <script src="./js/api.js"></script>
+  <script>
+    $(document).ready(function () {
+        getNewsDetail(newsId, function (n) {
+            const [news] = n;
+            $("#title").attr("value", news.title);  //attribute (태그값)에서 value를 건드리고, 그 뒤는 parameter값.
+            $('input[name=category]:checked').attr("value", news.category);
+            $("#content").val();
+            $("#image").val();
+            $("#content").attr("value", news.content);
+            $("#image").attr("value", news.image); 
+        });
+    });
+    
+</script>
 </body>
 </html>

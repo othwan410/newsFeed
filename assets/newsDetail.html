@@ -40,21 +40,20 @@
             </div>
             <div class="nav-item">
                 <ul class="menu">
-                    <li><a href="#">Write</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <div class="space"></div>
+                    <li><a id="writeA" href="/create.html" onclick="alert('로그인 후 이용 가능합니다.');return false;">Write</a>
+                    </li>
+                    <li id="signUpList"><a href="/userCreate.html">SignUp</a></li>
                 </ul>
             </div>
             <div class="nav-item user-form">
                 <div class="login-form">
                     <input id="id" type="text" placeholder="ID 입력" />
-                    <input id="password" type="password" placeholder="PW 입력" autocomplete="off"/>
-                    <button onclick="sign_in()">로그인</button>
+                    <input id="password" type="text" placeholder="PW 입력" />
+                    <button onclick="signIn()">로그인</button>
                 </div>
-                <!-- <div class="login-user">
-          <p class="login-id">접속중인 id : doohyeon</p>
-          <button class="logout-btn" onclick="log_out()">로그아웃</button>
-        </div> -->
+            </div>
+            <div class="nav-item logout-btn blind">
+                <button onclick="logOut()">로그아웃</button>
             </div>
         </nav>
     </header>
@@ -62,22 +61,22 @@
     <!-- 뉴스 -->
     <div id="nwesDiv">
         <div id="updateBtnDiv">
-            <button type="button" class="btn btn-primary" onClick="location.href='modify.html'">수정</button>
-            <button type="button" class="btn btn-primary" type="submit" onclick="remove()">삭제</button>
-            
         </div>
         <h1 id="newsTitle"></h1>
         <p id="newsCreatedAt"></p>
         <p id="newsUpdatedAt"></p>
-        <p id="newsNickname"></p>
-        <img id="newsImg" src="./img/1.jpg" />
+        <p id="newsCreatedAt"></p>
+        <p id="newsUpdatedAt"></p>
+        <div id="newsNicknameDiv">
+            <a id="newsNickname"></a>
+        </div>
+        <img id="newsImg" src= />
         <p id="newsContent"></p>
         <div id="likedDiv">
             <p id="liked">3</p>
             <button id="btnLiked" onclick=clickLikedBtn(newsId)>좋아요</button>
         </div>
     </div>
-    <script src="./js/api.js"></script>
 
 
     <!-- 댓글 -->
@@ -97,23 +96,22 @@
         </form>
     </div>
 
-    <script src="./js/comment.js"></script>
-
     <footer>
         <p>NodeJs A반 6조 - 노드레인저</p>
     </footer>
 
-    
-         <script src="./js/api.js"></script>
-         <script>
+
+    <script src="./js/comment.js"></script>
+    <script>
         $(document).ready(function () {
-            login_check();
+            loginCheck();
 
             getNewsDetail(newsId, function (n) {
                 const [news] = n;
                 $("#newsTitle").text(news.title);
                 $("#newsImg").attr("src", news.img);
                 $("#newsNickname").text("작성자: " + news.nickname);
+                $("#newsNickname").attr("href", "http://localhost:3018/userInfo.html?userId=" + news.userId);
                 $("#newsContent").text(news.content);
                 $("#newsCreatedAt").text("작성일: " + news.createdAt);
                 $("#newsUpdatedAt").text("수정일: " + news.updatedAt);
@@ -121,9 +119,9 @@
 
             getNewsDetailLiked(newsId, function (likedCount) {
                 $("#liked").text(likedCount);
+                btnReady();
+                getUserlikedcheck(newsId);
             })
-
-            btnReady();
         });
     </script>
 </body>

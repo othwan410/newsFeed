@@ -51,7 +51,7 @@ function signIn() {
       password: password,
     },
     success: function (res) {
-      loginCheck();
+      location.reload();
     },
     error: function (error) {
       alert(error.responseJSON.message);
@@ -492,4 +492,157 @@ function clickDeleteBtn(newsId) {
       }
     },
   });
+}
+
+//댓글 작성
+function addComment(newsId) {
+  if(!loginUserId){
+    alert('로그인 댓글을 남길 수 있습니다.');
+    return ;
+  }
+
+  const content = document.querySelector("#commentContent").value;
+  if(content){
+    $.ajax({
+      type: 'POST',
+      url: `/api/news/${newsId}/comments`,
+      data: {content:content},
+      success: function (res) {
+        getComments(newsId);
+        document.querySelector("#commentContent").value = "";
+      },
+      error: function (error) {
+        console.log(error);
+        alert('댓글 작성에 실패했습니다.');
+      },
+    });
+  }else{
+    alert("내용을 입력해주세요");
+  }
+}
+
+// 댓글 수정 기능
+function editComment(newsId, commentId, beforeContent) {
+  const content = prompt("수정할 내용을 입력해주세요.",beforeContent);
+  if(content){
+    $.ajax({
+      type: 'PUT',
+      url: `/api/news/${newsId}/comments/${commentId}`,
+      data: {content:content},
+      success: function () {
+        getComments(newsId);
+        document.querySelector("#commentContent").value = "";
+      },
+      error: function () {
+        alert('댓글 수정에 실패했습니다.');
+      }
+    });
+  }else{
+    alert("내용을 입력해주세요");
+  }
+}
+
+// 댓글 삭제 기능
+function deleteComment(newsId, commentId) {
+  if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+      $.ajax({
+        type: 'DELETE',
+        url: `/api/news/${newsId}/comments/${commentId}`,
+      success: function (res) {
+        getComments(newsId);
+      },
+      error: function () {
+        alert('댓글 삭제에 실패했습니다.');
+      }
+    });
+  }
+}
+
+// 댓글 신고 기능
+function declarateComment(newsId, commentId) {
+  const content = prompt("신고사유를 작성해주세요.");
+  if(content){
+    $.ajax({
+      type: 'POST',
+      url: `/api/news/${newsId}/comments/${commentId}/declaration`,
+      data: {content:content},
+      success: function () {
+        alert('댓글을 신고했습니다.');
+        declarationProccess(newsId, commentId);
+      },
+      error: function () {
+        alert('댓글 신고에 실패하였습니다.');
+      }
+    });
+  }else{
+    alert("내용을 입력해주세요");
+  }
+}
+
+function getComments(newsId){
+  $.ajax({
+    type: 'GET',
+    url: `/api/news/${newsId}/comments`,
+    error: function (xhr, status, error) {
+      alert('알 수 없는 문제가 발생했습니다. 관리자에게 문의하세요.');
+    },
+    success: function (response) {
+      let commentsContainer = $('#comments');
+      commentsContainer.empty();
+      const comments = response.comments;
+      for(let i = 0; i < comments.length; i++){
+        let commentElement = createCommentElement(newsId, comments[i]);
+        commentsContainer.append(commentElement);
+      }
+    }
+  });
+}
+
+function declarationProccess(newsId, commentId){
+  $.ajax({
+    type: 'DELETE',
+    url: `/api/news/comments/${commentId}/declaration`,
+    success: function (response) {
+      if(response.check === "OK") getComments(newsId);
+    }
+  });
+}
+
+function createCommentElement(newsId, comment) {
+  console.log("dd");
+  let commentElement = $('<div>').addClass('comment');
+  let contentElement = $('<span>').addClass('commentContent').text(": "+comment.content);
+  let actionsElement = $('<span>').addClass('actions');
+
+  // 닉네임을 표시하는 요소 생성
+  let nicknameElement = $('<span>').addClass('commentNickname').text(comment.nickname);
+  // 클릭 이벤트 핸들러 추가
+  nicknameElement.on('click', function() {
+    // 네비게이션 코드를 여기에 추가
+    window.location.href = '/userinfo.html?userId=' + comment.userId;
+  });
+
+  if(loginUserId === comment.userId){
+    let editButton = $('<button>').text('수정');
+    editButton.on('click', function() {
+      editComment(newsId, comment.commentsId, comment.content);
+    });
+
+    let deleteButton = $('<button>').text('삭제');
+    deleteButton.on('click', function() {
+      deleteComment(newsId, comment.commentsId);
+    });
+  
+    actionsElement.append(editButton, deleteButton);
+  }
+
+  let declarateButton = $('<button>').text('신고');
+  declarateButton.on('click', function() {
+    declarateComment(newsId, comment.commentsId);
+  });
+
+  actionsElement.append(declarateButton);
+  commentElement.append(nicknameElement, contentElement, actionsElement);
+
+  return commentElement;
 }

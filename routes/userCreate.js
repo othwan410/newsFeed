@@ -43,7 +43,7 @@ router.post("/user", async (req, res) => {
 
   //  id 검증
   // 정규식을 활용하여, 입력받은 id가 조건을 만족하는지 체크한다.
-  const idRegex = /^[A-Za-z\d]{3,10}$/;
+  const idRegex = /^[A-Za-z0-9]+[A-Za-z0-9]{2,}$/g;
   const idCheck = idRegex.test(id);
 
   // 같은 id가 있는지 검색한다.
@@ -59,7 +59,7 @@ router.post("/user", async (req, res) => {
     res.status(400).json({
       // 경고문을 띄운다.
       errorMessage:
-        "ID를 최소 3~10자, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
+        "ID를 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
     });
     return;
   }

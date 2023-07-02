@@ -47,8 +47,9 @@
             </div>
             <div class="nav-item user-form">
                 <div class="login-form">
-                    <input id="id" type="text" placeholder="ID 입력" />
-                    <input id="password" type="text" placeholder="PW 입력" />
+                    <input id="id" type="text" placeholder="ID 입력" onKeyPress="if (event.keyCode==13){signIn();}" />
+                    <input id="password" type="text" placeholder="PW 입력"
+                        onKeyPress="if (event.keyCode==13){signIn();}" />
                     <button onclick="signIn()">로그인</button>
                 </div>
             </div>
@@ -83,28 +84,26 @@
     <div class="container">
         <div class="comment-container">
             <div id="comments">
-                <!-- 댓글 목록이 표시될 부분 -->
+
             </div>
         </div><br>
 
-        <form id="commentForm">
+        <div id="commentForm">
             <div class="mb-3">
-                <textarea rows="4" cols="50" class="form-control" id="commentContent"
-                    placeholder="댓글을 작성해주세요"></textarea>
+                <textarea onKeyPress="if (event.keyCode==13) addComment(newsId);" rows=" 4" cols="50"
+                    class="form-control" id="commentContent" placeholder="댓글을 작성해주세요"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">댓글 등록</button>
-        </form>
+            <button class="btn btn" onclick=addComment(newsId)>댓글 등록</button>
+        </div>
     </div>
 
     <footer>
         <p>NodeJs A반 6조 - 노드레인저</p>
     </footer>
-
-
-    <script src="./js/comment.js"></script>
     <script>
         $(document).ready(function () {
             loginCheck();
+            getComments(newsId);
 
             getNewsDetail(newsId, function (n) {
                 const [news] = n;

@@ -560,22 +560,26 @@ function deleteComment(newsId, commentId) {
 
 // 댓글 신고 기능
 function declarateComment(newsId, commentId) {
-  const content = prompt("신고사유를 작성해주세요.");
-  if(content){
-    $.ajax({
-      type: 'POST',
-      url: `/api/news/${newsId}/comments/${commentId}/declaration`,
-      data: {content:content},
-      success: function () {
-        alert('댓글을 신고했습니다.');
-        declarationProccess(newsId, commentId);
-      },
-      error: function () {
-        alert('댓글 신고에 실패하였습니다.');
-      }
-    });
+  if(loginUserId){
+    const content = prompt("신고사유를 작성해주세요.");
+    if(content){
+      $.ajax({
+        type: 'POST',
+        url: `/api/news/${newsId}/comments/${commentId}/declaration`,
+        data: {content:content},
+        success: function () {
+          alert('댓글을 신고했습니다.');
+          declarationProccess(newsId, commentId);
+        },
+        error: function () {
+          alert('댓글 신고에 실패하였습니다.');
+        }
+      });
+    }else{
+      alert("내용을 입력해주세요");
+    }
   }else{
-    alert("내용을 입력해주세요");
+    alert("로그인 후 이용 가능합니다.");
   }
 }
 

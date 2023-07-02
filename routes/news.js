@@ -1,5 +1,4 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const { News, Users, NewsLiked } = require("../models");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware.js");
@@ -15,7 +14,7 @@ router.get("/news/:newsId", async (req, res) => {
 
     const { newsId } = req.params;
     const news = await News.findOne({ 
-        attributes: ["newsId", "userId",  "title", "content","img", "createdAt", "updatedAt"],
+        attributes: ["newsId", "userId",  "title", "content", "img", "createdAt", "updatedAt"],
         include: [
             {
             model: Users,
@@ -28,7 +27,7 @@ router.get("/news/:newsId", async (req, res) => {
     const prNews = [news].map((item) => {
         return {
             newsId: item.newsId,
-            userId: item.User.userId,
+            userId: item.userId,
             title: item.title,
             nickname: item.User.nickname,
             content: item.content,
@@ -37,7 +36,7 @@ router.get("/news/:newsId", async (req, res) => {
             updatedAt: item.updatedAt,
         };
     });
-
+    
     res.json({
         news: prNews,
     });

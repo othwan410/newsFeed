@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "",
-    "password": "",
-    "database": "newsfeed",
-    "host": "",
+    "username": "powercom92",
+    "password": "tkddn2648",
+    "database": "teamproject",
+    "host": "express-database.cglnarldwxvs.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

@@ -12,7 +12,7 @@
 }
 
 #updateBtnDiv{
-    margin-left: 1550px;
+    margin-left: 500px;
 }
 
 #newsCreatedAt{
@@ -34,6 +34,9 @@
 }
 
 #newsImg{
+    width: 500px;
+    height: 300px;
+    object-fit:contain;
     margin: auto;
     display: block;
 }

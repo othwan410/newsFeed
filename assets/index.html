@@ -1,88 +1,74 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <link rel="favicon" href="./img/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic:wght@800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
-      rel="stylesheet"
-    />
-    <title>축스피드</title>
-  </head>
 
-  <body>
-    <header>
-      <nav>
-        <div class="nav-item">
-          <h1 class="logo">
-            <a href="/"
-              ><img src="./img/logo.png" width="40" alt="logo" />축스피드</a
-            >
-          </h1>
-        </div>
-        <div class="nav-item">
-          <ul class="menu">
-            <li><a href="/create.html">Write</a></li>
-            <li><a href="/userCreate.html">Sign Up</a></li>
-          </ul>
-        </div>
-        <div class="nav-item user-form">
-          <div class="login-form">
-            <input
-              id="id"
-              type="text"
-              placeholder="ID 입력"
-              onKeyPress="if (event.keyCode==13){signIn();}"
-            />
-            <input
-              id="password"
-              type="password"
-              placeholder="PW 입력"
-              onKeyPress="if(event.keyCode==13){signIn();}"
-            />
-            <button onclick="signIn()">로그인</button>
-          </div>
-          <!-- login user template -->
-        </div>
-        <div class="nav-item logout-btn blind">
-          <button onclick="logOut()">로그아웃</button>
-        </div>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="favicon" href="./img/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic:wght@800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet" />
+  <title>축스피드</title>
+</head>
 
-    <div class="main-container">
-      <main>
-        <div class="btn-box">
-          <a onclick="kFootball()">국내축구</a>
-          <a onclick="wFootball()">해외축구</a>
-          <a class="date-sort-btn" onclick="dateSort()">최신순</a>
+<body>
+  <header>
+    <nav>
+      <div class="nav-item">
+        <h1 class="logo">
+          <a href="/"><img src="./img/logo.png" width="40" alt="logo" />축스피드</a>
+        </h1>
+      </div>
+      <div class="nav-item">
+        <ul class="menu">
+          <li><a id="writeA" href="/create.html" onclick="alert('로그인 후 이용 가능합니다.');return false;">Write</a>
+          </li>
+          <li id="signUpList"><a href="/userCreate.html">SignUp</a></li>
+        </ul>
+      </div>
+      <div class="nav-item user-form">
+        <div class="login-form">
+          <input id="id" type="text" placeholder="ID 입력" onKeyPress="if (event.keyCode==13){signIn();}" />
+          <input id="password" type="password" placeholder="PW 입력" onKeyPress="if(event.keyCode==13){signIn();}" />
+          <button onclick="signIn()">로그인</button>
         </div>
-        <!-- 카테고리 표시 -->
-        <p class="news-category">축구소식</p>
-        <div class="news-box">
-          <!-- news template -->
-        </div>
-      </main>
-    </div>
-    <footer>
-      <p>NodeJs A반 6조 - 노드레인저</p>
-    </footer>
+        <!-- login user template -->
+      </div>
+      <div class="nav-item logout-btn blind">
+        <button onclick="logOut()">로그아웃</button>
+      </div>
+    </nav>
+  </header>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="./js/api.js"></script>
-    <script>
-      $('document').ready(function () {
-        getNews();
-        loginCheck();
-      });
-    </script>
-  </body>
+  <div class="main-container">
+    <main>
+      <div class="btn-box">
+        <a onclick="kFootball()">국내축구</a>
+        <a onclick="wFootball()">해외축구</a>
+        <a class="date-sort-btn" onclick="dateSort()">최신순</a>
+      </div>
+      <!-- 카테고리 표시 -->
+      <p class="news-category">축구소식</p>
+      <div class="news-box">
+        <!-- news template -->
+      </div>
+    </main>
+  </div>
+  <footer>
+    <p>NodeJs A반 6조 - 노드레인저</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="./js/api.js"></script>
+  <script>
+    $('document').ready(function () {
+      getNews();
+      loginCheck();
+    });
+  </script>
+</body>
+
 </html>

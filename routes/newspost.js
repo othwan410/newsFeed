@@ -11,15 +11,16 @@ const upload = require("../middlewares/upload-middleware.js");
 
 // 게시글 작성 POST : localhost:3018/sports/news (로그인 이후 작성 성공)
 
-router.post("/news", authMiddleware, async(req, res) => {   //authMiddleware, upload.single('image'),
+router.post("/news", authMiddleware, upload.single('image'), async(req, res) => {   //authMiddleware, upload.single('image'),
     // try{ 
         const { userId }  = res.locals.user;
         console.log(userId) // 정상출력
         const { title, content, category } = req.body;
+
         console.log(title) // 정상출력
         console.log(content) // 정상출력
         console.log(category) // 정상출력
-        // const imageUrl = req.file.location;
+        const imageUrl = req.file.location;
 
         // 유효성 검사
         if (!title) {
@@ -42,11 +43,11 @@ router.post("/news", authMiddleware, async(req, res) => {   //authMiddleware, up
         
         // key값에는 model에 있는 스키마, value에는 req.body값
         await News.create({
-            userId,
             title,
             content,
-            // img:"https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel-Messi-Argentina-2022-FIFA-World-Cup_%28cropped%29.jpg",
+            img:imageUrl,
             category,
+            userId,
         });
 
         return res.status(200).json({message:"게시글 작성에 성공하였습니다."}) // html에 코드 출력

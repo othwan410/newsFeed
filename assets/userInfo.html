@@ -270,6 +270,10 @@
                 .then(data => {
                     if (data && data.data && data.data.nickname) {
                         // 결과를 div에 채워넣기
+                        // console.log("data : "+typeof data + " , "+ data)
+                        // console.log("data.data : "+typeof data.data + " , "+ data.data)
+                        // console.log("data.createdAt : "+typeof data.createdAt + " , "+ data.createdAt)
+                        // console.log("data.data.creatdAt : "+typeof data.data.createdAt + " , "+ data.data.createdAt)
                         document.getElementById('nicknameDiv').innerText = data.data.nickname;
                         document.getElementById('createdAtDiv').innerText = data.data.createdAt.split("T")[0];
                         document.getElementById('messageDiv').innerText = data.data.message;

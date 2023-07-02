@@ -6,15 +6,15 @@ const path = require('path');
 const s3Client = new S3Client({
   region: 'ap-northeast-2',
   credentials: {
-    accessKeyId: 'AKIAUVQH7BTJYIOIJIQK',
-    secretAccessKey: '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',
+    accessKeyId: '',
+    secretAccessKey: '',
   },
 });
 
 const upload = multer({
   storage: multerS3({
     s3: s3Client,
-    bucket: 'soccersfeed',
+    bucket: '',
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {

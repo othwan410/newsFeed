@@ -17,20 +17,20 @@
         </div>
         <div class="nav-item">
             <ul class="menu">
-                <li><a href="/create.html">Write</a></li>
-                <li><a href="/userCreate.html">SignUp</a></li>
+                <li><a id="writeA" href="/create.html" onclick="alert('로그인 후 이용 가능합니다.');return false;">Write</a>
+                </li>
+                <li id="signUpList"><a href="/userCreate.html">SignUp</a></li>
             </ul>
         </div>
         <div class="nav-item user-form">
             <div class="login-form">
-                <input id="id" type="text" placeholder="ID 입력" />
-                <input id="password" type="password" placeholder="PW 입력" autocomplete="off" />
-                <button onclick="sign_in()">로그인</button>
+                <input id="id" type="text" placeholder="ID 입력" onKeyPress="if (event.keyCode==13){signIn();}" />
+                <input id="password" type="text" placeholder="PW 입력" onKeyPress="if (event.keyCode==13){signIn();}" />
+                <button onclick="signIn()">로그인</button>
             </div>
-            <!-- login user template -->
         </div>
         <div class="nav-item logout-btn blind">
-            <button onclick="log_out()">로그아웃</button>
+            <button onclick="logOut()">로그아웃</button>
         </div>
     </nav>
 
@@ -38,12 +38,11 @@
 </head>
 
 <body>
-    <div class="main-container" id="image">
+    <div class="main-container">
         <h1>유저 정보</h1>
         <div id="userInfo" class="input">
             <div class="output">닉네임: <span id="nicknameDiv"></span></div>
             <div class="output">가입일: <span id="createdAtDiv"></span></div>
-
         </div>
         <div>남김말: <span id="messageDiv"></span></div>
 
@@ -79,8 +78,11 @@
     </div>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="./js/api.js"></script>
     <script>
+        loginCheck();
         function getUserInfo() {
             console.log("자동 실행됨");
             // 쿠키 가져오기
@@ -105,17 +107,6 @@
                 console.log("쿠키 값 : " + userId + typeof userId);
                 console.log("파람 값 : " + urlUserId + typeof urlUserId);
 
-                const apiUrl = `http://localhost:3018/api/user/info/${userId}`;
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-
-
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
                 // userId와 urlUserId 비교
                 if (userId === urlUserId) {
                     console.log("일치합니다.")
@@ -269,13 +260,8 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.data && data.data.nickname) {
-                        // 결과를 div에 채워넣기
-                        // console.log("data : "+typeof data + " , "+ data)
-                        // console.log("data.data : "+typeof data.data + " , "+ data.data)
-                        // console.log("data.createdAt : "+typeof data.createdAt + " , "+ data.createdAt)
-                        // console.log("data.data.creatdAt : "+typeof data.data.createdAt + " , "+ data.data.createdAt)
-                        document.getElementById('nicknameDiv').innerText = data.data.nickname;
-                        document.getElementById('createdAtDiv').innerText = data.data.createdAt.split("T")[0];
+                        // document.getElementById('nicknameDiv').innerText = data.data.nickname;
+                        // document.getElementById('createdAtDiv').innerText = data.data.createdAt.split("T")[0];
                         document.getElementById('messageDiv').innerText = data.data.message;
                     } else {
                         alert("사용자를 찾을 수 없습니다.");

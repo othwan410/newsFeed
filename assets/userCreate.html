@@ -13,8 +13,9 @@
         </div>
         <div class="nav-item">
             <ul class="menu">
-                <li><a href="/create.html">Write</a></li>
-                <li><a href="/userCreate.html">SignUp</a></li>
+                <li><a id="writeA" href="/create.html" onclick="alert('로그인 후 이용 가능합니다.');return false;">Write</a>
+                </li>
+                <li id="signUpList"><a href="/userCreate.html">SignUp</a></li>
             </ul>
         </div>
         <div class="nav-item user-form">
@@ -29,32 +30,32 @@
             <button onclick="logOut()">로그아웃</button>
         </div>
     </nav>
-    
+
 </head>
 
 <body class="backgroundimage">
     <div class="main-container">
         <h1>회원가입</h1>
-       
-            <div class="input">
-                <div class="left-input">
-                    <label for="id">ID :</label>
-                    <label for="password">비밀번호 :</label>
-                    <label for="confirmPassword">비밀번호 다시 입력 :</label>
-                    <label for="name">이름 :</label>
-                    <label for="nickname">닉네임 :</label>
-                    <label for="message">나의 한마디 :</label>
-                </div>
-                <div class="right-input">
-                    <input type="text" id="signid" name="id" required/><br/>
-                    <input type="password" id="signpassword" name="password" required/><br/>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required/><br/>
-                    <input type="text" id="name" name="name" required/><br/>
-                    <input type="text" id="nickname" name="nickname" required/><br/>
-                    <input type="text" id="message" name="message"/><br/>
-                </div>
+
+        <div class="input">
+            <div class="left-input">
+                <label for="id">ID :</label>
+                <label for="password">비밀번호 :</label>
+                <label for="confirmPassword">비밀번호 다시 입력 :</label>
+                <label for="name">이름 :</label>
+                <label for="nickname">닉네임 :</label>
+                <label for="message">나의 한마디 :</label>
             </div>
-            <button class="btn" type="button" onclick="submitForm()">회원가입</button>
+            <div class="right-input">
+                <input type="text" id="signid" name="id" required /><br />
+                <input type="password" id="signpassword" name="password" required /><br />
+                <input type="password" id="confirmPassword" name="confirmPassword" required /><br />
+                <input type="text" id="name" name="name" required /><br />
+                <input type="text" id="nickname" name="nickname" required /><br />
+                <input type="text" id="message" name="message" /><br />
+            </div>
+        </div>
+        <button class="btn" type="button" onclick="submitForm()">회원가입</button>
 
     </div>
     <script>
@@ -81,54 +82,54 @@
             // POST 요청 보내기
 
             try {
-                    const response = await fetch(`http://localhost:3018/api/user`, {
-                        method: 'POST',
-                        headers: {
+                const response = await fetch(`http://localhost:3018/api/user`, {
+                    method: 'POST',
+                    headers: {
                         'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({id, password, confirmPassword, name, nickname, message}),
-                    });
-                    const result = await response.json();
-                    // console.log(result.message);
-                    // location.href = 'http://localhost:3018';
-                    return alert(result.message);
-                    } catch (error) {
-                    console.error('Error:', error);
-                    }
+                    },
+                    body: JSON.stringify({ id, password, confirmPassword, name, nickname, message }),
+                });
+                const result = await response.json();
+                // console.log(result.message);
+                // location.href = 'http://localhost:3018';
+                return alert(result.message);
+            } catch (error) {
+                console.error('Error:', error);
+            }
 
 
 
-                // .then(response => {
-                //     if (response.message) {
-                //         alert("회원가입이 완료되었습니다.");
-                //         window.location.href = "/";
-                //     } else if (response.status === 409) {
-                //         // 이미 존재하는 ID나 닉네임일 경우
-                //         response.json().then(data => {
-                //             alert(data.message);
-                //         });
-                //     } else if (response.status === 400) {
-                //         // 입력값에 오류가 있는 경우
-                //         response.json().then(data => {
-                //             alert(data.errorMessage);
-                //         });
-                //     } else {
-                //         // 기타 오류
-                //         alert("회원가입에 실패했습니다.");
-                //     }
-                // })
-                // .catch(error => {
-                //     console.error("Error:", error);
-                //     alert("서버 오류가 발생했습니다.");
-                // });
+            // .then(response => {
+            //     if (response.message) {
+            //         alert("회원가입이 완료되었습니다.");
+            //         window.location.href = "/";
+            //     } else if (response.status === 409) {
+            //         // 이미 존재하는 ID나 닉네임일 경우
+            //         response.json().then(data => {
+            //             alert(data.message);
+            //         });
+            //     } else if (response.status === 400) {
+            //         // 입력값에 오류가 있는 경우
+            //         response.json().then(data => {
+            //             alert(data.errorMessage);
+            //         });
+            //     } else {
+            //         // 기타 오류
+            //         alert("회원가입에 실패했습니다.");
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error("Error:", error);
+            //     alert("서버 오류가 발생했습니다.");
+            // });
         }
     </script>
-     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-     <script src="./js/api.js"></script>
-     <script>
-       
-         loginCheck();
-     </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="./js/api.js"></script>
+    <script>
+
+        loginCheck();
+    </script>
 </body>
 
 </html>

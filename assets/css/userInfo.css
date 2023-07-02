@@ -7,7 +7,6 @@
 }
 
 .output {
-
     width: 1000 px;
 }
 
@@ -34,12 +33,4 @@ input.row {
 
 .btn {
     margin-left: 200px;
-}
-
-.image {
-    height: 100%;
-    width: 100%;
-    background-image: url('https://i.ytimg.com/vi/lo5Qsv_lRK8/maxresdefault.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
 }

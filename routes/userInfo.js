@@ -3,17 +3,20 @@ const { Users } = require("../models");
 
 const router = express.Router();
 
-// 닉네임 조회
-// 닉네임으로 상대 정보를 받아오고, 그것으로 남김말을 본다.
-router.get("/user/:nickname", async (req, res) => {
-    const { nickname } = req.params;
+// userId로 조회
+// userId로 상대 정보를 받아오고, 그것으로 남김말을 본다.
+router.get("/user/:userId", async (req, res) => {
+    const { userId } = req.params;
 
     const user = await Users.findOne({
         // 검색 결과에서 가져올 속성들
-        attributes: ["nickname", "message"],
+        attributes: ["nickname", "message", "createdAt"],
         // 검색 조건은 userId이다.
-        where: { nickname },
+        where: { userId },
     });
+
+    // console.log("user : "+typeof user+" , "+ user)
+    // console.log("user.createdAt : "+typeof user.createdAt+" , "+ user.createdAt)
 
     if (!user) {
         return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
@@ -40,9 +43,9 @@ router.post("/user/info/:userId", async (req, res) => {
     });
 
     if (!user) {
-        return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+        return res.status(404).json({ errorMessage: "사용자를 찾을 수 없습니다." });
     } else if (password !== user.password) {
-        return res.status(404).json({ message: "비밀번호가 일치하지 않습니다." });
+        return res.status(404).json({ errorMessage: "비밀번호가 일치하지 않습니다." });
     } else {
         const { id,password, name, nickname, message, userId } = user;
         return res.status(200).json({ id, password, name, nickname, message, userId });

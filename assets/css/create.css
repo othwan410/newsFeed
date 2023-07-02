@@ -1,0 +1,57 @@
+.post {
+    color: white;
+  }
+
+  .title {
+    color: white;
+  }
+
+  .content {
+    color: white;
+    margin-top: 20px;
+  }
+
+  .body {
+    height: 100%;
+    width: 100%;
+    background-image: url('https://blog.kakaocdn.net/dn/0e9bC/btqWjp4w0Zq/fNhnULYtM7mCch5aLdEYc1/img.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .form-control {
+    background-color: transparent;
+  }
+
+  .wrap {
+    width: 60%;
+    margin: auto;
+    margin-top: 30px;
+  }
+
+  .form-group {
+    margin-top: 20px;
+  }
+
+  .label {
+    margin-top: 20px;
+  }
+
+  .btncls {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+  }
+
+  .btn-primary {
+    margin-left: 20px;
+  }
+
+  .inputPwd {
+    -webkit-text-security: disc;
+  }
+
+  #content {
+    margin-top: 20px;
+  }

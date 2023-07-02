@@ -2,162 +2,101 @@
 
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- 직접 POST 요청을 보내기 위해 axios 불러오기 -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <!--  rel="stylesheet" 가 들어가야 CSS -->
+    <link
+      rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <!-- font-awesome CSS -->
+    <script
+      src="https://kit.fontawesome.com/727ce840af.js"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!-- font-awesome CSS -->
-  <script src="https://kit.fontawesome.com/727ce840af.js" crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+    <!-- 날짜 CDN -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-  <!-- 날짜 CDN -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <title>게시글 작성</title>
+  </head>
 
-  <title>게시글 작성</title>
-</head>
-<style>
-  .post {
-    color: white;
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
+
+  <script>
+  // 뒤로가기 버튼
+  function back() {
+    location.href = 'javascript:history.back();'
   }
+  </script>
 
-  .title {
-    color: white;
-  }
-
-  .content {
-    color: white;
-    margin-top: 20px;
-  }
-
-  .body {
-    height: 100%;
-    width: 100%;
-    background-image: url('https://blog.kakaocdn.net/dn/0e9bC/btqWjp4w0Zq/fNhnULYtM7mCch5aLdEYc1/img.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
-  .form-control {
-    background-color: transparent;
-  }
-
-  .wrap {
-    width: 60%;
-    margin: auto;
-    margin-top: 30px;
-  }
-
-  .form-group {
-    margin-top: 20px;
-  }
-
-  .label {
-    margin-top: 20px;
-  }
-
-  .btncls {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-    margin-top: 10px;
-  }
-
-  .btn-primary {
-    margin-left: 20px;
-  }
-
-  .inputPwd {
-    -webkit-text-security: disc;
-  }
-
-  #content {
-    margin-top: 20px;
-  }
-</style>
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
-<script src="./js/multer.js"></script>
-<script>
-
-  // 게시글 생성
-  function upload() {
-    $.ajax({
-      type: "POST",
-      url: `http://localhost:3018/api/news`,
-      data: {
-        //post 보낼 데이터
-        title: $("#title").val(), // QuerySelector (#id) #아이디
-        content: $("#content").val(),
-        category: $("input[name=flexRadioDefault]:checked").val(), // 카테고리 value값 가져옴
-      },
-      success: function (response) {
-        if (response['result'] == "success") {
-          alert("글이 등록 되었습니다.");
-          window.location.href = "/news"
-        }
-      }
-    });
-  }
-
-</script>
-
-<body class="body">
-  <div class='wrap'>
-    <h1 class="post">게시글 작성</h1>
-    <form class="form-group" action="/news" method="post">
-      <div class="label" style="float: left">
-        <label class="post" style="font-weight: bold;">제목 :</label> 
-        <input type="text" id="title" placeholder="제목을 입력해 주세요." />
-      </div>
-      <div class="content" style="float: right">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="해외"
-            checked>
-          <label class="form-check-label" for="flexRadioDefault1">
-            해외축구
-          </label>
+  <body class="body">
+    <link rel="stylesheet" href="./css/create.css" />
+    <div class="wrap">
+      <h1 class="post">게시글 작성</h1> <!-- action에는 localhost뒤에 들어가는 주소 -->
+        <div class="label" style="float: left">
+          <!-- 제목 입력 -->
+          <label class="post" style="font-weight: bold">제목 :</label>
+          <input type="text" id="title" name="title" placeholder="제목을 입력해 주세요." />
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="국내"
-            checked>
-          <label class="form-check-label" for="flexRadioDefault2">
-            국내축구
-          </label>
+
+        <!-- 카테고리 설정 -->
+        <div class="content" style="float: right">
+          <input class="form-check-input" type="radio" name="radio" id="foreign" value="해외" checked>
+          <label class="form-check-label" for="flexRadioDefault1" value="해외">해외축구</label>
+          <br />
+          <input class="form-check-input" type="radio" name="radio" id="domestic" value="국내" checked>
+          <label class="form-check-label" for="flexRadioDefault2" value="국내">국내축구</label>
+          <div id="categoryresult"></div>
         </div>
+        <br />
+
+         <!-- 게시글 내용 입력 -->
+        <div class="label">
+          <label style="float: left"></label>
+          <textarea id="content" class="form-control" type="text" name ="content" rows="20" placeholder="내용을 입력해 주세요."></textarea>
+          <!-- <script src='./js/post.js'></script> -->
+        </div>
+
+        <!-- 사진 업로드 -->
+      <!-- <div class="btncls">
+        <form action="/news" method="post" enctype="multipart/form-data">
+          <label for='files'></label>
+          <input type="file" name="image" id="files" multiple> 
+          <input class="submit-btn" type="submit" value="저장" />
+        </form>
+      </div> -->
+
+      <!-- 게시글 전체 업로드 -->
+        <button class="btn btn-primary" onclick="upload()">작성 </button>
+        <button class="btn btn-primary" onclick="back()">뒤로 가기 </button>
       </div>
-      <br>
-      <div class="label">
-        <label style="float: left"></label> 
-        <textarea id="content" class="form-control" id="borderContent" type="text" rows="20"
-          placeholder="내용을 입력해 주세요."></textarea>
-      </div>
-    </form>
-    <div class="btncls">
-      <form action="/news" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" required/>
-        <input type="submit" value="Upload" />
-      </form>
-    
-      <button class="btn btn-primary" type="submit" onclick="upload()">작성</button>
-      <button class="btn btn-primary" onclick="location.href='/news'">뒤로 가기</button>
+
     </div>
-  </div>
-</body>
-
+    <script src='./js/post.js'></script>
+  </body>
 </html>

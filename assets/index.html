@@ -17,6 +17,7 @@
     />
     <title>축스피드</title>
   </head>
+
   <body>
     <header>
       <nav>
@@ -30,7 +31,7 @@
         <div class="nav-item">
           <ul class="menu">
             <li><a href="/create.html">Write</a></li>
-            <li><a href="/userCreate.html">SignUp</a></li>
+            <li><a href="/userCreate.html">Sign Up</a></li>
           </ul>
         </div>
         <div class="nav-item user-form">
@@ -45,7 +46,7 @@
               id="password"
               type="password"
               placeholder="PW 입력"
-              onKeyPress="if (event.keyCode==13){signIn();}"
+              onKeyPress="if(event.keyCode==13){signIn();}"
             />
             <button onclick="signIn()">로그인</button>
           </div>
@@ -71,7 +72,9 @@
         </div>
       </main>
     </div>
-    <footer><p>NodeJs A반 6조 - 노드레인저</p></footer>
+    <footer>
+      <p>NodeJs A반 6조 - 노드레인저</p>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="./js/api.js"></script>

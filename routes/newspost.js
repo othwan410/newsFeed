@@ -1,91 +1,99 @@
 // 이상우 게시글 생성, 수정, 삭제
+// http://localhost:3018/create.html
 
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth-middleware.js")
-const { News } = require("../models");
+const { News, Users } = require("../models");
 const { Op } = require("sequelize");
 const upload = require("../middlewares/upload-middleware.js");
 
-// 게시글 작성 POST : localhost:3018/sports/news (성공)
-// authMiddleware
-router.post("/news", upload.single('image'), async(req, res) => {  
-    try{ 
-        // const { UserId } = res.locals.user;
-        const { UserId,title, content, category} = req.body;
-        const imageUrl = req.file.location;
+
+// 게시글 작성 POST : localhost:3018/sports/news (로그인 이후 작성 성공)
+
+router.post("/news", authMiddleware, async(req, res) => {   //authMiddleware, upload.single('image'),
+    // try{ 
+        const { userId }  = res.locals.user;
+        console.log(userId) // 정상출력
+        const { title, content, category } = req.body;
+        console.log(title) // 정상출력
+        console.log(content) // 정상출력
+        console.log(category) // 정상출력
+        // const imageUrl = req.file.location;
 
         // 유효성 검사
         if (!title) {
             return res.status(400).json({
-            errorMessage: "제목을 입력해주세요."
+                message: "제목을 입력해주세요."
             })
         } else if (!content) {
             return res.status(400).json({
-            errorMessage: "내용을 입력해주세요."
+                message: "내용을 입력해주세요."
             })
         } else if (!category) {
             return res.status(400).json({
-            errorMessage: "카테고리를 선택해주세요."
+                message: "카테고리를 선택해주세요."
             })
-        } else if (!UserId) {
+        } else if (!userId) {
             return res.status(400).json({
-            errorMessage: "게시글 작성 권한이 없습니다. 로그인 해주세요."
+                message: "게시글 작성 권한이 없습니다. 로그인 해주세요."
             })
         }
         
-        const news = await News.create({
-            userId : UserId, // 뉴스와 유저의 관계는 1대 N ()
+        // key값에는 model에 있는 스키마, value에는 req.body값
+        await News.create({
+            userId,
             title,
             content,
-            img: imageUrl,
+            // img:"https://upload.wikimedia.org/wikipedia/commons/b/b4/Lionel-Messi-Argentina-2022-FIFA-World-Cup_%28cropped%29.jpg",
             category,
         });
 
-        return res.send({ result: "success" });
-    } catch (error){
-        console.error(error);
-        res.status(401).json({
-        errorMessage: "비정상적인 접근입니다."
-        })
-    }
+        return res.status(200).json({message:"게시글 작성에 성공하였습니다."}) // html에 코드 출력
+    // } catch (error){
+    //     console.error(error);
+    //     res.status(401).json({
+    //     message: "비정상적인 접근입니다."
+    //     })
+    // }
 })
 
 
 // 게시글 수정 PUT : localhost:3018/sports/news/newsId (성공)
-router.put("/news/:newsId", authMiddleware, async(req, res) => {  
+router.put("/news/:newsId", authMiddleware, async(req, res) => {  //upload.single('image')
     const { newsId } = req.params;
-    const { userId } = res.locals.user;
-    const { title, content, category, img } = req.body;
+    const { userId }  = res.locals.user;
+    const { title, content, category } = req.body;
+    // const imageUrl = req.file.location;
     
     const post = await News.findOne({where: { newsId }});
   
     // 유효성 검사
-    if (!post || !newsId) {
+    if (!post) {
         return res.status(404).json({
-            errorMessage: "게시글이 존재하지 않습니다."
+            message: "게시글이 존재하지 않습니다."
         })
     } else if (userId !== post.userId) {
         return res.status(404).json({
-            errorMessage: "게시글 수정 권한이 없습니다."
+            message: "게시글 수정 권한이 없습니다."
         })
     } else if (!title) {
         return res.status(404).json({
-            errorMessage: "제목을 입력해주세요."
+            message: "제목을 입력해주세요."
         })
     } else if (!content) {
         return res.status(404).json({
-            errorMessage: "내용을 입력해주세요."
+            message: "내용을 입력해주세요."
         })
     } else if (!category) {
         return res.status(400).json({
-            errorMessage: "카테고리를 선택해주세요."
+            message: "카테고리를 선택해주세요."
         })
     }
 
     // 수정
     await News.update(
-        { title, content, category, img },
+        { userId, title, content, category, img:imageUrl },
         {
             where: {
                 [Op.and]: [{ newsId }, { UserId: userId }],
@@ -100,7 +108,7 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {
 
 
 
-// 게시글 삭제 DELETE : localhost:3018/sports/news/newsId (성공)
+// 게시글 삭제 DELETE : localhost:3018/api/news/newsId 
 router.delete("/news/:newsId", authMiddleware, async (req, res) => { 
     const { newsId } = req.params;
     const { userId } = res.locals.user;

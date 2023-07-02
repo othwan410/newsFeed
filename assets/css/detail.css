@@ -108,3 +108,7 @@ footer{
     text-align: center;
     margin-top: 300px;
 }
+
+.commentNickname{
+    font-weight: bold;
+}

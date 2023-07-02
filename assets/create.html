@@ -10,8 +10,9 @@
     <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 
     <!-- Bootstrap CSS -->
+    <!--  rel="stylesheet" 가 들어가야 CSS -->
     <link
-      rel="stylesheet"
+      rel="stylesheet" 
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
@@ -44,7 +45,7 @@
     <title>게시글 작성</title>
   </head>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
 
   <script>
   // 뒤로가기 버튼
@@ -56,22 +57,19 @@
   <body class="body">
     <link rel="stylesheet" href="./css/create.css" />
     <div class="wrap">
-      <h1 class="post">게시글 작성</h1>
-      <form class="form-group" action="/news" method="POST">
+      <h1 class="post">게시글 작성</h1> <!-- action에는 localhost뒤에 들어가는 주소 -->
         <div class="label" style="float: left">
-          <form id="form">
-
           <!-- 제목 입력 -->
           <label class="post" style="font-weight: bold">제목 :</label>
-          <input type="text" id="title" placeholder="제목을 입력해 주세요." />
+          <input type="text" id="title" name="title" placeholder="제목을 입력해 주세요." />
         </div>
 
         <!-- 카테고리 설정 -->
         <div class="content" style="float: right">
-          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault1" value="해외" checked>
+          <input class="form-check-input" type="radio" name="radio" id="foreign" value="해외" checked>
           <label class="form-check-label" for="flexRadioDefault1" value="해외">해외축구</label>
           <br />
-          <input class="form-check-input" type="radio" name="category" id="flexRadioDefault2" value="국내" checked>
+          <input class="form-check-input" type="radio" name="radio" id="domestic" value="국내" checked>
           <label class="form-check-label" for="flexRadioDefault2" value="국내">국내축구</label>
           <div id="categoryresult"></div>
         </div>
@@ -80,25 +78,24 @@
          <!-- 게시글 내용 입력 -->
         <div class="label">
           <label style="float: left"></label>
-          <textarea id="content" class="form-control" type="text" rows="20" placeholder="내용을 입력해 주세요."></textarea>
-          <script src='./js/post.js'></script>
+          <textarea id="content" class="form-control" type="text" name ="content" rows="20" placeholder="내용을 입력해 주세요."></textarea>
+          <!-- <script src='./js/post.js'></script> -->
         </div>
-      </form>
 
         <!-- 사진 업로드 -->
-      <div class="btncls">
+      <!-- <div class="btncls">
         <form action="/news" method="post" enctype="multipart/form-data">
           <label for='files'></label>
-          <input type="file" name="image" id="files" multiple>
-          <!-- <input class="submit-btn" type="submit" value="저장" /> -->
+          <input type="file" name="image" id="files" multiple> 
+          <input class="submit-btn" type="submit" value="저장" />
         </form>
-        <script src='./js/post.js'></script>
+      </div> -->
 
       <!-- 게시글 전체 업로드 -->
-        <button class="btn btn-primary" type="submit" onclick="upload()">작성 </button>
+        <button class="btn btn-primary" onclick="upload()">작성 </button>
         <button class="btn btn-primary" onclick="back()">뒤로 가기 </button>
       </div>
-    </form>
+
     </div>
     <script src='./js/post.js'></script>
   </body>

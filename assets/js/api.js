@@ -89,6 +89,7 @@ function loginCheck() {
         $('.user-form').html(template);
         $('.logout-btn').removeClass('blind');
         $('#signUpList').hide();
+        
         document.getElementById('writeA').onclick = '';
 
         loginUserNickname = userInfo.nickname;
@@ -479,7 +480,9 @@ function btnReady() {
   }
 }
 
-function clickUpdateBtn(newsId) {}
+function clickUpdateBtn(newsId) {
+  location.href = 'http://localhost:3018/modify.html?newsId=' + newsId
+}
 
 function clickDeleteBtn(newsId) {
   $.ajax({
@@ -650,3 +653,39 @@ function createCommentElement(newsId, comment) {
 
   return commentElement;
 }
+
+
+
+// 게시글 수정 기능
+function editPost(newsId) {
+  const title = document.querySelector('#title').value
+  const content = document.querySelector('#content').value
+
+  const categoryRadio = document.getElementsByName('category');
+  let category;
+  categoryRadio.forEach((node) => {
+    if(node.checked)  {
+      category = node.value;
+    }
+  }) 
+
+  // const content = prompt("수정할 내용을 입력해주세요.",beforeContent);
+  if(title && content && category){
+    $.ajax({
+      type: 'PUT',
+      url: `/api/news/${newsId}`,
+      data: {title, content, category},
+      success: function () {
+        alert('뉴스 수정에 성공했습니다.');
+      },
+      error: function () {
+        alert('뉴스 수정에 실패했습니다.');
+      }
+    });
+    location.href = "http://localhost:3018/newsDetail.html?newsId=" + newsId;
+  }else{
+    alert("내용을 입력해주세요");
+  }
+}
+
+

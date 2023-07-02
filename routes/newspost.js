@@ -9,10 +9,10 @@ const { Op } = require("sequelize");
 const upload = require("../middlewares/upload-middleware.js");
 
 
-// 게시글 작성 POST : localhost:3018/sports/news (로그인 이후 작성 성공)
+// 게시글 작성 POST : localhost:3018/api/news (로그인 이후 작성 성공)
 
 router.post("/news", authMiddleware, upload.single('image'), async(req, res) => {   //authMiddleware, upload.single('image'),
-    // try{ 
+    try{ 
         const { userId }  = res.locals.user;
         console.log(userId) // 정상출력
         const { title, content, category } = req.body;
@@ -50,17 +50,17 @@ router.post("/news", authMiddleware, upload.single('image'), async(req, res) => 
             userId,
         });
 
-        return res.status(200).json({message:"게시글 작성에 성공하였습니다."}) // html에 코드 출력
-    // } catch (error){
-    //     console.error(error);
-    //     res.status(401).json({
-    //     message: "비정상적인 접근입니다."
-    //     })
-    // }
+        return res.status(200).send("<script> alert('게시글이 작성되었습니다'); location.href='/'</script>") // html에 코드 출력
+    } catch (error){
+        console.error(error);
+        res.status(401).json({
+        message: "비정상적인 접근입니다."
+        })
+    }
 })
 
 
-// 게시글 수정 PUT : localhost:3018/sports/news/newsId (성공)
+// 게시글 수정 PUT : localhost:3018/api/news/newsId (성공)
 router.put("/news/:newsId", authMiddleware, async(req, res) => {  //upload.single('image')
     const { newsId } = req.params;
     const { userId }  = res.locals.user;
@@ -94,17 +94,12 @@ router.put("/news/:newsId", authMiddleware, async(req, res) => {  //upload.singl
 
     // 수정
     await News.update(
-        { userId, title, content, category, img:imageUrl },
+        {  title, content, category },// img:imageUrl userId,
         {
-            where: {
-                [Op.and]: [{ newsId }, { UserId: userId }],
-            }
+            where: { newsId }
         }
     );
-    res.send({ result: "success" });
-    // return res.status(200).json({
-    //     message: "게시글이 수정되었습니다."
-    // });
+    res.send("<script> alert('게시글이 수정되었습니다')</script>");
 });
 
 
@@ -126,14 +121,9 @@ router.delete("/news/:newsId", authMiddleware, async (req, res) => {
         });
     }
     await News.destroy({
-        where: {
-            [Op.and]: [{ newsId }, { UserId: userId }]
-        }
+        where: { newsId }
     });
     res.send({ result: "success" });
-    // return res.status(200).json({
-    //     message: "게시글이 삭제되었습니다."
-    // });
 });
 
 

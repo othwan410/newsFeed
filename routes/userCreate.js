@@ -6,6 +6,7 @@ const { Users } = require("../models");
 // 라우터 생성하기
 const router = express.Router();
 
+
 // 로그인
 //                    비동기
 router.post("/login", async (req, res) => {
@@ -36,6 +37,13 @@ router.post("/login", async (req, res) => {
   return res.status(200).json({ message: "로그인 성공", userId: user.userId });
 });
 
+
+
+
+
+
+
+
 // 회원가입
 // 클라이언트에서 준 정보 처리
 router.post("/user", async (req, res) => {
@@ -58,7 +66,7 @@ router.post("/user", async (req, res) => {
   if (!idCheck) {
     res.status(400).json({
       // 경고문을 띄운다.
-      errorMessage:
+      message:
         "ID를 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
     });
     return;
@@ -66,13 +74,13 @@ router.post("/user", async (req, res) => {
 
   //  비밀번호 검증
   // 6글자 이상 , 대문자 ~ 소문자 , 어떤 숫자든지 가능
-  const passRegex = /^(?=.*[A-Za-z\d!@#$%^&*]).{6,20}$/
+  const passRegex = /^(?=.*[A-Za-z0-9])(?=.*\d)[A-Za-z0-9\d@$!%*#?&]{5,}$/
   const passCheck = passRegex.test(password);
 
   // 위의 조건 + id 를 포함하지 않을 것
   if (!passCheck || password.includes(id)) {
     res.status(400).json({
-      errorMessage:
+      message:
         "password는 ID를 포함하지 않는, 영어, 숫자, 특수문자(!@#$%^&*)를 포함한 6~20 글자여야합니다.",
     });
     return;
@@ -81,7 +89,7 @@ router.post("/user", async (req, res) => {
   // 패스워드를 똑같이 두 번 입력하지 않은 경우 에러 메시지 출력
   if (password !== confirmPassword) {
     res.status(400).json({
-      errorMessage: "비밀번호가 일치하지 않습니다..",
+      message: "비밀번호가 일치하지 않습니다..",
     });
     return;
   }
@@ -92,21 +100,21 @@ router.post("/user", async (req, res) => {
 
   if (!nameCheck) {
     res.status(400).json({
-      errorMessage:
+      message:
         "이름은 두 글자 이상, 한글만 입력해주세요.",
     });
     return;
   }
 
-  //  닉네임 검증
+  // //  닉네임 검증
 
-  if (!nickCheck) {
-    res.status(400).json({
-      errorMessage:
-        "닉네임을 3~10자, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
-    });
-    return;
-  }
+  // if (!nickCheck) {
+  //   res.status(400).json({
+  //     message:
+  //       "닉네임을 3~10자, 알파벳 대소문자(a~z, A~Z), 숫자(0~9) 으로 작성하세요",
+  //   });
+  //   return;
+  // }
 
   // 닉네임 중복 확인
   const isExistUserNickname = await Users.findOne({ where: { nickname } });
@@ -122,13 +130,13 @@ router.post("/user", async (req, res) => {
 
   if (!messCheck) {
     res.status(400).json({
-      errorMessage:
-        "메시지는 1~30 글자로 해주세요!(영어, 숫자, 특수문자만 가능)",
+      message:
+        "메시지는 1~30 글자로 해주세요!(영어, 숫자, 특수문자만 가능)"
     });
     return;
   }
 
-  const user = await Users.create({
+await Users.create({
     id,
     password,
     name,

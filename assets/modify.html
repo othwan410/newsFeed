@@ -51,7 +51,7 @@
   <div class='wrap'>
     <h1>게시글 수정</h1>
     <!-- "/api/news/newsId="+newsId = newsId가 앞의 문자열 뒤에 붙음. -->
-    <form class="form-group" action="/api/news/newsId="+newsId method="PUT" enctype="multipart/form-data"> 
+    <!-- <form class="form-group" action="/api/news/newsId="+newsId method="PUT" enctype="multipart/form-data">  -->
       <div class="form-group">
         <div class="label" style="float: left">
             
@@ -77,28 +77,30 @@
         </div>
       </div>
         <!-- 사진 업로드 -->
-        <div class="btncls">
+        <!-- <div class="btncls">
             <label for='files'></label>
-            <input type="file" name="image" id="image">
+            <input type="file" name="image" id="image"> -->
      
           <!-- 게시글 전체 업로드 -->
 
-      <button class="btn btn-primary" type="submit" type="submit">수정 완료</button>
-    </form>
+      <button class="btn btn-primary" onclick = "editPost(newsId)">수정 완료</button>
+    <!-- </form> -->
       <button class="btn btn-primary" type="submit" onclick="back()">취소</button>
     </div>
   </div>
   <script src="./js/api.js"></script>
   <script>
+
     $(document).ready(function () {
-        getNewsDetail(newsId, function (n) {
+        getNewsDetail(newsId, function (n) { // n을 구조분해할다
             const [news] = n;
             $("#title").attr("value", news.title);  //attribute (태그값)에서 value를 건드리고, 그 뒤는 parameter값.
-            $('input[name=category]:checked').attr("value", news.category);
-            $("#content").val();
-            $("#image").val();
-            $("#content").attr("value", news.content);
-            $("#image").attr("value", news.image); 
+            $("#content").text(news.content);
+            console.log(news.category);
+            if(news.category === "국내")
+              $("input:radio[name='category']:radio[value='국내']").prop('checked', true);
+            else
+              $("input:radio[name='category']:radio[value='해외']").prop('checked', true);
         });
     });
     

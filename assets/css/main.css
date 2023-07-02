@@ -129,3 +129,15 @@ footer p {
   padding-top: 10px;
   text-align: center;
 }
+
+.backgroundimage{
+  height: 100%;
+  width: 100%;
+  background-image: url("https://img.hankyung.com/photo/202011/1606618870717381.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.input {
+  color: white;
+}

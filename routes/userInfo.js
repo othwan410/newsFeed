@@ -15,6 +15,9 @@ router.get("/user/:userId", async (req, res) => {
         where: { userId },
     });
 
+    // console.log("user : "+typeof user+" , "+ user)
+    // console.log("user.createdAt : "+typeof user.createdAt+" , "+ user.createdAt)
+
     if (!user) {
         return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
     }

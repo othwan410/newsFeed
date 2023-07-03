@@ -91,9 +91,11 @@
                     body: JSON.stringify({ id, password, confirmPassword, name, nickname, message }),
                 });
                 const result = await response.json();
-                // console.log(result.message);
-                // location.href = 'http://localhost:3018';
-                return alert(result.message);
+                alert(result.message);
+                console.log(response.status === 201);
+                if (response.status === 201) {
+                    location.href = '/'
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
